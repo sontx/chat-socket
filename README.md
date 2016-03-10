@@ -1,5 +1,10 @@
 ![](https://lh3.googleusercontent.com/-Zu1tFauo9r4/VuDuhO0cp_I/AAAAAAAAOHU/NqgaCg4tfso/s0/chat-socket-proj-banner.png)
 **chat-socket** is a simple chat application include chat client and chat server. Support multiple users, private chat and show personal status. User must take an account before enter to system, this step require some simple information such as username, password....This project base on tcp socket, multithreading, java serialization and json.
+
+<a href="https://youtu.be/tIEG-Q6liXw">
+<img src="https://lh3.googleusercontent.com/-rmZzcxTw5UU/VuFSsd3pYoI/AAAAAAAAOLs/djf79cFry0A/s0/Capture.PNG">
+</a>
+
 ## Installation
 This project require [java runtime 1.6 or higher](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html), you can use [Eclipse](https://eclipse.org) to open and edit this project to custom for more personalized then recompile to take your owner client and server binary files.
 
