@@ -67,9 +67,11 @@ To change display name or status just enter new info then click **Change...** li
 ##Dependencies
 This project do not depend on platform, they just require java runtime 1.6 or higher so you can run in Windows or Linux or other flatform.
 In this project using some libraries:
+
 1. [**common-lang3**](https://commons.apache.org/proper/commons-lang/) to escape html.
 2. [**java-json**](http://www.java2s.com/Code/Jar/j/Downloadjavajsonjar.htm) to work with JSON
 3. [**jdk 1.7**](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) for develop
+
 ## History
 This is first version [v1.0.0](https://github.com/sontx/chat-socket/releases), it's not stable version.
 ## Author
