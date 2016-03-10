@@ -1,0 +1,6 @@
+.metadata/
+Client/bin/
+Server/bin/
+.recommenders/
+RemoteSystemsTempFiles/
+Shared/bin/
