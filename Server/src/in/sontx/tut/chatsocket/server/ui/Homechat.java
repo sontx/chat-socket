@@ -308,7 +308,7 @@ public class Homechat extends JFrame implements ActionListener {
 		@Override
 		public void l(Object obj) {
 			String msg = getMessage(obj);
-			appendLineInSafeThraed(String.format("LOG: %s", msg));
+			//appendLineInSafeThraed(String.format("LOG: %s", msg));
 			appendToFile(msg);
 		}
 
