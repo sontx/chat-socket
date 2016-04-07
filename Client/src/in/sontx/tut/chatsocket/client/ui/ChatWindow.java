@@ -146,7 +146,7 @@ public class ChatWindow extends Window implements ActionListener, WindowStateLis
 	}
 
 	private String prepareHtmlString(String rawContent) {
-		return StringEscapeUtils.escapeHtml3(rawContent);
+		return StringEscapeUtils.escapeXml(rawContent);
 	}
 
 	private void focusMe() {
