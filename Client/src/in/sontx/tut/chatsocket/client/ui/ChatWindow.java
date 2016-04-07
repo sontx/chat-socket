@@ -6,6 +6,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 import java.io.IOException;
@@ -31,7 +33,7 @@ import in.sontx.tut.chatsocket.utils.Task;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 
-public class ChatWindow extends Window implements ActionListener, WindowStateListener, OnDataReceivedListener {
+public class ChatWindow extends Window implements ActionListener, WindowStateListener, OnDataReceivedListener, AdjustmentListener {
 	private static final long serialVersionUID = 2690121762619830343L;
 	private static final String STYLE_SHEET = ".chat-box { margin: 2px; }"
 			+ ".chat-box p { display: block; padding: 7px; margin-top: 2px; margin-bottom: 2px; word-wrap: break-word;}"
@@ -70,6 +72,7 @@ public class ChatWindow extends Window implements ActionListener, WindowStateLis
 		JScrollPane scrollPane = new JScrollPane(dispField);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
+		scrollPane.getVerticalScrollBar().addAdjustmentListener(this);
 
 		setSize(280, 400);
 
@@ -191,5 +194,10 @@ public class ChatWindow extends Window implements ActionListener, WindowStateLis
 			});
 		}
 		return true;
+	}
+
+	@Override
+	public void adjustmentValueChanged(AdjustmentEvent e) {
+		e.getAdjustable().setValue(e.getAdjustable().getMaximum());
 	}
 }
