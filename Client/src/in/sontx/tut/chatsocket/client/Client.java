@@ -75,9 +75,9 @@ public final class Client {
 				boolean isCorruptData = false;
 				do {
 					try {
-						Log.i("Wait for receiving data...");
+						//Log.i("Wait for receiving data...");
 						Object receivedObject = protocol.receiveObject();
-						Log.i("Received data!");
+						//Log.i("Received data!");
 						if (receivedObject instanceof ChatResult) {
 							for (int i = 0; i < mOnDataReceivedListeners.size(); i++) {
 								OnDataReceivedListener listener = mOnDataReceivedListeners.get(i);
