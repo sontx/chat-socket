@@ -11,7 +11,7 @@ This project require [java runtime 1.6 or higher](http://www.oracle.com/technetw
 All releases [here](https://github.com/sontx/chat-socket/releases), they include source code and binary files.
 ![](https://lh3.googleusercontent.com/-TmXmzSowGZo/VuEMSqw9ICI/AAAAAAAAOHs/xoU8HmEM1EE/s0/Untitled.png)
 
-> **homechat-client.jar** is binary for chat client which you and your friends will use to chat with another and **homechat-server.jar** is binary for chat server is "brain" where all clients will connect to.
+> **homechat-client.jar** is binary for chat client which you and your friends will use to chat with another and **homechat-server.jar** is binary for chat server is "brain" where all clients will connect to. Current release already support win32 executable files for more friendly when run on Windows OS.
 
 ## Usage
 Ensure in your computer has java runtime first, lowest version is 1.6 to run client or server or both.
@@ -78,14 +78,19 @@ In this project using some libraries:
 3. [**jdk 1.7**](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) for develop
 
 ## History
-This is first version [v1.0.0](https://github.com/sontx/chat-socket/releases), it's not stable version.
+The second release is [v1.0.1](https://github.com/sontx/chat-socket/releases/tag/v1.0.1) with changed log:
+
+1. Support win32 executable file for more friendly.
+2. Fix auto scroll feature in chatbox.
+3. Remove some logs for best performance.
+
 ## Author
 Developed by sontx/noem, some useful information:
 
  - Home: [www.sontx.in](http://www.sontx.in)
  - My blog: [www.blog.sontx.in](http://www.blog.sontx.in)
  - Email: <a href="mailto:xuanson33bk@gmail.com">xuanson33bk@gmail.com</a>
- - Facebook: [No Em](https://mobile.facebook.com/Melkior.9x)
+ - Twitter: [@sontx0](https://twitter.com/sontx0)
 
 ## License
 Copyright 2016 Tran Xuan Son
