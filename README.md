@@ -87,8 +87,7 @@ The second release is [v1.0.1](https://github.com/sontx/chat-socket/releases/tag
 ## Author
 Developed by sontx/noem, some useful information:
 
- - Home: [www.sontx.in](http://www.sontx.in)
- - My blog: [www.blog.sontx.in](http://www.blog.sontx.in)
+ - Home: [http://sontx.blogspot.com](http://sontx.blogspot.com)
  - Email: <a href="mailto:xuanson33bk@gmail.com">xuanson33bk@gmail.com</a>
  - Twitter: [@sontx0](https://twitter.com/sontx0)
 
