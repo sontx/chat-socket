@@ -5,6 +5,16 @@ import com.blogspot.sontx.chatsocket.server.AppServerImpl;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.cli.*;
 
+/**
+ * Starts client/server based on application's arguments.
+ * <p>
+ * Supported arguments:
+ * <pre>
+ * -h (--help): shows help.
+ * -m (--mode): starts client/server, the following flag either <code>client</code> or <code>server</code>
+ * </pre>
+ * </p>
+ */
 @Log4j
 class Bootstrap {
     private Options options;
@@ -35,19 +45,11 @@ class Bootstrap {
     }
 
     private void startClient() {
-        try {
-            new AppClientImpl().start();
-        } catch (Exception e) {
-            log.error(e);
-        }
+        new AppClientImpl().start();
     }
 
     private void startServer() {
-        try {
-            new AppServerImpl().start();
-        } catch (Exception e) {
-            log.error(e);
-        }
+        new AppServerImpl().start();
     }
 
     private CommandLine parseArgs(String[] args) {
@@ -55,7 +57,7 @@ class Bootstrap {
         try {
             return parser.parse(options, args);
         } catch (ParseException e) {
-            log.error(e);
+            log.error("Wrong app arguments", e);
             return null;
         }
     }

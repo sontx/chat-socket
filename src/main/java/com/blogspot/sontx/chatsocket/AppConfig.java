@@ -6,9 +6,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Global configurations that loaded from <code>app.properties</code> file by default.
+ */
 @Log4j
 public final class AppConfig {
     private static AppConfig defaultInstance;
+    private final Properties properties;
+
+    private AppConfig(InputStream configInputStream) throws IOException {
+        properties = new Properties();
+        properties.load(configInputStream);
+    }
 
     public synchronized static AppConfig getDefault() {
         if (defaultInstance == null) {
@@ -23,14 +32,11 @@ public final class AppConfig {
         return defaultInstance;
     }
 
-    private final Properties properties;
-
     public String getAppName() {
-        return properties.getProperty("AppName");
+        return properties.getProperty("AppName", "Unknown");
     }
 
-    private AppConfig(InputStream configInputStream) throws IOException {
-        properties = new Properties();
-        properties.load(configInputStream);
+    public String getAppVersion() {
+        return properties.getProperty("AppVersion", "Unknown");
     }
 }

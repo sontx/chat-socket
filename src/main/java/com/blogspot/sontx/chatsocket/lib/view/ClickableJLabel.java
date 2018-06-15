@@ -10,29 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClickableJLabel extends JLabel {
-	private static final long serialVersionUID = -8953610647879519149L;
+    private List<ActionListener> actionListeners = new ArrayList<>();
 
-	private List<ActionListener> actionListeners = new ArrayList<>();
+    public ClickableJLabel(String s) {
+        super(s);
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ActionEvent event = new ActionEvent(ClickableJLabel.this, ActionEvent.ACTION_PERFORMED, "clicked");
+                for (ActionListener actionListener : actionListeners) {
+                    actionListener.actionPerformed(event);
+                }
+            }
+        });
+    }
 
-	public void addActionListener(ActionListener l) {
-		actionListeners.add(l);
-	}
-
-	public void removeActionListener(ActionListener l) {
-		actionListeners.remove(l);
-	}
-
-	public ClickableJLabel(String s) {
-		super(s);
-		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ActionEvent event = new ActionEvent(ClickableJLabel.this, ActionEvent.ACTION_PERFORMED, "clicked");
-				for (ActionListener actionListener : actionListeners) {
-					actionListener.actionPerformed(event);
-				}
-			}
-		});
-	}
+    public void addActionListener(ActionListener l) {
+        actionListeners.add(l);
+    }
 }
