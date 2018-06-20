@@ -1,0 +1,1 @@
+start homechat.jar --mode=client
