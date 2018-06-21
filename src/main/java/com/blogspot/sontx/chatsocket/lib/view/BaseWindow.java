@@ -29,12 +29,12 @@ public abstract class BaseWindow extends JFrame implements BaseView {
 
     @Override
     public void showWindow() {
-        SwingUtilities.invokeLater(() -> setVisible(true));
+        setVisible(true);
     }
 
     @Override
     public void closeWindow() {
-        SwingUtilities.invokeLater(this::dispose);
+        dispose();
     }
 
     @Override

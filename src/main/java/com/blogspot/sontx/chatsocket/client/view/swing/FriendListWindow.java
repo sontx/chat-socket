@@ -1,5 +1,6 @@
-package com.blogspot.sontx.chatsocket.client.view;
+package com.blogspot.sontx.chatsocket.client.view.swing;
 
+import com.blogspot.sontx.chatsocket.client.view.FriendListView;
 import com.blogspot.sontx.chatsocket.client.view.custom.FriendCellRenderer;
 import com.blogspot.sontx.chatsocket.client.view.custom.FriendEntry;
 import com.blogspot.sontx.chatsocket.lib.Callback;
@@ -17,7 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class FriendListWindow extends BaseWindow implements FriendListView, ActionListener {
+class FriendListWindow extends BaseWindow implements FriendListView, ActionListener {
     private JList<FriendEntry> friendList;
     private ClickableJLabel myInfoField;
     private Runnable myInfoButtonClick;

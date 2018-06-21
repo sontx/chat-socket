@@ -1,5 +1,6 @@
-package com.blogspot.sontx.chatsocket.client.view;
+package com.blogspot.sontx.chatsocket.client.view.swing;
 
+import com.blogspot.sontx.chatsocket.client.view.ChatView;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
 import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
@@ -15,7 +16,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-public class ChatWindow extends BaseWindow implements
+class ChatWindow extends BaseWindow implements
         ChatView,
         ActionListener,
         WindowStateListener,

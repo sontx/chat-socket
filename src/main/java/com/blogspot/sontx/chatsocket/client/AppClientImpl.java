@@ -5,6 +5,7 @@ import com.blogspot.sontx.chatsocket.client.model.*;
 import com.blogspot.sontx.chatsocket.client.model.handler.ResponseHandlerFactory;
 import com.blogspot.sontx.chatsocket.client.presenter.*;
 import com.blogspot.sontx.chatsocket.client.view.*;
+import com.blogspot.sontx.chatsocket.lib.Platform;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
 import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
 import com.blogspot.sontx.chatsocket.lib.view.WindowUtils;
@@ -24,9 +25,11 @@ public class AppClientImpl implements AppClient {
     private final Profile userProfile = new Profile();
     private Client client;
     private ChattingManager chattingManager = new ChattingManagerImpl();
+    private Platform platform;
 
     @Override
-    public void start() {
+    public void start(Platform platform) {
+        this.platform = platform;
         EventBus.getDefault().register(this);
         showUI();
     }
@@ -37,8 +40,12 @@ public class AppClientImpl implements AppClient {
     }
 
     private void openConnectionWindow() {
-        ConnectionPresenter connectionPresenter = new ConnectionPresenter(new ConnectionWindow());
+        ConnectionPresenter connectionPresenter = new ConnectionPresenter(create(ConnectionView.class));
         connectionPresenter.show();
+    }
+
+    private <T> T create(Class<T> viewType) {
+        return platform.getViewFactory().create(viewType);
     }
 
     @Subscribe
@@ -52,13 +59,13 @@ public class AppClientImpl implements AppClient {
         client.start();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onConnectedToServer(ConnectedToServerEvent event) {
         openLoginWindow();
     }
 
     private void openLoginWindow() {
-        LoginPresenter loginPresenter = new LoginPresenter(new LoginWindow());
+        LoginPresenter loginPresenter = new LoginPresenter(create(LoginView.class));
         loginPresenter.show();
     }
 
@@ -69,20 +76,20 @@ public class AppClientImpl implements AppClient {
     }
 
     private void openMainWindow() {
-        FriendListPresenter friendListPresenter = new FriendListPresenter(new FriendListWindow());
+        FriendListPresenter friendListPresenter = new FriendListPresenter(create(FriendListView.class));
         friendListPresenter.setMyAccountInfo(userProfile);
         friendListPresenter.show();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onOpenChat(OpenChatEvent event) {
-        ChatPresenter chatPresenter = new ChatPresenter(new ChatWindow(), event.getChatWith());
+        ChatPresenter chatPresenter = new ChatPresenter(create(ChatView.class), event.getChatWith());
         chatPresenter.show();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onOpenMyProfile(OpenMyProfileEvent event) {
-        ProfilePresenter profilePresenter = new ProfilePresenter(new ProfileWindow(), userProfile);
+        ProfilePresenter profilePresenter = new ProfilePresenter(create(ProfileView.class), userProfile);
         profilePresenter.show();
     }
 
@@ -91,9 +98,9 @@ public class AppClientImpl implements AppClient {
         userProfile.setUsername(event.getUsername());
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onOpenRegister(OpenRegisterEvent event) {
-        RegisterPresenter registerPresenter = new RegisterPresenter(new RegisterWindow());
+        RegisterPresenter registerPresenter = new RegisterPresenter(create(RegisterView.class));
         registerPresenter.show();
     }
 

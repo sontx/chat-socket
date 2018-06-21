@@ -1,5 +1,6 @@
-package com.blogspot.sontx.chatsocket.client.view;
+package com.blogspot.sontx.chatsocket.client.view.swing;
 
+import com.blogspot.sontx.chatsocket.client.view.RegisterView;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
 import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
 import com.blogspot.sontx.chatsocket.lib.view.FitImageJLabel;
@@ -9,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RegisterWindow extends BaseWindow implements RegisterView, ActionListener {
+class RegisterWindow extends BaseWindow implements RegisterView, ActionListener {
 
     private JTextField usernameField;
     private JPasswordField passwordField;

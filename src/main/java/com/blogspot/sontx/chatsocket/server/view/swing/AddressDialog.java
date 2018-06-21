@@ -1,4 +1,4 @@
-package com.blogspot.sontx.chatsocket.server.view;
+package com.blogspot.sontx.chatsocket.server.view.swing;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

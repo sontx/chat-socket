@@ -1,7 +1,9 @@
 package com.blogspot.sontx.chatsocket;
 
 import com.blogspot.sontx.chatsocket.client.AppClientImpl;
+import com.blogspot.sontx.chatsocket.client.platform.ClientSwingPlatform;
 import com.blogspot.sontx.chatsocket.server.AppServerImpl;
+import com.blogspot.sontx.chatsocket.server.platform.ServerSwingPlatform;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.cli.*;
 
@@ -45,11 +47,11 @@ class Bootstrap {
     }
 
     private void startClient() {
-        new AppClientImpl().start();
+        new AppClientImpl().start(new ClientSwingPlatform());
     }
 
     private void startServer() {
-        new AppServerImpl().start();
+        new AppServerImpl().start(new ServerSwingPlatform());
     }
 
     private CommandLine parseArgs(String[] args) {

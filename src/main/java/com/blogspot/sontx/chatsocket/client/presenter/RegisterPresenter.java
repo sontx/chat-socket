@@ -6,6 +6,7 @@ import com.blogspot.sontx.chatsocket.client.view.RegisterView;
 import com.blogspot.sontx.chatsocket.lib.utils.Security;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class RegisterPresenter {
     private final RegisterView registerView;
@@ -42,7 +43,7 @@ public class RegisterPresenter {
         EventBus.getDefault().post(new RegisterEvent(username, password, displayName));
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onRegistered(RegisteredEvent event) {
         EventBus.getDefault().unregister(this);
         registerView.closeWindow();

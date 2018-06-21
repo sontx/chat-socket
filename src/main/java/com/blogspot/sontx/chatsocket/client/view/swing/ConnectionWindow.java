@@ -1,5 +1,6 @@
-package com.blogspot.sontx.chatsocket.client.view;
+package com.blogspot.sontx.chatsocket.client.view.swing;
 
+import com.blogspot.sontx.chatsocket.client.view.ConnectionView;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
 import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
 import com.blogspot.sontx.chatsocket.lib.view.FitImageJLabel;
@@ -9,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ConnectionWindow extends BaseWindow implements ConnectionView, ActionListener {
+class ConnectionWindow extends BaseWindow implements ConnectionView, ActionListener {
 
     private JTextField portField;
     private JTextField ipField;

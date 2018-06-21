@@ -1,6 +1,7 @@
-package com.blogspot.sontx.chatsocket.client.view;
+package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.client.model.Profile;
+import com.blogspot.sontx.chatsocket.client.view.ProfileView;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
 import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ProfileWindow extends BaseWindow implements ProfileView, ActionListener {
+class ProfileWindow extends BaseWindow implements ProfileView, ActionListener {
     private JTextField statusField;
     private JTextField displayNameField;
     private ClickableJLabel passwordButton;

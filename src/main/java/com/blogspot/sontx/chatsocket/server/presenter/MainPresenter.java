@@ -5,10 +5,12 @@ import com.blogspot.sontx.chatsocket.server.event.ServerStatusChangedEvent;
 import com.blogspot.sontx.chatsocket.server.event.ShutdownServerEvent;
 import com.blogspot.sontx.chatsocket.server.event.StartServerEvent;
 import com.blogspot.sontx.chatsocket.server.event.StopServerEvent;
+import com.blogspot.sontx.chatsocket.server.view.LogView;
 import com.blogspot.sontx.chatsocket.server.view.MainView;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.log4j.LogManager;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -18,8 +20,9 @@ public class MainPresenter {
     private final MainView mainView;
     private volatile boolean serverIsRunning;
 
-    public MainPresenter(MainView mainView) {
+    public MainPresenter(MainView mainView, LogView logView) {
         this.mainView = mainView;
+        LogManager.getRootLogger().addAppender(new Log4jUIAppender(logView));
         wireUpViewEvents();
     }
 

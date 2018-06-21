@@ -1,9 +1,11 @@
-package com.blogspot.sontx.chatsocket.server.view;
+package com.blogspot.sontx.chatsocket.server.view.swing;
 
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
 import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
+import com.blogspot.sontx.chatsocket.server.view.LogView;
+import com.blogspot.sontx.chatsocket.server.view.MainView;
 import lombok.extern.log4j.Log4j;
-import org.apache.log4j.LogManager;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,13 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 @Log4j
-public class MainWindow extends BaseWindow implements ActionListener, MainView {
+class MainWindow extends BaseWindow implements ActionListener, MainView, LogView {
     private JTextField addressField;
     private JTextField portField;
     private JButton btnShowIPs;
     private JButton btnStart;
 
     private Runnable startButtonListener;
+    private JTextPane logPane;
 
     @Override
     protected void initializeComponents() {
@@ -75,7 +78,7 @@ public class MainWindow extends BaseWindow implements ActionListener, MainView {
         getContentPane().add(panel_1);
         panel_1.setLayout(new BorderLayout(0, 0));
 
-        JTextPane logPane = new JTextPane();
+        logPane = new JTextPane();
         logPane.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(logPane);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -83,15 +86,6 @@ public class MainWindow extends BaseWindow implements ActionListener, MainView {
 
         setSize(529, 375);
         setLocationRelativeTo(null);
-
-        registerLogUI(logPane);
-    }
-
-    /**
-     * Logs from {@link org.apache.log4j.Logger} log4j will be also shown on the logPane.
-     */
-    private void registerLogUI(JTextPane logPane) {
-        LogManager.getRootLogger().addAppender(new Log4jUIAppender(logPane));
     }
 
     private void selectAddress() {
@@ -122,11 +116,25 @@ public class MainWindow extends BaseWindow implements ActionListener, MainView {
 
     @Override
     public void setStartButtonText(String text) {
-        SwingUtilities.invokeLater(() -> btnStart.setText(text));
+        btnStart.setText(text);
     }
 
     @Override
     public void setStartButtonListener(Runnable runnable) {
         this.startButtonListener = runnable;
+    }
+
+    @Override
+    public synchronized void appendLog(String message) {
+        String current = logPane.getText();
+        if (StringUtils.isEmpty(current))
+            logPane.setText(message);
+        else
+            logPane.setText(current + System.lineSeparator() + message);
+    }
+
+    @Override
+    public void clearLog() {
+        logPane.setText("");
     }
 }

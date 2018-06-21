@@ -1,5 +1,6 @@
 package com.blogspot.sontx.chatsocket.server;
 
+import com.blogspot.sontx.chatsocket.lib.Platform;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
 import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
 import com.blogspot.sontx.chatsocket.lib.view.WindowUtils;
@@ -14,7 +15,8 @@ import com.blogspot.sontx.chatsocket.server.model.account.AccountManagerImpl;
 import com.blogspot.sontx.chatsocket.server.model.account.JsonAccountStorage;
 import com.blogspot.sontx.chatsocket.server.model.handler.RequestHandlerFactory;
 import com.blogspot.sontx.chatsocket.server.presenter.MainPresenter;
-import com.blogspot.sontx.chatsocket.server.view.MainWindow;
+import com.blogspot.sontx.chatsocket.server.view.LogView;
+import com.blogspot.sontx.chatsocket.server.view.MainView;
 import lombok.extern.log4j.Log4j;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,9 +37,12 @@ public class AppServerImpl implements AppServer {
     private AccountManager accountManager;
     private RequestRouter requestRouter;
     private Server server;
+    private Platform platform;
 
     @Override
-    public void start() {
+    public void start(Platform platform) {
+        this.platform = platform;
+
         EventBus.getDefault().register(this);
         initializeComponents();
         showUI();
@@ -65,7 +70,9 @@ public class AppServerImpl implements AppServer {
 
     private void showUI() {
         WindowUtils.setSystemLookAndFeel();
-        MainPresenter presenter = new MainPresenter(new MainWindow());
+        MainView mainView = platform.getViewFactory().create(MainView.class);
+        LogView logView = platform.getViewFactory().create(LogView.class);
+        MainPresenter presenter = new MainPresenter(mainView, logView);
         presenter.show();
     }
 

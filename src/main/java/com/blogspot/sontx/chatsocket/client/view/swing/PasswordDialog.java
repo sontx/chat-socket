@@ -1,4 +1,4 @@
-package com.blogspot.sontx.chatsocket.client.view;
+package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PasswordDialog extends JDialog implements ActionListener {
+class PasswordDialog extends JDialog implements ActionListener {
     private JPasswordField passwordField;
     private JPasswordField rePasswordField;
     private JButton btnCancel;

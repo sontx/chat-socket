@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class ConnectionPresenter {
     private final ConnectionView connectionView;
@@ -38,7 +39,7 @@ public class ConnectionPresenter {
         EventBus.getDefault().post(new ConnectToServerEvent(serverIp, Integer.parseInt(serverPortAsString)));
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onConnectedToServer(ConnectedToServerEvent event) {
         EventBus.getDefault().unregister(this);
         connectionView.closeWindow();
