@@ -9,5 +9,5 @@ public interface MainView extends BaseView {
 
     void setStartButtonText(String text);
 
-    void setStartButtonListener(Runnable runnable);
+    void setStartButtonListener(Runnable listener);
 }

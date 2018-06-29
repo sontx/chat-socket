@@ -8,6 +8,7 @@ import com.blogspot.sontx.chatsocket.lib.bo.DefaultObjectTransmission;
 import com.blogspot.sontx.chatsocket.lib.bo.ObjectTransmission;
 import com.blogspot.sontx.chatsocket.lib.bo.SerializableObjectAdapter;
 import com.blogspot.sontx.chatsocket.lib.bo.SocketByteTransmission;
+import com.blogspot.sontx.chatsocket.lib.service.BackgroundService;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
 import lombok.extern.log4j.Log4j;
 import org.greenrobot.eventbus.EventBus;
@@ -18,7 +19,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 @Log4j
-public class SocketClient extends Thread implements Client {
+public class SocketClient extends BackgroundService implements Client {
     private final String serverIp;
     private final int serverPort;
     private final ResponseHandlerFactory responseHandlerFactory;
@@ -38,7 +39,6 @@ public class SocketClient extends Thread implements Client {
     @Override
     public void run() {
         closing = false;
-        EventBus.getDefault().register(this);
         try {
             connect();
             waitForIncommingMessages();
@@ -53,11 +53,11 @@ public class SocketClient extends Thread implements Client {
 
     private void shutdownClientWithError(Exception e) {
         log.error("Error while running socket client", e);
-        EventBus.getDefault().post(new ClientShutdownEvent(e));
+        post(new ClientShutdownEvent(e));
     }
 
     private void shutdownClientWithoutError() {
-        EventBus.getDefault().post(new ClientShutdownEvent());
+        post(new ClientShutdownEvent());
         StreamUtils.tryCloseStream(this);
     }
 
@@ -65,7 +65,7 @@ public class SocketClient extends Thread implements Client {
         StreamUtils.tryCloseStream(transmission);
         Socket socket = new Socket(serverIp, serverPort);
         transmission = new DefaultObjectTransmission(new SerializableObjectAdapter(), new SocketByteTransmission(socket));
-        EventBus.getDefault().post(new ConnectedToServerEvent());
+        post(new ConnectedToServerEvent());
     }
 
     private void waitForIncommingMessages() throws Exception {
@@ -126,9 +126,9 @@ public class SocketClient extends Thread implements Client {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         closing = true;
-        EventBus.getDefault().unregister(this);
         StreamUtils.tryCloseStream(transmission);
+        stop();
     }
 }

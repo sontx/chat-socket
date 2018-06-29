@@ -14,7 +14,7 @@ public class FriendListResponseHandler extends AbstractResponseHandler {
     @SuppressWarnings("unchecked")
     public void handle(ObjectTransmission transmission, Response response) throws Exception {
         if (response.getCode() == ResponseCode.OK) {
-            EventBus.getDefault().post(new FriendListReceivedEvent((List<AccountInfo>) response.getExtra()));
+            post(new FriendListReceivedEvent((List<AccountInfo>) response.getExtra()));
         } else {
             showErrorMessage("Can not fetch friend list", response.getExtra());
         }

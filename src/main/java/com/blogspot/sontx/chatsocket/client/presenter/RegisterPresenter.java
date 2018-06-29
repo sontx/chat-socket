@@ -3,12 +3,14 @@ package com.blogspot.sontx.chatsocket.client.presenter;
 import com.blogspot.sontx.chatsocket.client.event.RegisterEvent;
 import com.blogspot.sontx.chatsocket.client.event.RegisteredEvent;
 import com.blogspot.sontx.chatsocket.client.view.RegisterView;
+import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
+import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.lib.utils.Security;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class RegisterPresenter {
+public class RegisterPresenter extends AbstractService implements Presenter {
     private final RegisterView registerView;
 
     public RegisterPresenter(RegisterView registerView) {
@@ -19,7 +21,7 @@ public class RegisterPresenter {
     private void wireUpViewEvents() {
         registerView.setRegisterButtonClickListener(() -> {
             if (!verifyInputs())
-                registerView.showMessageBox("Invalid register info.");
+                postMessageBox("Invalid register info.", "Registration", MessageType.Error);
             else
                 register();
         });
@@ -40,17 +42,17 @@ public class RegisterPresenter {
         String password = registerView.getPassword();
         String displayName = registerView.getDisplayName();
 
-        EventBus.getDefault().post(new RegisterEvent(username, password, displayName));
+        post(new RegisterEvent(username, password, displayName));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onRegistered(RegisteredEvent event) {
-        EventBus.getDefault().unregister(this);
+        stop();
         registerView.closeWindow();
     }
 
     public void show() {
-        EventBus.getDefault().register(this);
+        start();
         registerView.setTitle("Register");
         registerView.showWindow();
     }

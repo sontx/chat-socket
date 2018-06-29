@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="617.0" prefWidth="395.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <BorderPane onMouseClicked="#onMyInfoClick" prefHeight="49.0" prefWidth="395.0" style="-fx-cursor: hand;" BorderPane.alignment="CENTER">
+         <left>
+            <ImageView fx:id="avatarImageView" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@/images/online.png" />
+               </image>
+            </ImageView>
+         </left>
+         <center>
+            <Label fx:id="statusLabel" BorderPane.alignment="CENTER_LEFT">
+               <BorderPane.margin>
+                  <Insets left="10.0" />
+               </BorderPane.margin>
+            </Label>
+         </center>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </BorderPane>
+   </top>
+   <center>
+      <ListView fx:id="friendListView" onMouseClicked="#onListViewItemClick" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin></ListView>
+   </center>
+</BorderPane>

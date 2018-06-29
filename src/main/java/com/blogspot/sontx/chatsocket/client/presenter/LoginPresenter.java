@@ -4,12 +4,14 @@ import com.blogspot.sontx.chatsocket.client.event.LoggedEvent;
 import com.blogspot.sontx.chatsocket.client.event.LoginEvent;
 import com.blogspot.sontx.chatsocket.client.event.OpenRegisterEvent;
 import com.blogspot.sontx.chatsocket.client.view.LoginView;
+import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
+import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.lib.utils.Security;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class LoginPresenter {
+public class LoginPresenter extends AbstractService implements Presenter {
     private final LoginView loginView;
 
     public LoginPresenter(LoginView loginView) {
@@ -20,7 +22,7 @@ public class LoginPresenter {
     private void wireUpViewEvents() {
         loginView.setLoginButtonClickListener(() -> {
             if (!verifyInputs())
-                loginView.showMessageBox("Invalid login info.");
+                postMessageBox("Invalid login info.", "Login", MessageType.Error);
             else
                 login();
         });
@@ -38,21 +40,21 @@ public class LoginPresenter {
         String username = loginView.getUsername();
         String password = loginView.getPassword();
 
-        EventBus.getDefault().post(new LoginEvent(username, password));
+        post(new LoginEvent(username, password));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onLogged(LoggedEvent event) {
+        stop();
         loginView.closeWindow();
-        EventBus.getDefault().unregister(this);
     }
 
     private void register() {
-        EventBus.getDefault().post(new OpenRegisterEvent());
+        post(new OpenRegisterEvent());
     }
 
     public void show() {
-        EventBus.getDefault().register(this);
+        start();
         loginView.setTitle("Login");
         loginView.showWindow();
     }

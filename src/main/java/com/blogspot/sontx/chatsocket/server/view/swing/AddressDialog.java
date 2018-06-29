@@ -1,5 +1,7 @@
 package com.blogspot.sontx.chatsocket.server.view.swing;
 
+import com.blogspot.sontx.chatsocket.lib.utils.NetworkUtils;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,31 +44,11 @@ class AddressDialog extends JDialog implements ActionListener {
         mOnSelectedAddressListener = listener;
     }
 
-    private List<String> getAllIPs() throws SocketException {
-        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-        List<String> ips = new ArrayList<>();
-        while (interfaces.hasMoreElements()) {
-            NetworkInterface netInterface = interfaces.nextElement();
-            Enumeration<InetAddress> addresses = netInterface.getInetAddresses();
-            while (addresses.hasMoreElements()) {
-                InetAddress address = addresses.nextElement();
-                if (address.getAddress().length == 4)
-                    ips.add(address.getHostAddress());
-            }
-        }
-        return ips;
-    }
-
     private void loadIPsToUI() {
-        try {
-            List<String> ips = getAllIPs();
-            for (String ip : ips) {
-                ipList.addItem(ip);
-            }
-        } catch (SocketException e) {
-            e.printStackTrace();
+        List<String> ips = NetworkUtils.getAllAddresses();
+        for (String ip : ips) {
+            ipList.addItem(ip);
         }
-
     }
 
     @Override

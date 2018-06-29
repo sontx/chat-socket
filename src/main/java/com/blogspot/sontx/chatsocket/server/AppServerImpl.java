@@ -1,9 +1,10 @@
 package com.blogspot.sontx.chatsocket.server;
 
-import com.blogspot.sontx.chatsocket.lib.Platform;
+import com.blogspot.sontx.chatsocket.lib.platform.Platform;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
 import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
 import com.blogspot.sontx.chatsocket.lib.view.WindowUtils;
+import com.blogspot.sontx.chatsocket.server.event.AppShutdownEvent;
 import com.blogspot.sontx.chatsocket.server.event.ServerStatusChangedEvent;
 import com.blogspot.sontx.chatsocket.server.event.StartServerEvent;
 import com.blogspot.sontx.chatsocket.server.event.StopServerEvent;
@@ -18,7 +19,6 @@ import com.blogspot.sontx.chatsocket.server.presenter.MainPresenter;
 import com.blogspot.sontx.chatsocket.server.view.LogView;
 import com.blogspot.sontx.chatsocket.server.view.MainView;
 import lombok.extern.log4j.Log4j;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
@@ -42,8 +42,7 @@ public class AppServerImpl implements AppServer {
     @Override
     public void start(Platform platform) {
         this.platform = platform;
-
-        EventBus.getDefault().register(this);
+        platform.getEventBus().register(this);
         initializeComponents();
         showUI();
     }
@@ -64,7 +63,7 @@ public class AppServerImpl implements AppServer {
 
     private void initializeRequestRouter() {
         if (accountManager != null) {
-            requestRouter = new RequestRouter(new RequestHandlerFactory(accountManager));
+            requestRouter = new RequestRouter(new RequestHandlerFactory(accountManager, platform)).build(platform);
         }
     }
 
@@ -73,6 +72,7 @@ public class AppServerImpl implements AppServer {
         MainView mainView = platform.getViewFactory().create(MainView.class);
         LogView logView = platform.getViewFactory().create(LogView.class);
         MainPresenter presenter = new MainPresenter(mainView, logView);
+        presenter.setPlatform(platform);
         presenter.show();
     }
 
@@ -81,14 +81,14 @@ public class AppServerImpl implements AppServer {
         StreamUtils.tryCloseStream(server);
         try {
             startServer(event.getIp(), event.getPort());
-            EventBus.getDefault().post(new ServerStatusChangedEvent(true));
+            this.platform.getEventBus().post(new ServerStatusChangedEvent(true));
         } catch (IOException e) {
             log.error("Error while staring server", e);
         }
     }
 
     private void startServer(String listenOnIp, int port) throws IOException {
-        server = new SocketServer(port, listenOnIp, 100);
+        server = new SocketServer(port, listenOnIp, 100).build(platform);
         server.start();
 
         if (requestRouter != null) {
@@ -103,6 +103,11 @@ public class AppServerImpl implements AppServer {
             requestRouter.stop();
         }
 
-        EventBus.getDefault().post(new ServerStatusChangedEvent(false));
+        this.platform.getEventBus().post(new ServerStatusChangedEvent(false));
+    }
+
+    @Subscribe
+    public void onAppShutdown(AppShutdownEvent event) {
+        platform.exit();
     }
 }

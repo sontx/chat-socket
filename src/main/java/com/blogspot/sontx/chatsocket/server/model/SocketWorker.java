@@ -4,6 +4,7 @@ import com.blogspot.sontx.chatsocket.lib.bean.*;
 import com.blogspot.sontx.chatsocket.lib.bo.DefaultObjectTransmission;
 import com.blogspot.sontx.chatsocket.lib.bo.SerializableObjectAdapter;
 import com.blogspot.sontx.chatsocket.lib.bo.SocketByteTransmission;
+import com.blogspot.sontx.chatsocket.lib.service.BackgroundService;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
 import com.blogspot.sontx.chatsocket.server.event.*;
 import lombok.extern.log4j.Log4j;
@@ -19,7 +20,7 @@ import java.net.Socket;
  * Each {@link SocketWorker} will be started in a separated thread.
  */
 @Log4j
-public class SocketWorker extends Thread implements Worker {
+public class SocketWorker extends BackgroundService implements Worker {
     private final DefaultObjectTransmission objectTransmission;
     private final int sessionId;
     private final Object lock = new Object();
@@ -37,7 +38,7 @@ public class SocketWorker extends Thread implements Worker {
     @Override
     public void run() {
         try {
-            EventBus.getDefault().register(this);
+
             waitForRequests();
         } catch (Exception e) {
             if (!closing)
@@ -56,7 +57,7 @@ public class SocketWorker extends Thread implements Worker {
             if (receivedObject == null)
                 break;
             if (receivedObject instanceof Request) {
-                EventBus.getDefault().post(new RequestReceivedEvent((Request) receivedObject, account, this));
+                post(new RequestReceivedEvent((Request) receivedObject, account, this));
             }
         }
     }
@@ -78,16 +79,16 @@ public class SocketWorker extends Thread implements Worker {
 
         closing = true;
 
-        EventBus.getDefault().unregister(this);
-
         StreamUtils.tryCloseStream(objectTransmission);
         AccountInfo accountInfo = account;
         if (accountInfo != null) {
             accountInfo.setState(AccountInfo.STATE_OFFLINE);
-            EventBus.getDefault().post(new AccountInfoChangedEvent(accountInfo));
+            post(new AccountInfoChangedEvent(accountInfo));
         }
 
         alreadyShutdown = true;
+
+        stop();
     }
 
     @Subscribe(threadMode = ThreadMode.POSTING)

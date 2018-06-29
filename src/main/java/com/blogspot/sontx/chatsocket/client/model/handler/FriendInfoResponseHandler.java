@@ -11,7 +11,7 @@ public class FriendInfoResponseHandler extends AbstractResponseHandler {
     @Override
     public void handle(ObjectTransmission transmission, Response response) throws Exception {
         if (response.getCode() == ResponseCode.OK) {
-            EventBus.getDefault().post(new FriendInfoChangedEvent((AccountInfo) response.getExtra()));
+            post(new FriendInfoChangedEvent((AccountInfo) response.getExtra()));
         }
     }
 }

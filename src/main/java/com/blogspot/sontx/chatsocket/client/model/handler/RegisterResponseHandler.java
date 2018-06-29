@@ -11,7 +11,7 @@ public class RegisterResponseHandler extends AbstractResponseHandler {
     @Override
     public void handle(ObjectTransmission transmission, Response response) throws Exception {
         if (response.getCode() == ResponseCode.OK) {
-            EventBus.getDefault().post(new RegisteredEvent((AccountInfo) response.getExtra()));
+            post(new RegisteredEvent((AccountInfo) response.getExtra()));
         } else {
             showErrorMessage("Can not register new account", response.getExtra());
         }

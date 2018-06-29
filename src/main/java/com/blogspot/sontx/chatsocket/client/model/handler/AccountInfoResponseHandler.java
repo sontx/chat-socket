@@ -11,7 +11,7 @@ public class AccountInfoResponseHandler extends AbstractResponseHandler {
     @Override
     public void handle(ObjectTransmission transmission, Response response) throws Exception {
         if (response.getCode() == ResponseCode.OK) {
-            EventBus.getDefault().post(new MyAccountInfoReceivedEvent((AccountInfo) response.getExtra()));
+            post(new MyAccountInfoReceivedEvent((AccountInfo) response.getExtra()));
         } else {
             showErrorMessage("Can not fetch user info", response.getExtra());
         }

@@ -8,6 +8,9 @@ import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
 import com.blogspot.sontx.chatsocket.lib.bean.ChatMessage;
 import com.blogspot.sontx.chatsocket.lib.bean.Response;
 import com.blogspot.sontx.chatsocket.lib.bean.ResponseCode;
+import com.blogspot.sontx.chatsocket.lib.platform.Platform;
+import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
+import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,29 +23,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ChattingManagerImpl implements ChattingManager {
+public class ChattingManagerImpl extends AbstractService implements ChattingManager {
     private final List<ManagedFriend> managedFriends;
     private final Object lock = new Object();
-    private boolean started;
 
     public ChattingManagerImpl() {
         managedFriends = new ArrayList<>();
-    }
-
-    @Override
-    public void start() {
-        if (!started) {
-            EventBus.getDefault().register(this);
-            started = true;
-        }
-    }
-
-    @Override
-    public void stop() {
-        if (started) {
-            EventBus.getDefault().unregister(this);
-            started = false;
-        }
     }
 
     @Override
@@ -51,16 +37,15 @@ public class ChattingManagerImpl implements ChattingManager {
         if (!isChattingWith(friendId)) {
             openChatWindow(friendId);
         }
-        EventBus.getDefault().post(new ChatMessageReceivedEvent(chatMessage));
+        post(new ChatMessageReceivedEvent(chatMessage));
     }
 
     @Override
     public void processSentChatMessage(Response response) {
         if (response.getCode() == ResponseCode.Fail) {
-            MessageBox.showInUIThread(
-                    null,
-                    "Can not send chat message to your friend: " + response.getExtra(),
-                    MessageBox.MESSAGE_ERROR);
+            postMessageBox(
+                    "Can not send the chat message to your friend: " + response.getExtra(),
+                    MessageType.Error);
         }
     }
 
@@ -82,7 +67,7 @@ public class ChattingManagerImpl implements ChattingManager {
     }
 
     private void openChatWindow(ManagedFriend friend) {
-        EventBus.getDefault().post(new OpenChatEvent(friend.accountInfo));
+        post(new OpenChatEvent(friend.accountInfo));
         friend.isChattingWith = true;
     }
 

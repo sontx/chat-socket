@@ -2,18 +2,21 @@ package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.client.view.LoginView;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
+import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.FitImageJLabel;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class LoginWindow extends BaseWindow implements LoginView, ActionListener {
+class LoginWindow extends BaseSwingWindow implements LoginView, ActionListener {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton btnRegister;
+    @Setter
     private Runnable loginButtonClickListener;
+    @Setter
     private Runnable registerButtonClickListener;
 
     @Override
@@ -81,15 +84,5 @@ class LoginWindow extends BaseWindow implements LoginView, ActionListener {
     @Deprecated
     public String getPassword() {
         return passwordField.getText();
-    }
-
-    @Override
-    public void setLoginButtonClickListener(Runnable listener) {
-        this.loginButtonClickListener = listener;
-    }
-
-    @Override
-    public void setRegisterButtonClickListener(Runnable listener) {
-        this.registerButtonClickListener = listener;
     }
 }

@@ -7,12 +7,12 @@ import com.blogspot.sontx.chatsocket.client.event.SendChatMessageEvent;
 import com.blogspot.sontx.chatsocket.client.view.ChatView;
 import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
 import com.blogspot.sontx.chatsocket.lib.bean.ChatMessage;
+import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import org.apache.commons.lang3.StringUtils;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class ChatPresenter {
+public class ChatPresenter extends AbstractService implements Presenter {
     private final ChatView chatView;
     private AccountInfo chatWith;
 
@@ -31,18 +31,19 @@ public class ChatPresenter {
         if (StringUtils.isEmpty(content)) return;
 
         ChatMessage chatMessage = new ChatMessage(chatWith.getAccountId(), content);
-        EventBus.getDefault().post(new SendChatMessageEvent(chatMessage));
+        post(new SendChatMessageEvent(chatMessage));
 
         chatView.appendMeMyMessage(content);
         chatView.clearInput();
     }
 
     private void notifyChatWindowClosed() {
-        EventBus.getDefault().post(new ChatWindowClosedEvent(chatWith));
+        stop();
+        post(new ChatWindowClosedEvent(chatWith));
     }
 
     public void show() {
-        EventBus.getDefault().register(this);
+        start();
         chatView.setTitle(chatWith.getDisplayName());
         chatView.showWindow();
     }

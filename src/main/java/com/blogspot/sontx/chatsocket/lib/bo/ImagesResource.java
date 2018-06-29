@@ -6,13 +6,16 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 
 /**
  * Manages image files from resources.
  */
 @Log4j
-public final class ImagesResource {
+public final class ImagesResource extends AbstractResource {
+    private static final String IMAGES_DIR = "/images/";
+
     private static ImagesResource instance;
     private HashMap<String, BufferedImage> imagesHolder = new HashMap<>();
 
@@ -21,7 +24,7 @@ public final class ImagesResource {
         imagesHolder.put("default", defaultImage);
     }
 
-    public static ImagesResource getInstance() {
+    public synchronized static ImagesResource getInstance() {
         if (instance == null)
             instance = new ImagesResource();
         return instance;
@@ -42,7 +45,7 @@ public final class ImagesResource {
     }
 
     private BufferedImage loadImage(String name) throws IOException {
-        InputStream imageStream = getClass().getResourceAsStream("/images/" + name);
+        InputStream imageStream = loadResource(IMAGES_DIR + name);
         BufferedImage image = ImageIO.read(imageStream);
         imagesHolder.put(name, image);
         return image;
@@ -55,5 +58,9 @@ public final class ImagesResource {
             log.error("Can not read image resource", e);
         }
         return imagesHolder.get("default");
+    }
+
+    public URL getImageAsUrl(String name) {
+        return toUrl(IMAGES_DIR + name);
     }
 }

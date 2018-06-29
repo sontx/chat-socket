@@ -2,18 +2,20 @@ package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.client.view.ConnectionView;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
+import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.FitImageJLabel;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class ConnectionWindow extends BaseWindow implements ConnectionView, ActionListener {
+class ConnectionWindow extends BaseSwingWindow implements ConnectionView, ActionListener {
 
     private JTextField portField;
     private JTextField ipField;
+    @Setter
     private Runnable connectButtonClickListener;
 
     @Override
@@ -65,11 +67,6 @@ class ConnectionWindow extends BaseWindow implements ConnectionView, ActionListe
     public void actionPerformed(ActionEvent e) {
         if (connectButtonClickListener != null)
             connectButtonClickListener.run();
-    }
-
-    @Override
-    public void setConnectButtonClickListener(Runnable listener) {
-        this.connectButtonClickListener = listener;
     }
 
     @Override

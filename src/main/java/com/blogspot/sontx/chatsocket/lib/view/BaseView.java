@@ -7,8 +7,6 @@ public interface BaseView {
 
     void setTitle(String title);
 
-    void showMessageBox(String message);
-
     void setOnClosingListener(Runnable listener);
 
     void setMainWindow();

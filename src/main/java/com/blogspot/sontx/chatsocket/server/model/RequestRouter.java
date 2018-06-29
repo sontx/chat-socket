@@ -1,6 +1,7 @@
 package com.blogspot.sontx.chatsocket.server.model;
 
 import com.blogspot.sontx.chatsocket.lib.bean.Request;
+import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.blogspot.sontx.chatsocket.server.event.RequestReceivedEvent;
 import com.blogspot.sontx.chatsocket.server.model.handler.RequestHandler;
 import com.blogspot.sontx.chatsocket.server.model.handler.RequestHandlerFactory;
@@ -13,15 +14,11 @@ import org.greenrobot.eventbus.ThreadMode;
  * Routes incomming requests from clients to handlers.
  */
 @Log4j
-public class RequestRouter {
+public class RequestRouter extends AbstractService {
     private final RequestHandlerFactory requestHandlerFactory;
 
     public RequestRouter(RequestHandlerFactory requestHandlerFactory) {
         this.requestHandlerFactory = requestHandlerFactory;
-    }
-
-    public void start() {
-        EventBus.getDefault().register(this);
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
@@ -33,9 +30,5 @@ public class RequestRouter {
         } catch (Exception e) {
             log.error("Handle request", e);
         }
-    }
-
-    public void stop() {
-        EventBus.getDefault().unregister(this);
     }
 }

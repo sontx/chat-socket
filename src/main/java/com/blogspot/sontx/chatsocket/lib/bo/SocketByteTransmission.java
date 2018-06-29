@@ -27,6 +27,8 @@ public class SocketByteTransmission implements ByteTransmission {
 
     @Override
     public void close() throws IOException {
+        socket.shutdownInput();
+        socket.shutdownOutput();
         StreamUtils.tryCloseStream(in);
         StreamUtils.tryCloseStream(out);
         StreamUtils.tryCloseStream(socket);

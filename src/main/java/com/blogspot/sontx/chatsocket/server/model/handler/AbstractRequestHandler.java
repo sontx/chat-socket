@@ -4,13 +4,14 @@ import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
 import com.blogspot.sontx.chatsocket.lib.bean.RequestCode;
 import com.blogspot.sontx.chatsocket.lib.bean.Response;
 import com.blogspot.sontx.chatsocket.lib.bean.ResponseCode;
+import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.blogspot.sontx.chatsocket.server.event.AccountInfoChangedEvent;
 import com.blogspot.sontx.chatsocket.server.event.RequestReceivedEvent;
 import com.blogspot.sontx.chatsocket.server.model.Worker;
 import org.apache.commons.lang3.NotImplementedException;
 import org.greenrobot.eventbus.EventBus;
 
-abstract class AbstractRequestHandler implements RequestHandler {
+abstract class AbstractRequestHandler extends AbstractService implements RequestHandler {
     Response okResponse(Object extra, RequestCode requestCode) {
         return buildResponse(extra, ResponseCode.OK, requestCode);
     }
@@ -40,11 +41,11 @@ abstract class AbstractRequestHandler implements RequestHandler {
         throw new NotImplementedException("handleWithAuthenticated method not implemented.");
     }
 
-    private boolean authenticate(RequestReceivedEvent event) throws Exception {
+    private boolean authenticate(RequestReceivedEvent event) {
         return event.getRequest() != null && event.getAccountInfo() != null;
     }
 
     void broadcastAccountInfoChanged(AccountInfo accountInfo) {
-        EventBus.getDefault().post(new AccountInfoChangedEvent(accountInfo));
+        post(new AccountInfoChangedEvent(accountInfo));
     }
 }

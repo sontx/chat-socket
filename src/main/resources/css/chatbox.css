@@ -1,0 +1,59 @@
+.chatbox {
+    -fx-background-color: white;
+}
+
+.chatbox-container {
+    -fx-padding: 5px 0 5px 0;
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.chatbox-content {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.chatbox-inputbox {
+    -fx-border-color: #cbcbcb;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 10px 5px 10px 5px;
+}
+
+.chatbox-inputbox-textinput {
+    -fx-wrap-text: true;
+    -fx-max-height: 100px;
+    -fx-background-color: transparent;
+    -fx-text-box-border: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-focus-color: -fx-control-inner-background;
+    -fx-faint-focus-color: -fx-control-inner-background;
+    -fx-border-width: -1;
+}
+
+.chatbox-inputbox-textinput .content {
+    -fx-background-color: transparent;
+}
+
+.chatbox-inputbox-textinput .viewport {
+    -fx-background-insets: 0;
+    -fx-background-color: transparent, white, transparent, white;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-focus-color: -fx-control-inner-background;
+    -fx-faint-focus-color: -fx-control-inner-background;
+    -fx-text-box-border: -fx-control-inner-background;
+    -fx-border-width: -1;
+}
+
+.chatbox-inputbox-textinput:focused .content {
+    -fx-background-color: transparent;
+}
+
+.chatbox-inputbox-textinput:focused {
+    -fx-focus-color: transparent;
+}
+
+.chatbox-inputbox-textinput > .scroll-pane {
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+}

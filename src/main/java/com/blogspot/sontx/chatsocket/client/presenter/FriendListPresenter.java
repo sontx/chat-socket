@@ -4,13 +4,14 @@ import com.blogspot.sontx.chatsocket.AppConfig;
 import com.blogspot.sontx.chatsocket.client.event.*;
 import com.blogspot.sontx.chatsocket.client.view.FriendListView;
 import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-public class FriendListPresenter {
+public class FriendListPresenter extends AbstractService implements Presenter {
     private final FriendListView friendListView;
     private AccountInfo myAccountInfo;
     private List<AccountInfo> friendList;
@@ -29,23 +30,24 @@ public class FriendListPresenter {
     private void openMyProfile() {
         AccountInfo accountInfo = myAccountInfo;
         if (accountInfo != null) {
-            EventBus.getDefault().post(new OpenMyProfileEvent(accountInfo));
+            post(new OpenMyProfileEvent(accountInfo));
         }
     }
 
     private void openChat(AccountInfo friend) {
         if (friend != null) {
-            EventBus.getDefault().post(new OpenChatEvent(friend));
+            post(new OpenChatEvent(friend));
         }
     }
 
     private void exitApp() {
-        EventBus.getDefault().post(new AppShutdownEvent());
+        stop();
+        post(new AppShutdownEvent());
     }
 
     public void show() {
-        EventBus.getDefault().register(this);
-        EventBus.getDefault().post(new UpdateFriendListEvent());
+        start();
+        post(new UpdateFriendListEvent());
 
         friendListView.setMainWindow();
         friendListView.setTitle(String.format("%s %s", AppConfig.getDefault().getAppName(), AppConfig.getDefault().getAppVersion()));

@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.client;
 
-import com.blogspot.sontx.chatsocket.lib.Platform;
+import com.blogspot.sontx.chatsocket.lib.platform.Platform;
 
 /**
  * Client entry point.

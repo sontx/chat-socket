@@ -4,24 +4,28 @@ import com.blogspot.sontx.chatsocket.client.model.Profile;
 import com.blogspot.sontx.chatsocket.client.view.ProfileView;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
+import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.ClickableJLabel;
 import com.blogspot.sontx.chatsocket.lib.view.FitImageJLabel;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class ProfileWindow extends BaseWindow implements ProfileView, ActionListener {
+class ProfileWindow extends BaseSwingWindow implements ProfileView, ActionListener {
     private JTextField statusField;
     private JTextField displayNameField;
     private ClickableJLabel passwordButton;
     private ClickableJLabel displayNameButton;
     private ClickableJLabel statusButton;
     private JLabel usernameField;
+    @Setter
     private Callback<String> changeDisplayNameButtonClickListener;
+    @Setter
     private Callback<String> changeStatusButtonClickListener;
+    @Setter
     private Callback<String> changePasswordButtonClickListener;
 
     @Override
@@ -118,21 +122,6 @@ class ProfileWindow extends BaseWindow implements ProfileView, ActionListener {
         } else {
             dispose();
         }
-    }
-
-    @Override
-    public void setChangeDisplayNameButtonClickListener(Callback<String> listener) {
-        this.changeDisplayNameButtonClickListener = listener;
-    }
-
-    @Override
-    public void setChangeStatusButtonClickListener(Callback<String> listener) {
-        this.changeStatusButtonClickListener = listener;
-    }
-
-    @Override
-    public void setChangePasswordButtonClickListener(Callback<String> listener) {
-        this.changePasswordButtonClickListener = listener;
     }
 
     @Override

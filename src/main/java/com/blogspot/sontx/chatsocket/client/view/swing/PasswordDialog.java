@@ -2,6 +2,7 @@ package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ class PasswordDialog extends JDialog implements ActionListener {
     private JPasswordField passwordField;
     private JPasswordField rePasswordField;
     private JButton btnCancel;
+    @Setter
     private Callback<String> changePasswordButtonClickListener;
 
     PasswordDialog() {
@@ -65,9 +67,5 @@ class PasswordDialog extends JDialog implements ActionListener {
         String password = new String(passwordField.getPassword());
         String rePassword = new String(rePasswordField.getPassword());
         return !StringUtils.isEmpty(password) && password.equals(rePassword);
-    }
-
-    void setChangePasswordButtonClickListener(Callback<String> listener) {
-        this.changePasswordButtonClickListener = listener;
     }
 }

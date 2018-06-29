@@ -2,20 +2,22 @@ package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.client.view.RegisterView;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
+import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.FitImageJLabel;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class RegisterWindow extends BaseWindow implements RegisterView, ActionListener {
+class RegisterWindow extends BaseSwingWindow implements RegisterView, ActionListener {
 
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JTextField displayNameField;
     private JButton btnCancel;
+    @Setter
     private Runnable registerButtonClickListener;
 
     @Override
@@ -79,11 +81,6 @@ class RegisterWindow extends BaseWindow implements RegisterView, ActionListener 
             if (registerButtonClickListener != null)
                 registerButtonClickListener.run();
         }
-    }
-
-    @Override
-    public void setRegisterButtonClickListener(Runnable listener) {
-        this.registerButtonClickListener = listener;
     }
 
     @Override

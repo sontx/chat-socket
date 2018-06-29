@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+
+<fx:root fx:id="root" stylesheets="@../css/chatmsg.css" text="Message" type="Label" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <styleClass>
+      <String fx:value="chatmsg-content" />
+      <String fx:value="chatmsg-content--friend" />
+   </styleClass>
+</fx:root>

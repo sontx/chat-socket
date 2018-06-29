@@ -25,7 +25,7 @@ class ChatMessageRequestHandler extends AbstractRequestHandler {
         ChatMessage forwardMessage = new ChatMessage(senderId, chatMessage.getContent());
 
         ForwardChatMessageEvent event = new ForwardChatMessageEvent(forwardMessage, receiverId, null);
-        EventBus.getDefault().post(event);
+        post(event);
 
         Response result = event.getResponseResult();
         return result != null ? result : failResponse("Friend was offline", RequestCode.ChatMessage);

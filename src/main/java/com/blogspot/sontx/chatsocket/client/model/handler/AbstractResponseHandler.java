@@ -1,13 +1,10 @@
 package com.blogspot.sontx.chatsocket.client.model.handler;
 
-import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
+import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
+import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 
-abstract class AbstractResponseHandler implements ResponseHandler {
-    void showErrorMessage(String message) {
-        MessageBox.showInUIThread(null, message, MessageBox.MESSAGE_ERROR);
-    }
-
+abstract class AbstractResponseHandler extends AbstractService implements ResponseHandler {
     void showErrorMessage(String message, Object reason) {
-        MessageBox.showInUIThread(null, message + ": " + reason, MessageBox.MESSAGE_ERROR);
+        postMessageBox(message + ": " + reason, MessageType.Error);
     }
 }

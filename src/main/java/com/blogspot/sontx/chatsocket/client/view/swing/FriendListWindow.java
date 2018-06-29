@@ -1,13 +1,14 @@
 package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.client.view.FriendListView;
-import com.blogspot.sontx.chatsocket.client.view.custom.FriendCellRenderer;
-import com.blogspot.sontx.chatsocket.client.view.custom.FriendEntry;
+import com.blogspot.sontx.chatsocket.client.view.swing.custom.FriendCellRenderer;
+import com.blogspot.sontx.chatsocket.client.view.swing.custom.FriendEntry;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
+import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.ClickableJLabel;
+import lombok.Setter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,11 +19,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-class FriendListWindow extends BaseWindow implements FriendListView, ActionListener {
+class FriendListWindow extends BaseSwingWindow implements FriendListView, ActionListener {
     private JList<FriendEntry> friendList;
     private ClickableJLabel myInfoField;
-    private Runnable myInfoButtonClick;
-    private Callback<AccountInfo> friendButtonClick;
+    @Setter
+    private Runnable myInfoButtonClickListener;
+    @Setter
+    private Callback<AccountInfo> friendButtonClickListener;
 
     @Override
     protected void initializeComponents() {
@@ -56,16 +59,6 @@ class FriendListWindow extends BaseWindow implements FriendListView, ActionListe
     }
 
     @Override
-    public void setMyInfoButtonClickListener(Runnable listener) {
-        this.myInfoButtonClick = listener;
-    }
-
-    @Override
-    public void setFriendButtonClickListener(Callback<AccountInfo> listener) {
-        this.friendButtonClick = listener;
-    }
-
-    @Override
     public void setFriendList(List<AccountInfo> friendAccountInfoList) {
         DefaultListModel<FriendEntry> friendEntities = getFriendEntities();
         for (AccountInfo friend : friendAccountInfoList) {
@@ -75,7 +68,7 @@ class FriendListWindow extends BaseWindow implements FriendListView, ActionListe
 
     private DefaultListModel<FriendEntry> getFriendEntities() {
         ListModel<FriendEntry> friendEntities = friendList.getModel();
-        if (friendEntities == null || !(friendEntities instanceof DefaultListModel)) {
+        if (!(friendEntities instanceof DefaultListModel)) {
             DefaultListModel<FriendEntry> defaultFriendEntries = new DefaultListModel<>();
             friendList.setModel(defaultFriendEntries);
             return defaultFriendEntries;
@@ -115,8 +108,8 @@ class FriendListWindow extends BaseWindow implements FriendListView, ActionListe
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (myInfoButtonClick != null)
-            myInfoButtonClick.run();
+        if (myInfoButtonClickListener != null)
+            myInfoButtonClickListener.run();
     }
 
     private class ItemClickHandler extends MouseAdapter {
@@ -127,8 +120,8 @@ class FriendListWindow extends BaseWindow implements FriendListView, ActionListe
                 if (where > -1) {
                     FriendEntry friendEntry = friendList.getModel().getElementAt(where);
                     AccountInfo friend = friendEntry.getAccountInfo();
-                    if (friendButtonClick != null)
-                        friendButtonClick.call(friend);
+                    if (friendButtonClickListener != null)
+                        friendButtonClickListener.call(friend);
                 }
             }
         }

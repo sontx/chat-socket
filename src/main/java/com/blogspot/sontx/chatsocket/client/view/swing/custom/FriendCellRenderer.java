@@ -1,4 +1,4 @@
-package com.blogspot.sontx.chatsocket.client.view.custom;
+package com.blogspot.sontx.chatsocket.client.view.swing.custom;
 
 import com.blogspot.sontx.chatsocket.lib.view.TwoLineJLabel;
 

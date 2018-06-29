@@ -1,15 +1,17 @@
 package com.blogspot.sontx.chatsocket.client;
 
+import com.blogspot.sontx.chatsocket.AppConfig;
 import com.blogspot.sontx.chatsocket.client.event.*;
 import com.blogspot.sontx.chatsocket.client.model.*;
 import com.blogspot.sontx.chatsocket.client.model.handler.ResponseHandlerFactory;
 import com.blogspot.sontx.chatsocket.client.presenter.*;
 import com.blogspot.sontx.chatsocket.client.view.*;
-import com.blogspot.sontx.chatsocket.lib.Platform;
+import com.blogspot.sontx.chatsocket.lib.platform.Platform;
+import com.blogspot.sontx.chatsocket.lib.service.event.ShowMessageBoxEvent;
+import com.blogspot.sontx.chatsocket.lib.thread.JavaFxInvoker;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
-import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
 import com.blogspot.sontx.chatsocket.lib.view.WindowUtils;
-import org.greenrobot.eventbus.EventBus;
+import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -24,14 +26,24 @@ import org.greenrobot.eventbus.ThreadMode;
 public class AppClientImpl implements AppClient {
     private final Profile userProfile = new Profile();
     private Client client;
-    private ChattingManager chattingManager = new ChattingManagerImpl();
+    private ChattingManager chattingManager;
     private Platform platform;
 
     @Override
     public void start(Platform platform) {
         this.platform = platform;
-        EventBus.getDefault().register(this);
+        registerEventBus(platform);
+        initializeChattingManager(platform);
         showUI();
+    }
+
+    private void registerEventBus(Platform platform) {
+        platform.getEventBus().register(this);
+    }
+
+    private void initializeChattingManager(Platform platform) {
+        chattingManager = new ChattingManagerImpl();
+        ((ChattingManagerImpl) chattingManager).setPlatform(platform);
     }
 
     private void showUI() {
@@ -40,12 +52,16 @@ public class AppClientImpl implements AppClient {
     }
 
     private void openConnectionWindow() {
-        ConnectionPresenter connectionPresenter = new ConnectionPresenter(create(ConnectionView.class));
-        connectionPresenter.show();
+        startPresenter(new ConnectionPresenter(create(ConnectionView.class)));
+    }
+
+    private void startPresenter(Presenter presenter) {
+        presenter.setPlatform(platform);
+        presenter.show();
     }
 
     private <T> T create(Class<T> viewType) {
-        return platform.getViewFactory().create(viewType);
+        return new JavaFxInvoker.Helper<T>().invokeWithResult(() -> platform.getViewFactory().create(viewType));
     }
 
     @Subscribe
@@ -55,7 +71,8 @@ public class AppClientImpl implements AppClient {
         client = new SocketClient(
                 event.getServerIp(),
                 event.getServerPort(),
-                new ResponseHandlerFactory(chattingManager));
+                new ResponseHandlerFactory(chattingManager, platform));
+        ((SocketClient) client).setPlatform(platform);
         client.start();
     }
 
@@ -65,8 +82,7 @@ public class AppClientImpl implements AppClient {
     }
 
     private void openLoginWindow() {
-        LoginPresenter loginPresenter = new LoginPresenter(create(LoginView.class));
-        loginPresenter.show();
+        startPresenter(new LoginPresenter(create(LoginView.class)));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -78,19 +94,17 @@ public class AppClientImpl implements AppClient {
     private void openMainWindow() {
         FriendListPresenter friendListPresenter = new FriendListPresenter(create(FriendListView.class));
         friendListPresenter.setMyAccountInfo(userProfile);
-        friendListPresenter.show();
+        startPresenter(friendListPresenter);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onOpenChat(OpenChatEvent event) {
-        ChatPresenter chatPresenter = new ChatPresenter(create(ChatView.class), event.getChatWith());
-        chatPresenter.show();
+        startPresenter(new ChatPresenter(create(ChatView.class), event.getChatWith()));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onOpenMyProfile(OpenMyProfileEvent event) {
-        ProfilePresenter profilePresenter = new ProfilePresenter(create(ProfileView.class), userProfile);
-        profilePresenter.show();
+        startPresenter(new ProfilePresenter(create(ProfileView.class), userProfile));
     }
 
     @Subscribe
@@ -100,29 +114,30 @@ public class AppClientImpl implements AppClient {
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onOpenRegister(OpenRegisterEvent event) {
-        RegisterPresenter registerPresenter = new RegisterPresenter(create(RegisterView.class));
-        registerPresenter.show();
+        startPresenter(new RegisterPresenter(create(RegisterView.class)));
     }
 
     @Subscribe
     public void onRegistered(RegisteredEvent event) {
-        MessageBox.showInUIThread(
-                null,
-                "Registered! use your new account to login.",
-                MessageBox.MESSAGE_INFO);
+        String message = "Registered! use your new account to login.";
+        String caption = AppConfig.getDefault().getAppName();
+        platform.getEventBus().post(new ShowMessageBoxEvent(message, caption, MessageType.Info));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onClientShutdown(ClientShutdownEvent event) {
         cleanResources();
         if (event.getReason() != null) {
-            MessageBox.showInUIThread(null, event.getReason().getMessage(), MessageBox.MESSAGE_ERROR);
+            String message = event.getReason().getMessage();
+            String caption = AppConfig.getDefault().getAppName();
+            platform.getEventBus().post(new ShowMessageBoxEvent(message, caption, MessageType.Error));
         }
     }
 
     @Subscribe
     public void onAppShutdown(AppShutdownEvent event) {
         cleanResources();
+        platform.exit();
     }
 
     private void cleanResources() {

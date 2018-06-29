@@ -3,11 +3,11 @@ package com.blogspot.sontx.chatsocket.lib.view;
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 
-public abstract class BaseWindow extends JFrame implements BaseView {
+public abstract class BaseSwingWindow extends JFrame implements BaseView {
 
     private Runnable onClosingListener;
 
-    protected BaseWindow() {
+    protected BaseSwingWindow() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initializeComponents();
     }
@@ -35,11 +35,6 @@ public abstract class BaseWindow extends JFrame implements BaseView {
     @Override
     public void closeWindow() {
         dispose();
-    }
-
-    @Override
-    public void showMessageBox(String message) {
-        MessageBox.showInUIThread(this, message, MessageBox.MESSAGE_INFO);
     }
 
     @Override

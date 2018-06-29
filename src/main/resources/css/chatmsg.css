@@ -1,0 +1,17 @@
+.chatmsg-content {
+    -fx-background-radius: 5;
+    -fx-padding: 8px;
+    -fx-min-width: 80px;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+}
+
+.chatmsg-content--friend {
+    -fx-background-color: #f1f0f0;
+    -fx-text-fill: #4b4f56;
+}
+
+.chatmsg-content--mine {
+    -fx-background-color: #4080ff;
+    -fx-text-fill: #fff;
+}

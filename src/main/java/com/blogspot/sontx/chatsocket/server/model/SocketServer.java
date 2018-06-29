@@ -1,5 +1,6 @@
 package com.blogspot.sontx.chatsocket.server.model;
 
+import com.blogspot.sontx.chatsocket.lib.service.BackgroundService;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
 import com.blogspot.sontx.chatsocket.server.event.ShutdownServerEvent;
 import com.blogspot.sontx.chatsocket.server.event.ShutdownWorkerEvent;
@@ -12,14 +13,15 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Default implementation of {@link Server} based on {@link Socket}.
  * Each {@link SocketServer} will be started in a separated thread.
  */
 @Log4j
-public class SocketServer extends Thread implements Server {
-    private static volatile int freeId;
+public class SocketServer extends BackgroundService implements Server {
+    private static AtomicInteger freeId = new AtomicInteger();
 
     private final ServerSocket serverSocket;
     private final int sessionId;
@@ -29,14 +31,12 @@ public class SocketServer extends Thread implements Server {
 
     public SocketServer(int port, String address, int maxConnection) throws IOException {
         serverSocket = new ServerSocket(port, maxConnection, InetAddress.getByName(address));
-        sessionId = freeId++;
+        sessionId = freeId.incrementAndGet();
         log.debug("Server session is " + sessionId);
     }
 
     @Override
     public void run() {
-        EventBus.getDefault().register(this);
-
         log.debug("ServerSocket is started");
         try {
             waitForConnections();
@@ -54,11 +54,13 @@ public class SocketServer extends Thread implements Server {
         closing = true;
 
         log.debug("ServerSocket is stopped");
-        EventBus.getDefault().unregister(this);
-        EventBus.getDefault().post(new ShutdownWorkerEvent(sessionId));
+
+        post(new ShutdownWorkerEvent(sessionId));
         StreamUtils.tryCloseStream(serverSocket);
 
         alreadyShutdown = true;
+
+        stop();
     }
 
     private void waitForConnections() throws IOException {
@@ -72,7 +74,7 @@ public class SocketServer extends Thread implements Server {
 
     private void startWorker(Socket socket) {
         try {
-            Worker worker = new SocketWorker(socket, sessionId);
+            Worker worker = new SocketWorker(socket, sessionId).build(getPlatform());
             worker.start();
             log.debug("Start new worker");
         } catch (IOException e) {
@@ -89,7 +91,7 @@ public class SocketServer extends Thread implements Server {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         shutdownServer();
     }
 }

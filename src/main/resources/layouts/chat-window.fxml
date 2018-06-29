@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.blogspot.sontx.chatsocket.lib.view.javafx.custom.DynamicTextArea?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+
+<BorderPane prefHeight="500.0" prefWidth="350.0" styleClass="chatbox" stylesheets="@../css/chatbox.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <BorderPane styleClass="chatbox-inputbox" BorderPane.alignment="CENTER">
+         <center>
+            <DynamicTextArea fx:id="messageTextArea" onAction="#onMessageTextAreaEnter" promptText="Type a message..." styleClass="chatbox-inputbox-textinput" wrapText="true" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </bottom>
+   <center>
+      <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="chatbox-container" BorderPane.alignment="CENTER">
+         <content>
+            <GridPane fx:id="messageBox" styleClass="chatbox-content" vgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" />
+              </columnConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

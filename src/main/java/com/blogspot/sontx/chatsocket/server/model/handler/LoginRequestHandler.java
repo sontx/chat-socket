@@ -33,7 +33,7 @@ class LoginRequestHandler extends AbstractRequestHandler {
         }
     }
 
-    private void registerNewLoggedUser(Worker sender, AccountInfo accountInfo) throws IOException {
+    private void registerNewLoggedUser(Worker sender, AccountInfo accountInfo) {
         accountInfo.setState(AccountInfo.STATE_ONLINE);
         sender.setAccount(accountInfo);
         broadcastAccountInfoChanged(accountInfo);
@@ -46,7 +46,7 @@ class LoginRequestHandler extends AbstractRequestHandler {
 
         LookupWorkerEvent event = new LookupWorkerEvent();
         event.setMatchedAccount(accountInfo);
-        EventBus.getDefault().post(event);
+        post(event);
 
         Worker matchedWorker = event.getMatchedWorker();
         if (matchedWorker != null) {

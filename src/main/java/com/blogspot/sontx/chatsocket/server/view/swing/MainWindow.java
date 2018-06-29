@@ -1,9 +1,10 @@
 package com.blogspot.sontx.chatsocket.server.view.swing;
 
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
+import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
 import com.blogspot.sontx.chatsocket.server.view.LogView;
 import com.blogspot.sontx.chatsocket.server.view.MainView;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,12 +14,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 @Log4j
-class MainWindow extends BaseWindow implements ActionListener, MainView, LogView {
+class MainWindow extends BaseSwingWindow implements ActionListener, MainView, LogView {
     private JTextField addressField;
     private JTextField portField;
     private JButton btnShowIPs;
     private JButton btnStart;
 
+    @Setter
     private Runnable startButtonListener;
     private JTextPane logPane;
 
@@ -117,11 +119,6 @@ class MainWindow extends BaseWindow implements ActionListener, MainView, LogView
     @Override
     public void setStartButtonText(String text) {
         btnStart.setText(text);
-    }
-
-    @Override
-    public void setStartButtonListener(Runnable runnable) {
-        this.startButtonListener = runnable;
     }
 
     @Override

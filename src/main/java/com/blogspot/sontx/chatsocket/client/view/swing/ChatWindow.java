@@ -3,8 +3,9 @@ package com.blogspot.sontx.chatsocket.client.view.swing;
 import com.blogspot.sontx.chatsocket.client.view.ChatView;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseWindow;
+import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
+import lombok.Setter;
 import org.apache.commons.text.StringEscapeUtils;
 
 import javax.swing.*;
@@ -16,7 +17,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-class ChatWindow extends BaseWindow implements
+class ChatWindow extends BaseSwingWindow implements
         ChatView,
         ActionListener,
         WindowStateListener,
@@ -36,6 +37,7 @@ class ChatWindow extends BaseWindow implements
 
     private JTextField inputField;
     private JTextPane displayField;
+    @Setter
     private Callback<String> sendButtonClickListener;
 
     @Override
@@ -118,11 +120,6 @@ class ChatWindow extends BaseWindow implements
     public void appendMeMyMessage(String message) {
         String htmlMessage = prepareHtmlString(message);
         appendRawHtmlChatContent(String.format(DEFAULT_WE_CHAT_FORMAT, htmlMessage));
-    }
-
-    @Override
-    public void setSendButtonClickListener(Callback<String> listener) {
-        this.sendButtonClickListener = listener;
     }
 
     @Override
