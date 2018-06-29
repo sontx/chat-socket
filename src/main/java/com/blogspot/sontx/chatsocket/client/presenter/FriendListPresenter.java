@@ -62,10 +62,11 @@ public class FriendListPresenter extends AbstractService implements Presenter {
     public void setMyAccountInfo(AccountInfo myAccountInfo) {
         this.myAccountInfo = myAccountInfo;
         friendListView.setMyAccountInfo(this.myAccountInfo);
+        String appName = AppConfig.getDefault().getAppName();
         if (this.myAccountInfo != null)
-            friendListView.setTitle("Homechat - Welcome " + this.myAccountInfo.getDisplayName());
+            friendListView.setTitle(String.format("%s [%s]", appName, this.myAccountInfo.getDisplayName()));
         else
-            friendListView.setTitle("Homechat");
+            friendListView.setTitle(appName);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)

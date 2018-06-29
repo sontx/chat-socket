@@ -93,8 +93,8 @@ public class AppClientImpl implements AppClient {
 
     private void openMainWindow() {
         FriendListPresenter friendListPresenter = new FriendListPresenter(create(FriendListView.class));
-        friendListPresenter.setMyAccountInfo(userProfile);
         startPresenter(friendListPresenter);
+        friendListPresenter.setMyAccountInfo(userProfile);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
