@@ -3,7 +3,7 @@
 }
 
 .chatbox-container {
-    -fx-padding: 5px 0 5px 0;
+    -fx-padding: 5px;
     -fx-background-color: transparent;
     -fx-background: transparent;
 }
