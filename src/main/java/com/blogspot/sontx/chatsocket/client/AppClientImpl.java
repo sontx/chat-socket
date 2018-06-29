@@ -97,7 +97,7 @@ public class AppClientImpl implements AppClient {
         startPresenter(friendListPresenter);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onOpenChat(OpenChatEvent event) {
         startPresenter(new ChatPresenter(create(ChatView.class), event.getChatWith()));
     }
