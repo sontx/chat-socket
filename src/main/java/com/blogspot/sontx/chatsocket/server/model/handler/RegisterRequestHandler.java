@@ -24,7 +24,6 @@ class RegisterRequestHandler extends AbstractRequestHandler {
             Response result = register((RegisterInfo) request.getExtra());
             if (result.getCode() == ResponseCode.OK) {
                 AccountInfo accountInfo = (AccountInfo) result.getExtra();
-                sender.setAccount(accountInfo);
                 broadcastAccountInfoChanged(accountInfo);
             }
             sender.response(result);

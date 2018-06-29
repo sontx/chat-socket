@@ -40,7 +40,7 @@ public class AccountManagerImpl implements AccountManager {
     @Override
     public AccountInfo findAccountByUserName(String username) {
         Optional<Account> account = accountStorage.findByUserName(username);
-        return account.isPresent() ? account.get().getDetail() : null;
+        return account.map(Account::getDetail).orElse(null);
     }
 
     @Override
