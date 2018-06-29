@@ -18,7 +18,7 @@ class RegisterWindow extends BaseJavaFxWindow implements RegisterView {
     private Runnable registerButtonClickListener;
 
     RegisterWindow() {
-        init(this, "register-window.fxml");
+        init(this, "register-window.fxml", false);
     }
 
     @FXML

@@ -18,7 +18,7 @@ class LoginWindow extends BaseJavaFxWindow implements LoginView {
     private Runnable registerButtonClickListener;
 
     LoginWindow() {
-        init(this, "login-window.fxml");
+        init(this, "login-window.fxml", false);
     }
 
     @FXML

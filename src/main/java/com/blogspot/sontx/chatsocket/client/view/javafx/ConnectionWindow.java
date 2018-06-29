@@ -15,7 +15,7 @@ class ConnectionWindow extends BaseJavaFxWindow implements ConnectionView {
     private TextField portTextField;
 
     ConnectionWindow() {
-        init(this, "connection-window.fxml");
+        init(this, "connection-window.fxml", false);
     }
 
     @FXML

@@ -26,6 +26,10 @@ public abstract class BaseJavaFxWindow implements BaseView {
     private boolean isMainWindow;
 
     protected void init(BaseJavaFxWindow controller, String layoutName) {
+        init(controller, layoutName, true);
+    }
+
+    protected void init(BaseJavaFxWindow controller, String layoutName, boolean resizable) {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(LayoutsResource.getInstance().getResource(layoutName));
         fxmlLoader.setController(controller);
@@ -34,6 +38,7 @@ public abstract class BaseJavaFxWindow implements BaseView {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             controller.setStage(stage);
+            stage.setResizable(resizable);
         } catch (IOException e) {
             log.error("Error while create MainWindow", e);
         }

@@ -25,7 +25,7 @@ class ProfileWindow extends BaseJavaFxWindow implements ProfileView {
     private Callback<String> changePasswordButtonClickListener;
 
     ProfileWindow() {
-        init(this, "profile-window.fxml");
+        init(this, "profile-window.fxml", false);
     }
 
     @FXML
