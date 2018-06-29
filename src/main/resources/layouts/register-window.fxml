@@ -17,7 +17,7 @@
       <TextField fx:id="usernameTextField" layoutX="175.0" layoutY="30.0" promptText="Username" />
       <TextField fx:id="displayNameTextField" layoutX="175.0" layoutY="80.0" promptText="Display name" />
       <PasswordField fx:id="passwordField" layoutX="175.0" layoutY="130.0" promptText="Password" />
-      <Button layoutX="175.0" layoutY="218.0" mnemonicParsing="false" onAction="#onOKButtonClick" prefWidth="85.0" text="OK" />
-      <Button layoutX="277.0" layoutY="218.0" mnemonicParsing="false" onAction="#onCancelButtonClick" prefWidth="85.0" text="Cancel" />
+      <Button layoutX="175.0" layoutY="218.0" mnemonicParsing="false" onAction="#onOKButtonClick" prefWidth="85.0" text="OK" AnchorPane.bottomAnchor="18.0" />
+      <Button layoutX="277.0" layoutY="218.0" mnemonicParsing="false" onAction="#onCancelButtonClick" prefWidth="85.0" text="Cancel" AnchorPane.bottomAnchor="18.0" />
    </children>
 </AnchorPane>

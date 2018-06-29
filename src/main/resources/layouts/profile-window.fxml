@@ -24,6 +24,6 @@
       <Button layoutX="479.0" layoutY="146.0" mnemonicParsing="false" onAction="#onChangeDisplayNameButtonClick" text="Update" />
       <TextField fx:id="statusTextField" layoutX="285.0" layoutY="196.0" />
       <Button layoutX="479.0" layoutY="196.0" mnemonicParsing="false" onAction="#onChangeStatusButtonClick" text="Update" />
-      <Button layoutX="455.0" layoutY="318.0" mnemonicParsing="false" onAction="#onCloseButtonClick" text="Look Good" />
+      <Button layoutX="455.0" layoutY="318.0" mnemonicParsing="false" onAction="#onCloseButtonClick" text="Look Good" AnchorPane.bottomAnchor="22.0" />
    </children>
 </AnchorPane>
