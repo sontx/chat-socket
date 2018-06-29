@@ -31,8 +31,8 @@ public class JavaFxInvoker implements Invoker {
     }
 
     public static class Helper<T> {
-        private T result;
         private final Object sync = new Object();
+        private T result;
 
         public T invokeWithResult(Function<T> func) {
             return Platform.isFxApplicationThread() ? func.call() : runInJavaFxAppThread(func);

@@ -8,13 +8,10 @@ import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
 import com.blogspot.sontx.chatsocket.lib.bean.ChatMessage;
 import com.blogspot.sontx.chatsocket.lib.bean.Response;
 import com.blogspot.sontx.chatsocket.lib.bean.ResponseCode;
-import com.blogspot.sontx.chatsocket.lib.platform.Platform;
 import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
-import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

@@ -3,7 +3,6 @@ package com.blogspot.sontx.chatsocket.server.model.handler;
 import com.blogspot.sontx.chatsocket.lib.bean.*;
 import com.blogspot.sontx.chatsocket.server.event.ForwardChatMessageEvent;
 import com.blogspot.sontx.chatsocket.server.event.RequestReceivedEvent;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Handles sending chat message request from the client, the chat message

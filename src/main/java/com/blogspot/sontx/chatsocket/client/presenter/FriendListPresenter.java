@@ -5,7 +5,6 @@ import com.blogspot.sontx.chatsocket.client.event.*;
 import com.blogspot.sontx.chatsocket.client.view.FriendListView;
 import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
 import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

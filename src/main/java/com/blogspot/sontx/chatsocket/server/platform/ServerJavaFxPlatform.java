@@ -8,10 +8,9 @@ import javafx.stage.Stage;
 import lombok.Getter;
 
 public class ServerJavaFxPlatform extends JavaFxPlatform {
+    private static final Object lock = new Object();
     @Getter
     private final ViewFactory viewFactory;
-
-    private static final Object lock = new Object();
 
     public ServerJavaFxPlatform() {
         viewFactory = new JavaFxViewFactory();

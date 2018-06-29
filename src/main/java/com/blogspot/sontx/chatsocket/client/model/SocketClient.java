@@ -11,7 +11,6 @@ import com.blogspot.sontx.chatsocket.lib.bo.SocketByteTransmission;
 import com.blogspot.sontx.chatsocket.lib.service.BackgroundService;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
 import lombok.extern.log4j.Log4j;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

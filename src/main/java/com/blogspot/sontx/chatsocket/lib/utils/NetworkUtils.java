@@ -10,6 +10,10 @@ import java.util.List;
 
 public final class NetworkUtils {
 
+    private NetworkUtils() {
+
+    }
+
     public static List<String> getAllAddresses() {
         Enumeration<NetworkInterface> interfaces;
         try {
@@ -29,9 +33,5 @@ public final class NetworkUtils {
             }
         }
         return ips;
-    }
-
-    private NetworkUtils() {
-
     }
 }

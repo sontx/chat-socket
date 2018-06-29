@@ -7,7 +7,6 @@ import com.blogspot.sontx.chatsocket.client.view.ProfileView;
 import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.lib.utils.Security;
-import org.greenrobot.eventbus.EventBus;
 
 public class ProfilePresenter extends AbstractService implements Presenter {
     private final ProfileView profileView;

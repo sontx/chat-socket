@@ -5,9 +5,6 @@ import com.blogspot.sontx.chatsocket.server.event.LookupWorkerEvent;
 import com.blogspot.sontx.chatsocket.server.event.RequestReceivedEvent;
 import com.blogspot.sontx.chatsocket.server.model.Worker;
 import com.blogspot.sontx.chatsocket.server.model.account.AccountManager;
-import org.greenrobot.eventbus.EventBus;
-
-import java.io.IOException;
 
 /**
  * Handles login request from the client.

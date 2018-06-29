@@ -5,11 +5,6 @@ import com.blogspot.sontx.chatsocket.lib.utils.NetworkUtils;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 /**

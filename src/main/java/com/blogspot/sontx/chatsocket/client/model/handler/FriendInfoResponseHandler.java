@@ -5,7 +5,6 @@ import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
 import com.blogspot.sontx.chatsocket.lib.bean.Response;
 import com.blogspot.sontx.chatsocket.lib.bean.ResponseCode;
 import com.blogspot.sontx.chatsocket.lib.bo.ObjectTransmission;
-import org.greenrobot.eventbus.EventBus;
 
 public class FriendInfoResponseHandler extends AbstractResponseHandler {
     @Override

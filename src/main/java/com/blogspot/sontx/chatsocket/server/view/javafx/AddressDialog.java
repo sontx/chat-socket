@@ -3,7 +3,6 @@ package com.blogspot.sontx.chatsocket.server.view.javafx;
 import com.blogspot.sontx.chatsocket.AppConfig;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.utils.NetworkUtils;
-import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
 import javafx.scene.control.ChoiceDialog;
 import lombok.Setter;
 
@@ -16,9 +15,7 @@ public class AddressDialog {
 
     public void show() {
         List<String> addresses = NetworkUtils.getAllAddresses();
-        if (addresses.isEmpty()) {
-            MessageBox.show(null, "No IP addresses available.", MessageBox.MESSAGE_ERROR);
-        } else {
+        if (!addresses.isEmpty()) {
             ChoiceDialog<String> choiceDialog = new ChoiceDialog<>(addresses.get(0), addresses);
             choiceDialog.setTitle(AppConfig.getDefault().getAppName());
             choiceDialog.setHeaderText("Available Addresses");

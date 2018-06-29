@@ -15,7 +15,6 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Log4j
 class PasswordDialog {

@@ -25,6 +25,10 @@ class MainWindow extends BaseJavaFxWindow implements MainView, LogView {
     @Setter
     private Runnable startButtonListener;
 
+    MainWindow() {
+        init(this, "main-window.fxml");
+    }
+
     @FXML
     private void onStartClick() {
         if (startButtonListener != null)
@@ -36,10 +40,6 @@ class MainWindow extends BaseJavaFxWindow implements MainView, LogView {
         AddressDialog addressDialog = new AddressDialog();
         addressDialog.setOnSelectedAddress(address -> ipTextField.setText(address));
         addressDialog.show();
-    }
-
-    MainWindow() {
-        init(this, "main-window.fxml");
     }
 
     @Override

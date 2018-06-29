@@ -20,19 +20,17 @@ import java.util.List;
 import java.util.Optional;
 
 class FriendListWindow extends BaseJavaFxWindow implements FriendListView {
+    private final ObservableList<AccountInfo> friends = FXCollections.observableArrayList();
     @FXML
     private Label statusLabel;
     @FXML
     private ImageView avatarImageView;
     @FXML
     private ListView<AccountInfo> friendListView;
-
     @Setter
     private Runnable myInfoButtonClickListener;
     @Setter
     private Callback<AccountInfo> friendButtonClickListener;
-
-    private final ObservableList<AccountInfo> friends = FXCollections.observableArrayList();
 
     FriendListWindow() {
         init(this, "friend-list-window.fxml");

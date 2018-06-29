@@ -5,8 +5,6 @@ import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.spi.LoggingEvent;
 
-import javax.swing.*;
-
 /**
  * Tracks the log from {@link org.apache.log4j.Logger} log4j and shows to the UI.
  */

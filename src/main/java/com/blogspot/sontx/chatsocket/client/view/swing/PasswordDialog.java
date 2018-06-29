@@ -1,7 +1,6 @@
 package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.lib.Callback;
-import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -56,8 +55,6 @@ class PasswordDialog extends JDialog implements ActionListener {
             dispose();
         } else {
             if (!checkPasswordInput()) {
-                MessageBox.show(null, "Invalid password.", MessageBox.MESSAGE_ERROR);
-            } else if (changePasswordButtonClickListener != null) {
                 changePasswordButtonClickListener.call(new String(passwordField.getPassword()));
             }
         }

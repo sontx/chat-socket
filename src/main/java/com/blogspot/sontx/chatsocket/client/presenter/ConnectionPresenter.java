@@ -8,7 +8,6 @@ import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

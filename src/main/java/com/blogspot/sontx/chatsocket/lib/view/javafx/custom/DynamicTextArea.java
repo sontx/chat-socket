@@ -23,6 +23,7 @@ public class DynamicTextArea extends TextArea {
 
     private Text textHolder = new Text();
     private double oldHeight = 0;
+    private ObjectProperty<EventHandler<KeyEvent>> propertyOnAction = new SimpleObjectProperty<>();
 
     public DynamicTextArea() {
         loadLayout();
@@ -77,19 +78,17 @@ public class DynamicTextArea extends TextArea {
         }
     }
 
-    private ObjectProperty<EventHandler<KeyEvent>> propertyOnAction = new SimpleObjectProperty<>();
-
     public final ObjectProperty<EventHandler<KeyEvent>> onActionProperty() {
         return propertyOnAction;
-    }
-
-    public final void setOnAction(EventHandler<KeyEvent> handler) {
-        propertyOnAction.set(handler);
     }
 
     public final EventHandler<KeyEvent> getOnAction() {
         return propertyOnAction.get();
 
+    }
+
+    public final void setOnAction(EventHandler<KeyEvent> handler) {
+        propertyOnAction.set(handler);
     }
 
     @Override

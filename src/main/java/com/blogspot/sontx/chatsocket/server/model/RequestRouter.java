@@ -6,7 +6,6 @@ import com.blogspot.sontx.chatsocket.server.event.RequestReceivedEvent;
 import com.blogspot.sontx.chatsocket.server.model.handler.RequestHandler;
 import com.blogspot.sontx.chatsocket.server.model.handler.RequestHandlerFactory;
 import lombok.extern.log4j.Log4j;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

@@ -1,8 +1,10 @@
 package com.blogspot.sontx.chatsocket.server;
 
+import com.blogspot.sontx.chatsocket.AppConfig;
 import com.blogspot.sontx.chatsocket.lib.platform.Platform;
+import com.blogspot.sontx.chatsocket.lib.service.event.ShowMessageBoxEvent;
+import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
-import com.blogspot.sontx.chatsocket.lib.view.MessageBox;
 import com.blogspot.sontx.chatsocket.lib.view.WindowUtils;
 import com.blogspot.sontx.chatsocket.server.event.AppShutdownEvent;
 import com.blogspot.sontx.chatsocket.server.event.ServerStatusChangedEvent;
@@ -57,7 +59,9 @@ public class AppServerImpl implements AppServer {
             accountManager = new AccountManagerImpl(new JsonAccountStorage("user.json"));
         } catch (IOException e) {
             log.error("Error while initializing account manager", e);
-            MessageBox.show(null, "Can not initialize account manager", MessageBox.MESSAGE_ERROR);
+            platform
+                    .getEventBus()
+                    .post(new ShowMessageBoxEvent("Can not initialize account manager", AppConfig.getDefault().getAppName(), MessageType.Error));
         }
     }
 

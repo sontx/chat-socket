@@ -6,7 +6,10 @@ import org.greenrobot.eventbus.EventBus;
 
 public interface Platform {
     ViewFactory getViewFactory();
+
     Invoker getInvoker();
+
     EventBus getEventBus();
+
     void exit();
 }
