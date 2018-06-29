@@ -1,10 +1,15 @@
 package com.blogspot.sontx.chatsocket.client.view.javafx;
 
+import com.blogspot.sontx.chatsocket.AppConfig;
 import com.blogspot.sontx.chatsocket.client.view.ConnectionView;
 import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import lombok.Setter;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
 
 class ConnectionWindow extends BaseJavaFxWindow implements ConnectionView {
     @Setter
@@ -22,6 +27,14 @@ class ConnectionWindow extends BaseJavaFxWindow implements ConnectionView {
     private void onConnectButtonClick() {
         if (connectButtonClickListener != null) {
             connectButtonClickListener.run();
+        }
+    }
+
+    @FXML
+    private void onLogoClick() {
+        try {
+            Desktop.getDesktop().browse(URI.create(AppConfig.getDefault().getHomePageUrl()));
+        } catch (IOException ignored) {
         }
     }
 

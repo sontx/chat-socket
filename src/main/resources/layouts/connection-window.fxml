@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -17,6 +18,14 @@
       <TextField fx:id="addressTextField" layoutX="533.0" layoutY="75.0" prefHeight="31.0" prefWidth="154.0" promptText="IP Address" />
       <TextField fx:id="portTextField" layoutX="533.0" layoutY="125.0" prefHeight="31.0" prefWidth="154.0" promptText="Port" />
       <Button layoutX="533.0" layoutY="175.0" mnemonicParsing="false" onAction="#onConnectButtonClick" prefHeight="31.0" prefWidth="154.0" text="Connect" />
-      <Label layoutX="13.0" layoutY="418.0" text="Copyright by sontx, www.code4bugs.com" textFill="#909090" AnchorPane.bottomAnchor="10.0" />
+      <Label layoutX="83.0" layoutY="419.0" text="Copyright by sontx, www.code4bugs.com" textFill="#909090" AnchorPane.bottomAnchor="10.0" />
+      <ImageView fitHeight="39.0" fitWidth="65.0" layoutX="14.0" layoutY="397.0" onMouseClicked="#onLogoClick" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="13.0">
+         <image>
+            <Image url="@/images/personal-logo.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>

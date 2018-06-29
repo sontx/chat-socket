@@ -39,4 +39,8 @@ public final class AppConfig {
     public String getAppVersion() {
         return properties.getProperty("AppVersion", "Unknown");
     }
+
+    public String getHomePageUrl() {
+        return properties.getProperty("HomePageUrl");
+    }
 }
