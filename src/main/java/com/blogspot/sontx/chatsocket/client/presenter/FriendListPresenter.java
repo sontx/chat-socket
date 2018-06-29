@@ -8,6 +8,7 @@ import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FriendListPresenter extends AbstractService implements Presenter {
@@ -76,9 +77,14 @@ public class FriendListPresenter extends AbstractService implements Presenter {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onFriendInfoChanged(FriendInfoChangedEvent event) {
         AccountInfo newFriendInfo = event.getNewFriendInfo();
-        if (friendList != null && friendList.stream().anyMatch(friend -> friend.getAccountId() == newFriendInfo.getAccountId())) {
+
+        if (friendList == null)
+            friendList = new ArrayList<>();
+
+        if (friendList.stream().anyMatch(friend -> friend.getAccountId() == newFriendInfo.getAccountId())) {
             friendListView.updateFriend(newFriendInfo);
         } else {
+            friendList.add(newFriendInfo);
             friendListView.addNewFriend(newFriendInfo);
         }
     }

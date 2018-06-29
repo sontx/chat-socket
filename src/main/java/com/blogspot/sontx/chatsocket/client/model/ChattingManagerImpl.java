@@ -1,9 +1,6 @@
 package com.blogspot.sontx.chatsocket.client.model;
 
-import com.blogspot.sontx.chatsocket.client.event.ChatMessageReceivedEvent;
-import com.blogspot.sontx.chatsocket.client.event.ChatWindowClosedEvent;
-import com.blogspot.sontx.chatsocket.client.event.FriendListReceivedEvent;
-import com.blogspot.sontx.chatsocket.client.event.OpenChatEvent;
+import com.blogspot.sontx.chatsocket.client.event.*;
 import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
 import com.blogspot.sontx.chatsocket.lib.bean.ChatMessage;
 import com.blogspot.sontx.chatsocket.lib.bean.Response;
@@ -15,9 +12,7 @@ import lombok.Data;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChattingManagerImpl extends AbstractService implements ChattingManager {
@@ -116,8 +111,19 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
     @Subscribe
     public void onFriendListReceived(FriendListReceivedEvent event) {
         List<AccountInfo> updatedFriends = event.getFriendList();
+        updateManagedFriends(updatedFriends);
+    }
+
+    private void updateManagedFriends(List<AccountInfo> updatedFriends) {
         updateCurrentManagedFriends(updatedFriends);
         addNewManagedFriends(updatedFriends);
+    }
+
+    @Subscribe
+    public void onFriendInfoChanged(FriendInfoChangedEvent event) {
+        AccountInfo newFriendInfo = event.getNewFriendInfo();
+        List<AccountInfo> updatedFriends = Collections.singletonList(newFriendInfo);
+        updateManagedFriends(updatedFriends);
     }
 
     @Data
