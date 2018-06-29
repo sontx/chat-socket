@@ -62,10 +62,8 @@ class FriendListWindow extends BaseJavaFxWindow implements FriendListView {
     public void setMyAccountInfo(AccountInfo accountInfo) {
         if (accountInfo != null) {
             statusLabel.setText(accountInfo.getStatus());
-            avatarImageView.setImage(new Image(ImagesResource.getInstance().getImageAsUrl("online.png").toString()));
         } else {
-            statusLabel.setText("");
-            avatarImageView.setImage(new Image(ImagesResource.getInstance().getImageAsUrl("offline.png").toString()));
+            statusLabel.setText("Hi there!");
         }
     }
 
