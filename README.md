@@ -10,7 +10,10 @@ This project is based on TCP socket, multithreading, Java serialization, and JSO
 
 ## Installation
 Download the [binary file](https://github.com/sontx/chat-socket/releases) or clone this project and use your favorite IDE to
-customize then rebuild by `mvn clean compile assembly:single` (the binary file will be placed in **target** folder)
+customize then rebuild by:
+
+1. Run `install.bat` in [scripts](https://github.com/sontx/chat-socket/tree/master/scripts) folder.
+1. `mvn clean compile assembly:single` (the binary file will be placed in **target** folder)
 
 > This project requires [jdk 1.8 or later](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
 
