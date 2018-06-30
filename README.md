@@ -1,67 +1,59 @@
 ![](https://lh3.googleusercontent.com/-Zu1tFauo9r4/VuDuhO0cp_I/AAAAAAAAOHU/NqgaCg4tfso/s0/chat-socket-proj-banner.png)
-**chat-socket** is a simple chat application include chat client and chat server. Support multiple users, private chat and show personal status. User must take an account before enter to system, this step require some simple information such as username, password....This project base on tcp socket, multithreading, java serialization and json.
+
+**chat-socket** is a simple chat application includes chat client and chat server.
+Support multiple users, private chat, and personal status.
+This project is based on TCP socket, multithreading, Java serialization, and JSON.
 
 <a href="https://youtu.be/tIEG-Q6liXw">
-<img src="https://lh3.googleusercontent.com/-rmZzcxTw5UU/VuFSsd3pYoI/AAAAAAAAOLs/djf79cFry0A/s0/Capture.PNG">
+<img src="https://3.bp.blogspot.com/-4mgFXugXUps/WzcobCOOhOI/AAAAAAAAVOY/y9D8YMwETGUIrElK5rJy_XT2l_6iO1s7QCLcBGAs/s1600/client-friendlist.PNG">
 </a>
 
 ## Installation
-This project require [java runtime 1.6 or higher](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html), you can use [Eclipse](https://eclipse.org) to open and edit this project to custom for more personalized then recompile to take your owner client and server binary files.
+Download the [binary file](https://github.com/sontx/chat-socket/releases) or clone this project and use your favorite IDE to
+customize then rebuild by `mvn clean compile assembly:single` (the binary file will be placed in **target** folder)
 
-All releases [here](https://github.com/sontx/chat-socket/releases), they include source code and binary files.
-![](https://lh3.googleusercontent.com/-TmXmzSowGZo/VuEMSqw9ICI/AAAAAAAAOHs/xoU8HmEM1EE/s0/Untitled.png)
-
-> **homechat-client.jar** is binary for chat client which you and your friends will use to chat with another and **homechat-server.jar** is binary for chat server is "brain" where all clients will connect to. Current release already support win32 executable files for more friendly when run on Windows OS.
+> This project requires [jdk 1.8 or later](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
 
 ## Usage
-Ensure in your computer has java runtime first, lowest version is 1.6 to run client or server or both.
-First step, you must download binary files [here](https://github.com/sontx/chat-socket/releases) or export from project in Eclipse IDE(or other what you want), so we have two files are **homechat-client.jar** and **homechat-server.jar**
+Both server and client are in **homechat.jar**.
+1. Server app: run `server.bat`/`server.sh` or `java -jar homechat.jar --mode=server`
+2. Client app: run `client.bat`/`client.sh` or `java -jar homechat.jar --mode=client`
 
-**homechat-server.jar** is an application server so you have to run in a computer which allow other computers connect to like a server. This is a screenshot about main interface of server, so friendly! You just provide some info such as server ip, server port and a directory where some data will be saved.
+### Server
+The server needs to listen to an IP and a port number, other clients will connect to this address.
+Fill up these boxes and click on **Start** button to start the server.
 
-![](https://lh3.googleusercontent.com/-66VUBQH7n8A/VuERDlbNAyI/AAAAAAAAOIE/nvLSCx99EyU/s0/Untitled.png)
+![](https://1.bp.blogspot.com/-kB7oA2W7bcc/WzcodYjgBtI/AAAAAAAAVOs/JBM-hmbCSoE9aWaZYSl77k0C0Ggm-kkZgCLcBGAs/s1600/server.PNG)
 
-You can get available ip addresses in your computer by click to **...** button then select an ip address in dialog.
+All users data will be saved in **user.json** file.
 
-![](https://lh3.googleusercontent.com/-4bf0C57mHec/VuESBedpFXI/AAAAAAAAOIY/NIou4UpCSSQ/s0/Untitled.png)
+![](https://1.bp.blogspot.com/-3jSUQe1DRLY/WzcuV6DxROI/AAAAAAAAVPE/Ebh3KjveqG4kPMdfOvM2-mKjfjSpwMAbACLcBGAs/user-json.PNG)
 
-After you provided all info in fields then click to **Start** button to start server, you will see all log from text area like this:
+### Client
+1. Connect to the server.
 
-![](https://lh3.googleusercontent.com/-iq-XDux_9YM/VuES7yHFsjI/AAAAAAAAOIs/GAirp3ufJfU/s0/Untitled.png)
+![](https://3.bp.blogspot.com/-BfelkTjAyt0/WzcobEPCZ8I/AAAAAAAAVOc/NbLfhTq8yfYFisydCUs9KiessLw4w3P0ACLcBGAs/s1600/client-connection.PNG)
 
-All works of server are done! then we start with client.
-Start client by click to **homechat-client.jar**, first screen require you enter server ip and server port which you provide for server from above step.
+2. Login to the system.
 
-![](https://lh3.googleusercontent.com/-klz1GyyDC4M/VuETm6TTZzI/AAAAAAAAOJA/mLFzAGnTOpU/s0/Untitled.png)
+![](https://4.bp.blogspot.com/-V-KG-eGL84Q/Wzcob9l9eII/AAAAAAAAVOg/3d5hNPowqdMVQSTa5MN7nwj-WgkO_k7dgCLcBGAs/s1600/client-login.PNG)
 
-Then you just click to **Connect** button to start connect to server, after that, a login window appear like this:
+3. Or register a new account.
 
-![](https://lh3.googleusercontent.com/-mfWUJjvxxPE/VuET-8bnmkI/AAAAAAAAOJQ/G62gq_q-BgQ/s0/Untitled.png)
+![](https://2.bp.blogspot.com/-j4opAkxDQPU/Wzcocwr_xPI/AAAAAAAAVOo/UYAr6J84gjIjYUwskm0oGJ3rBPda8ZWNwCLcBGAs/s1600/client-register.PNG)
 
-Ohhhh! you must have an account to login to system. To take the account you just click to **Register** button then provide some info to create new account in server.
+4. Other users will be shown in your friend list.
 
-![](https://lh3.googleusercontent.com/-m-obEe5l9zk/VuEUjO6IaWI/AAAAAAAAOJk/BZ0RZXTiI4w/s0/Untitled.png)
+![](https://3.bp.blogspot.com/-4mgFXugXUps/WzcobCOOhOI/AAAAAAAAVOY/y9D8YMwETGUIrElK5rJy_XT2l_6iO1s7QCLcBGAs/s1600/client-friendlist.PNG)
 
-Finally, enter username and password which you just registered in Register window to login to system. After you logged to system, a main window appear which display all accounts in server so you can chat with them by click to online account which have avatar is ![](https://lh3.googleusercontent.com/-16CnaM1lc9w/VuEWwzjwSWI/AAAAAAAAOKA/q9bxGfxe8NE/s0/online.png), main window like this:
+5. To update your profile, double-click to the avatar.
 
-![](https://lh3.googleusercontent.com/-ZeCZ38_xwis/VuEW8Hxz-1I/AAAAAAAAOKQ/SvUGmmssyqw/s0/Untitled.png)
+![](https://3.bp.blogspot.com/-CwPvtWoHAY4/WzcocQqJQAI/AAAAAAAAVOk/mfAu94v3EOwlxoqCxy8lYVmP593h_bXvQCLcBGAs/s1600/client-profile.PNG)
 
-A chat window is very simple with chat box which you enter your chat message and a chat log above to display conversation. Your chat message will be ***red*** and your friend is ***blue***
+6. Double-click to any online friend to chat
 
-![](https://lh3.googleusercontent.com/-7n1YOnHZITw/VuEX5_HUExI/AAAAAAAAOKo/g7gDEGF0nZY/s0/Untitled.png)
+![](https://1.bp.blogspot.com/-MrJ4UuYQk7Y/WzcobCL1rSI/AAAAAAAAVOU/1M8NUAGLMd8TqbU47dGvv--fFV0BYYENwCLcBGAs/s1600/client-chatting.PNG)
 
-When you has been received an message from your friend then chat window auto show to display your conversation.
-You can change some profile info such as display name, status and blablalba by click your avatar(or your status message) in main window.
-
-![](https://lh3.googleusercontent.com/-emyvdBEDIUg/VuEYuLwa_MI/AAAAAAAAOK8/_rF1-Y9KqKA/s0/Untitled.png)
-
-Your profile window appear to show your info like this:
-
-![](https://lh3.googleusercontent.com/-zhFR0VQa8go/VuEZAETh4rI/AAAAAAAAOLM/xLUMSt6Pnsk/s0/Untitled.png)
-
-You can change password, display name and status from there.
-To change password, click to **Change...** link then provide new password in appear dialog.
-To change display name or status just enter new info then click **Change...** link to update to server. You change such as display name or status will be auto updated from other clients.
 ## Contributing
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
@@ -69,27 +61,25 @@ To change display name or status just enter new info then click **Change...** li
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
-##Dependencies
-This project do not depend on platform, they just require java runtime 1.6 or higher so you can run in Windows or Linux or other flatform.
-In this project using some libraries:
+## Dependencies
 
-1. [**common-lang3**](https://commons.apache.org/proper/commons-lang/) to escape html.
-2. [**java-json**](http://www.java2s.com/Code/Jar/j/Downloadjavajsonjar.htm) to work with JSON
-3. [**jdk 1.7**](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) for develop
-
-## History
-The second release is [v1.0.1](https://github.com/sontx/chat-socket/releases/tag/v1.0.1) with changed log:
-
-1. Support win32 executable file for more friendly.
-2. Fix auto scroll feature in chatbox.
-3. Remove some logs for best performance.
+ - [**common-lang3**](https://commons.apache.org/proper/commons-lang/).
+ - [**java-json**](http://www.java2s.com/Code/Jar/j/Downloadjavajsonjar.htm)
+ - [**jackson**](https://github.com/FasterXML/jackson)
+ - [**commons-text**](https://commons.apache.org/proper/commons-text/)
+ - [**commons-cli**](https://commons.apache.org/proper/commons-cli/)
+ - [**lombok**](https://projectlombok.org/)
+ - [**log4j**](https://logging.apache.org/log4j)
+ - [**eventbus**](https://github.com/sontx/eventbus-1)(desktop supported), original is [here](https://github.com/greenrobot/EventBus) 
+ - [**jdk 1.8**](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 ## Author
 Developed by sontx/noem, some useful information:
 
- - Home: [http://sontx.blogspot.com](http://sontx.blogspot.com)
+ - Home: [www.code4bugs.com](https://code4bugs.com)
+ - Blog: [https://sontx.blogspot.com](https://sontx.blogspot.com)
  - Email: <a href="mailto:xuanson33bk@gmail.com">xuanson33bk@gmail.com</a>
  - Twitter: [@sontx0](https://twitter.com/sontx0)
 
 ## License
-Copyright 2016 Tran Xuan Son
+[MIT](https://github.com/sontx/chat-socket/blob/master/LICENSE)
