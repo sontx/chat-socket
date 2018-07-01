@@ -2,8 +2,10 @@ package com.blogspot.sontx.chatsocket;
 
 import com.blogspot.sontx.chatsocket.client.AppClientImpl;
 import com.blogspot.sontx.chatsocket.client.platform.ClientJavaFxPlatform;
+import com.blogspot.sontx.chatsocket.client.platform.ClientSwingPlatform;
 import com.blogspot.sontx.chatsocket.server.AppServerImpl;
 import com.blogspot.sontx.chatsocket.server.platform.ServerJavaFxPlatform;
+import com.blogspot.sontx.chatsocket.server.platform.ServerSwingPlatform;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.cli.*;
 
@@ -14,6 +16,7 @@ import org.apache.commons.cli.*;
  * <pre>
  * -h (--help): shows help.
  * -m (--mode): starts client/server, the following flag either <code>client</code> or <code>server</code>
+ * -ui(--uistyle): shows the app with java <code>swing</code> or <code>javafx</code>.
  * </pre>
  * </p>
  */
@@ -29,6 +32,7 @@ class Bootstrap {
         options = new Options();
         options.addOption("h", "help", false, "Show help.");
         options.addRequiredOption("m", "mode", true, "The app should be run as client/server mode.");
+        options.addOption("ui", "uistyle", true, "UI style will be shown (swing/javafx)");
     }
 
     void boot(String[] args) {
@@ -38,20 +42,20 @@ class Bootstrap {
         } else if (commandLine.hasOption("m")) {
             String mode = commandLine.getOptionValue("m");
             if ("client".equals(mode))
-                startClient();
+                startClient(commandLine.getOptionValue("ui"));
             else if ("server".equals(mode))
-                startServer();
+                startServer(commandLine.getOptionValue("ui"));
             else
                 showHelp();
         }
     }
 
-    private void startClient() {
-        new AppClientImpl().start(new ClientJavaFxPlatform());
+    private void startClient(String uistyle) {
+        new AppClientImpl().start("swing".equals(uistyle) ? new ClientSwingPlatform() : new ClientJavaFxPlatform());
     }
 
-    private void startServer() {
-        new AppServerImpl().start(new ServerJavaFxPlatform());
+    private void startServer(String uistyle) {
+        new AppServerImpl().start("swing".equals(uistyle) ? new ServerSwingPlatform() : new ServerJavaFxPlatform());
     }
 
     private CommandLine parseArgs(String[] args) {

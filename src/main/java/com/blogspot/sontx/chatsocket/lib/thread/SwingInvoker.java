@@ -1,5 +1,6 @@
 package com.blogspot.sontx.chatsocket.lib.thread;
 
+import com.blogspot.sontx.chatsocket.lib.Function;
 import lombok.extern.log4j.Log4j;
 
 import javax.swing.*;
@@ -19,5 +20,10 @@ public class SwingInvoker implements Invoker {
         } catch (InterruptedException | InvocationTargetException e) {
             log.error("Error while invoking method in UI thread", e);
         }
+    }
+
+    @Override
+    public <T> T invokeWithResult(Function<T> func) {
+        return func.call();
     }
 }

@@ -30,6 +30,11 @@ public class JavaFxInvoker implements Invoker {
         }
     }
 
+    @Override
+    public <T> T invokeWithResult(Function<T> func) {
+        return new Helper<T>().invokeWithResult(func);
+    }
+
     public static class Helper<T> {
         private final Object sync = new Object();
         private T result;

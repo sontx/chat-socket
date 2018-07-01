@@ -5,7 +5,6 @@ import com.blogspot.sontx.chatsocket.lib.platform.Platform;
 import com.blogspot.sontx.chatsocket.lib.service.event.ShowMessageBoxEvent;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
-import com.blogspot.sontx.chatsocket.lib.view.WindowUtils;
 import com.blogspot.sontx.chatsocket.server.event.AppShutdownEvent;
 import com.blogspot.sontx.chatsocket.server.event.ServerStatusChangedEvent;
 import com.blogspot.sontx.chatsocket.server.event.StartServerEvent;
@@ -72,7 +71,6 @@ public class AppServerImpl implements AppServer {
     }
 
     private void showUI() {
-        WindowUtils.setSystemLookAndFeel();
         MainView mainView = platform.getViewFactory().create(MainView.class);
         LogView logView = platform.getViewFactory().create(LogView.class);
         MainPresenter presenter = new MainPresenter(mainView, logView);
