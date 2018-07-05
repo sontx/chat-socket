@@ -1,5 +1,7 @@
 ![](https://lh3.googleusercontent.com/-Zu1tFauo9r4/VuDuhO0cp_I/AAAAAAAAOHU/NqgaCg4tfso/s0/chat-socket-proj-banner.png)
 
+[![Gitter chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/chat-socket/Lobby#)
+
 **chat-socket** is a simple chat application includes chat client and chat server.
 Support multiple users, private chat, and personal status.
 This project is based on TCP socket, multithreading, Java serialization, and JSON.
