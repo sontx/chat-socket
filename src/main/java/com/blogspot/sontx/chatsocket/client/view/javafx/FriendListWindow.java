@@ -69,7 +69,7 @@ class FriendListWindow extends BaseJavaFxWindow implements FriendListView {
     public void updateFriend(Profile friendInfo) {
         Optional<Profile> matchedFriend = friends
                 .stream()
-                .filter(accountInfo -> accountInfo.getAccountId() == friendInfo.getAccountId())
+                .filter(accountInfo -> accountInfo.getId() == friendInfo.getId())
                 .findFirst();
 
         matchedFriend.ifPresent(accountInfo -> friends.set(friends.indexOf(accountInfo), friendInfo));

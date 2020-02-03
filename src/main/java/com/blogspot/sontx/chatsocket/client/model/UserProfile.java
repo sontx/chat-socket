@@ -15,12 +15,12 @@ public class UserProfile extends Profile {
 
     public void update(Profile profile) {
         if (profile != null) {
-            super.setAccountId(profile.getAccountId());
+            super.setId(profile.getId());
             super.setDisplayName(profile.getDisplayName());
             super.setStatus(profile.getStatus());
             super.setState(profile.getState());
         } else {
-            super.setAccountId("");
+            super.setId("");
         }
     }
 }

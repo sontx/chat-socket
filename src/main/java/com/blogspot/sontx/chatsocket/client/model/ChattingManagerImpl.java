@@ -47,14 +47,14 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
         synchronized (lock) {
             return managedFriends
                     .stream()
-                    .anyMatch(friend -> friend.profile.getAccountId().equals(friendId) && friend.isChattingWith);
+                    .anyMatch(friend -> friend.profile.getId().equals(friendId) && friend.isChattingWith);
         }
     }
 
     private void openChatWindow(String friendId) {
         Optional<ManagedFriend> foundFriend = managedFriends
                 .stream()
-                .filter(friend -> friend.profile.getAccountId().equals(friendId))
+                .filter(friend -> friend.profile.getId().equals(friendId))
                 .findFirst();
 
         foundFriend.ifPresent(this::openChatWindow);
@@ -68,7 +68,7 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
     private void updateCurrentManagedFriends(List<Profile> updatedFriends) {
         for (ManagedFriend managedFriend : managedFriends) {
             for (Profile updatedFriend : updatedFriends) {
-                if (updatedFriend.getAccountId().equals(managedFriend.profile.getAccountId())) {
+                if (updatedFriend.getId().equals(managedFriend.profile.getId())) {
                     managedFriend.profile = updatedFriend;
                 }
             }
@@ -80,7 +80,7 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
                 .stream()
                 .filter(updatedFriend -> managedFriends
                         .stream()
-                        .noneMatch(managedFriend -> managedFriend.profile.getAccountId().equals(updatedFriend.getAccountId())))
+                        .noneMatch(managedFriend -> managedFriend.profile.getId().equals(updatedFriend.getId())))
                 .collect(Collectors.toList());
 
         managedFriends.addAll(newFriends
@@ -92,7 +92,7 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
     private void setChattingWithState(String friendId, boolean isChattingWith) {
         synchronized (lock) {
             managedFriends.forEach(managedFriend -> {
-                if (managedFriend.profile.getAccountId().equals(friendId)) {
+                if (managedFriend.profile.getId().equals(friendId)) {
                     managedFriend.isChattingWith = isChattingWith;
                 }
             });
@@ -101,14 +101,14 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
 
     @Subscribe
     public void onOpenChat(OpenChatEvent event) {
-        setChattingWithState(event.getChatWith().getAccountId(), true);
+        setChattingWithState(event.getChatWith().getId(), true);
     }
 
     @Subscribe
     public void onChatWindowClosed(ChatWindowClosedEvent event) {
         runOnUiThread(() -> {
             Profile chatWith = event.getChatWith();
-            setChattingWithState(chatWith.getAccountId(), false);
+            setChattingWithState(chatWith.getId(), false);
         });
     }
 

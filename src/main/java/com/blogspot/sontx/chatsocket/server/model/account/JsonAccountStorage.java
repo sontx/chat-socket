@@ -33,7 +33,7 @@ public class JsonAccountStorage implements AccountStorage {
             CollectionType destType = TypeFactory.defaultInstance().constructCollectionType(List.class, Account.class);
             List<Account> accounts = new ObjectMapper().readValue(storeFile, destType);
             accounts.forEach(account -> {
-                account.getProfile().setAccountId(account.getId());
+                account.getProfile().setId(account.getId());
                 account.getProfile().setState(Profile.STATE_OFFLINE);
             });
             this.accounts = new CopyOnWriteArrayList<>(accounts);
@@ -69,7 +69,7 @@ public class JsonAccountStorage implements AccountStorage {
                 .toString()
                 .replace("-", "");
         account.setId(uuid);
-        account.getProfile().setAccountId(uuid);
+        account.getProfile().setId(uuid);
     }
 
     private synchronized void saveToFile() {

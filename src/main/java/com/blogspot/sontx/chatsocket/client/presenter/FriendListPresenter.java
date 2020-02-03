@@ -84,7 +84,7 @@ public class FriendListPresenter extends AbstractService implements Presenter {
             if (friendList == null)
                 friendList = new ArrayList<>();
 
-            if (friendList.stream().anyMatch(friend -> friend.getAccountId() == newFriendInfo.getAccountId())) {
+            if (friendList.stream().anyMatch(friend -> friend.getId() == newFriendInfo.getId())) {
                 friendListView.updateFriend(newFriendInfo);
             } else {
                 friendList.add(newFriendInfo);

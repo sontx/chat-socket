@@ -57,6 +57,6 @@ public class AccountManagerImpl implements AccountManager {
 
     @Override
     public void updateDetail(Profile profile) {
-        accountStorage.updateDetail(profile.getAccountId(), profile);
+        accountStorage.updateDetail(profile.getId(), profile);
     }
 }

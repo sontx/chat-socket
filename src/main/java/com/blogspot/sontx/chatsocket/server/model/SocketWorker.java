@@ -68,7 +68,7 @@ public class SocketWorker extends BackgroundService implements Worker {
 
     private boolean itIsMe(String accountId) {
         synchronized (lock) {
-            return account != null && account.getAccountId().equals(accountId);
+            return account != null && account.getId().equals(accountId);
         }
     }
 
@@ -118,7 +118,7 @@ public class SocketWorker extends BackgroundService implements Worker {
 
     @Subscribe
     public void onLookupWorker(LookupWorkerEvent event) {
-        if (itIsMe(event.getMatchedAccount().getAccountId())) {
+        if (itIsMe(event.getMatchedAccount().getId())) {
             event.setMatchedWorker(this);
         }
     }
@@ -144,7 +144,7 @@ public class SocketWorker extends BackgroundService implements Worker {
     @Subscribe
     public void onAccountInfoChanged(AccountInfoChangedEvent event) {
         runAsync(() -> {
-            if (!itIsMe(event.getProfile().getAccountId())) {
+            if (!itIsMe(event.getProfile().getId())) {
                 Response result = new Response();
                 result.setCode(ResponseCode.OK);
                 result.setRequestCode(RequestCode.FriendInfoUpdated);

@@ -29,7 +29,7 @@ public class ChatPresenter extends AbstractService implements Presenter {
     private void sendChatMessage(String content) {
         if (StringUtils.isEmpty(content)) return;
 
-        ChatMessage chatMessage = new ChatMessage(chatWith.getAccountId(), content);
+        ChatMessage chatMessage = new ChatMessage(chatWith.getId(), content);
         post(new SendChatMessageEvent(chatMessage));
 
         chatView.appendMeMyMessage(content);
@@ -51,7 +51,7 @@ public class ChatPresenter extends AbstractService implements Presenter {
     public void onChatMessageReceived(ChatMessageReceivedEvent event) {
         runOnUiThread(() -> {
             ChatMessage chatMessage = event.getChatMessage();
-            if (chatMessage.getWhoId().equals(chatWith.getAccountId())) {
+            if (chatMessage.getWhoId().equals(chatWith.getId())) {
                 chatView.appendFriendMessage(chatMessage.getContent());
             }
         });
@@ -61,7 +61,7 @@ public class ChatPresenter extends AbstractService implements Presenter {
     public void onFriendInfoChanged(FriendInfoChangedEvent event) {
         runOnUiThread(() -> {
             Profile newFriendInfo = event.getNewFriendInfo();
-            if (newFriendInfo.getAccountId().equals(chatWith.getAccountId())) {
+            if (newFriendInfo.getId().equals(chatWith.getId())) {
                 chatView.setTitle(newFriendInfo.getDisplayName());
                 chatWith = newFriendInfo;
             }

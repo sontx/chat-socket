@@ -15,7 +15,7 @@ public class FriendEntry {
     }
 
     public boolean contains(Profile profile) {
-        return profile != null && profile.getAccountId() == this.profile.getAccountId();
+        return profile != null && profile.getId() == this.profile.getId();
     }
 
     public String getDisplayName() {

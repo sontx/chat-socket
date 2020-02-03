@@ -19,7 +19,7 @@ class ChatMessageRequestHandler extends AbstractRequestHandler {
 
     private Response forwardChatMessage(ChatMessage chatMessage, Profile profile) {
         String receiverId = chatMessage.getWhoId();
-        String senderId = profile.getAccountId();
+        String senderId = profile.getId();
 
         ChatMessage forwardMessage = new ChatMessage(senderId, chatMessage.getContent());
 

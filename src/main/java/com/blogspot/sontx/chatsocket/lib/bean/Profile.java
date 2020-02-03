@@ -7,13 +7,13 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 @Data
-@EqualsAndHashCode(of = "accountId")
+@EqualsAndHashCode(of = "id")
 public class Profile implements Serializable {
     public static final int STATE_ONLINE = 0;
     public static final int STATE_OFFLINE = 1;
     private static final long serialVersionUID = -4193811689167914857L;
     @JsonIgnore
-    private String accountId;
+    private String id;
 
     private String displayName;
     private String status;
