@@ -75,14 +75,13 @@ All users data will be saved in **user.json** file.
  - [**commons-cli**](https://commons.apache.org/proper/commons-cli/)
  - [**lombok**](https://projectlombok.org/)
  - [**log4j**](https://logging.apache.org/log4j)
- - [**eventbus**](https://github.com/sontx/eventbus-1)(desktop supported), original is [here](https://github.com/greenrobot/EventBus) 
+ - [**guava**](https://github.com/google/guava) 
  - [**jdk 1.8**](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 ## Author
 Developed by sontx/noem, some useful information:
 
  - Home: [www.code4bugs.com](https://code4bugs.com)
- - Blog: [https://sontx.blogspot.com](https://sontx.blogspot.com)
  - Email: <a href="mailto:xuanson33bk@gmail.com">xuanson33bk@gmail.com</a>
  - Twitter: [@sontx0](https://twitter.com/sontx0)
 
