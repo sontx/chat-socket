@@ -1,0 +1,6 @@
+language: java
+jdk: openjdk8
+before_install:
+  - sudo apt update
+  - sudo apt install openjfx
+script: mvn clean verify
