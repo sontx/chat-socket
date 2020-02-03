@@ -7,9 +7,8 @@ import com.blogspot.sontx.chatsocket.lib.bo.SocketByteTransmission;
 import com.blogspot.sontx.chatsocket.lib.service.BackgroundService;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
 import com.blogspot.sontx.chatsocket.server.event.*;
+import com.google.common.eventbus.Subscribe;
 import lombok.extern.log4j.Log4j;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -61,7 +60,7 @@ public class SocketWorker extends BackgroundService implements Worker {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING)
+    @Subscribe
     public void onShutdownWorker(ShutdownWorkerEvent event) {
         if (event.getServerSession() == sessionId)
             shutdownWorker();
@@ -90,7 +89,7 @@ public class SocketWorker extends BackgroundService implements Worker {
         stop();
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING)
+    @Subscribe
     public void onForwardChatMessage(ForwardChatMessageEvent event) {
         if (itIsMe(event.getReceiverId())) {
             Response result = new Response();
@@ -117,7 +116,7 @@ public class SocketWorker extends BackgroundService implements Worker {
         response(response);
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING)
+    @Subscribe
     public void onLookupWorker(LookupWorkerEvent event) {
         if (itIsMe(event.getMatchedAccount().getAccountId())) {
             event.setMatchedWorker(this);
@@ -142,19 +141,21 @@ public class SocketWorker extends BackgroundService implements Worker {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe
     public void onAccountInfoChanged(AccountInfoChangedEvent event) {
-        if (!itIsMe(event.getAccountInfo().getAccountId())) {
-            Response result = new Response();
-            result.setCode(ResponseCode.OK);
-            result.setRequestCode(RequestCode.FriendInfoUpdated);
-            result.setExtra(event.getAccountInfo());
-            try {
-                response(result);
-            } catch (IOException e) {
-                log.error("Error while broadcast account info changed to workers", e);
-                shutdownWorker();
+        runAsync(() -> {
+            if (!itIsMe(event.getAccountInfo().getAccountId())) {
+                Response result = new Response();
+                result.setCode(ResponseCode.OK);
+                result.setRequestCode(RequestCode.FriendInfoUpdated);
+                result.setExtra(event.getAccountInfo());
+                try {
+                    response(result);
+                } catch (IOException e) {
+                    log.error("Error while broadcast account info changed to workers", e);
+                    shutdownWorker();
+                }
             }
-        }
+        });
     }
 }

@@ -5,9 +5,8 @@ import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.blogspot.sontx.chatsocket.server.event.RequestReceivedEvent;
 import com.blogspot.sontx.chatsocket.server.model.handler.RequestHandler;
 import com.blogspot.sontx.chatsocket.server.model.handler.RequestHandlerFactory;
+import com.google.common.eventbus.Subscribe;
 import lombok.extern.log4j.Log4j;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Routes incomming requests from clients to handlers.
@@ -20,14 +19,16 @@ public class RequestRouter extends AbstractService {
         this.requestHandlerFactory = requestHandlerFactory;
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe
     public void onRequestReceived(RequestReceivedEvent event) {
-        Request request = event.getRequest();
-        RequestHandler handler = requestHandlerFactory.create(request.getCode());
-        try {
-            handler.handle(event);
-        } catch (Exception e) {
-            log.error("Handle request", e);
-        }
+        runAsync(() -> {
+            Request request = event.getRequest();
+            RequestHandler handler = requestHandlerFactory.create(request.getCode());
+            try {
+                handler.handle(event);
+            } catch (Exception e) {
+                log.error("Handle request", e);
+            }
+        });
     }
 }

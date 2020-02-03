@@ -6,8 +6,7 @@ import com.blogspot.sontx.chatsocket.client.view.RegisterView;
 import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.lib.utils.Security;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import com.google.common.eventbus.Subscribe;
 
 public class RegisterPresenter extends AbstractService implements Presenter {
     private final RegisterView registerView;
@@ -44,10 +43,12 @@ public class RegisterPresenter extends AbstractService implements Presenter {
         post(new RegisterEvent(username, password, displayName));
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    @Subscribe
     public void onRegistered(RegisteredEvent event) {
-        stop();
-        registerView.closeWindow();
+        runOnUiThread(() -> {
+            stop();
+            registerView.closeWindow();
+        });
     }
 
     public void show() {

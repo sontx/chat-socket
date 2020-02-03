@@ -8,9 +8,8 @@ import com.blogspot.sontx.chatsocket.client.view.ChatView;
 import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
 import com.blogspot.sontx.chatsocket.lib.bean.ChatMessage;
 import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
+import com.google.common.eventbus.Subscribe;
 import org.apache.commons.lang3.StringUtils;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 public class ChatPresenter extends AbstractService implements Presenter {
     private final ChatView chatView;
@@ -48,20 +47,24 @@ public class ChatPresenter extends AbstractService implements Presenter {
         chatView.showWindow();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    @Subscribe
     public void onChatMessageReceived(ChatMessageReceivedEvent event) {
-        ChatMessage chatMessage = event.getChatMessage();
-        if (chatMessage.getWhoId() == chatWith.getAccountId()) {
-            chatView.appendFriendMessage(chatMessage.getContent());
-        }
+        runOnUiThread(() -> {
+            ChatMessage chatMessage = event.getChatMessage();
+            if (chatMessage.getWhoId() == chatWith.getAccountId()) {
+                chatView.appendFriendMessage(chatMessage.getContent());
+            }
+        });
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    @Subscribe
     public void onFriendInfoChanged(FriendInfoChangedEvent event) {
-        AccountInfo newFriendInfo = event.getNewFriendInfo();
-        if (newFriendInfo.getAccountId() == chatWith.getAccountId()) {
-            chatView.setTitle(newFriendInfo.getDisplayName());
-            chatWith = newFriendInfo;
-        }
+        runOnUiThread(() -> {
+            AccountInfo newFriendInfo = event.getNewFriendInfo();
+            if (newFriendInfo.getAccountId() == chatWith.getAccountId()) {
+                chatView.setTitle(newFriendInfo.getDisplayName());
+                chatWith = newFriendInfo;
+            }
+        });
     }
 }

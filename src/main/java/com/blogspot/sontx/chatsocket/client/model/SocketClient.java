@@ -10,9 +10,8 @@ import com.blogspot.sontx.chatsocket.lib.bo.SerializableObjectAdapter;
 import com.blogspot.sontx.chatsocket.lib.bo.SocketByteTransmission;
 import com.blogspot.sontx.chatsocket.lib.service.BackgroundService;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
+import com.google.common.eventbus.Subscribe;
 import lombok.extern.log4j.Log4j;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -81,34 +80,34 @@ public class SocketClient extends BackgroundService implements Client {
         handler.handle(transmission, response);
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe
     public void onLogin(LoginEvent event) {
-        sendRequest(new LoginInfo(event.getUsername(), event.getPassword()), RequestCode.Login);
+        runAsync(() -> sendRequest(new LoginInfo(event.getUsername(), event.getPassword()), RequestCode.Login));
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe
     public void onRegister(RegisterEvent event) {
-        sendRequest(new RegisterInfo(event.getUsername(), event.getPassword(), event.getDisplayName()), RequestCode.Register);
+        runAsync(() -> sendRequest(new RegisterInfo(event.getUsername(), event.getPassword(), event.getDisplayName()), RequestCode.Register));
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe
     public void onUpdateFriendList(UpdateFriendListEvent event) {
-        sendRequest(null, RequestCode.FriendList);
+        runAsync(() -> sendRequest(null, RequestCode.FriendList));
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe
     public void onUpdateProfile(UpdateProfileEvent event) {
-        sendRequest(event.getAccountInfo(), RequestCode.UpdateProfile);
+        runAsync(() -> sendRequest(event.getAccountInfo(), RequestCode.UpdateProfile));
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe
     public void onUpdatePassword(UpdatePasswordEvent event) {
-        sendRequest(event.getPassword(), RequestCode.UpdatePassword);
+        runAsync(() -> sendRequest(event.getPassword(), RequestCode.UpdatePassword));
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe
     public void onSendChatMessage(SendChatMessageEvent event) {
-        sendRequest(event.getChatMessage(), RequestCode.ChatMessage);
+        runAsync(() -> sendRequest(event.getChatMessage(), RequestCode.ChatMessage));
     }
 
     private void sendRequest(Object extra, RequestCode requestCode) {

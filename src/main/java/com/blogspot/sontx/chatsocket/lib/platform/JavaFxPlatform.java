@@ -2,14 +2,11 @@ package com.blogspot.sontx.chatsocket.lib.platform;
 
 import com.blogspot.sontx.chatsocket.lib.service.MessageBoxService;
 import com.blogspot.sontx.chatsocket.lib.service.message.JavaFxMessageBox;
-import com.blogspot.sontx.chatsocket.lib.thread.JavaFxInvoker;
-import org.greenrobot.eventbus.support.JavaFxMainThreadSupport;
+import com.blogspot.sontx.chatsocket.lib.thread.JavaFxThreadInvoker;
 
 public abstract class JavaFxPlatform extends AbstractPlatform {
     protected JavaFxPlatform() {
-        setInvoker(new JavaFxInvoker());
-        initializeEventBus(new JavaFxMainThreadSupport());
-
+        super(new JavaFxThreadInvoker());
         MessageBoxService messageBoxService = new MessageBoxService(new JavaFxMessageBox());
         messageBoxService.setPlatform(this);
         messageBoxService.start();

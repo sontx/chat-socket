@@ -1,8 +1,8 @@
 package com.blogspot.sontx.chatsocket.lib.view;
 
 import com.blogspot.sontx.chatsocket.lib.bo.LayoutsResource;
-import com.blogspot.sontx.chatsocket.lib.thread.Invoker;
-import com.blogspot.sontx.chatsocket.lib.thread.JavaFxInvoker;
+import com.blogspot.sontx.chatsocket.lib.thread.ThreadInvoker;
+import com.blogspot.sontx.chatsocket.lib.thread.JavaFxThreadInvoker;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -21,7 +21,7 @@ public abstract class BaseJavaFxWindow implements BaseView {
     @Getter
     @Setter
     private Stage stage;
-    private Invoker invoker = new JavaFxInvoker();
+    private ThreadInvoker threadInvoker = new JavaFxThreadInvoker();
 
     private boolean isMainWindow;
 
@@ -52,7 +52,7 @@ public abstract class BaseJavaFxWindow implements BaseView {
 
     @Override
     public void showWindow() {
-        invoker.invokeLater(() -> {
+        threadInvoker.invokeLater(() -> {
             if (stage != null) {
                 stage.show();
                 centerToScreen();
@@ -62,7 +62,7 @@ public abstract class BaseJavaFxWindow implements BaseView {
 
     @Override
     public void closeWindow() {
-        invoker.invokeLater(() -> {
+        threadInvoker.invokeLater(() -> {
             if (stage != null)
                 stage.close();
         });
@@ -70,7 +70,7 @@ public abstract class BaseJavaFxWindow implements BaseView {
 
     @Override
     public void setOnClosingListener(Runnable listener) {
-        invoker.invokeLater(() -> {
+        threadInvoker.invokeLater(() -> {
             if (stage == null) return;
             stage.setOnCloseRequest(event -> {
                 if (listener != null)
@@ -83,7 +83,7 @@ public abstract class BaseJavaFxWindow implements BaseView {
 
     @Override
     public void setTitle(String title) {
-        invoker.invokeLater(() -> {
+        threadInvoker.invokeLater(() -> {
             if (stage != null)
                 stage.setTitle(title);
         });

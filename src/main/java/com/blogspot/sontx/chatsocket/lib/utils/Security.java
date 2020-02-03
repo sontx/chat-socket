@@ -1,6 +1,7 @@
 package com.blogspot.sontx.chatsocket.lib.utils;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
@@ -46,6 +47,6 @@ public final class Security {
     public static String getPasswordHash(String password) {
         if (password == null)
             return null;
-        return convertToSHA1(password.getBytes(Charset.forName("UTF-8")));
+        return convertToSHA1(password.getBytes(StandardCharsets.UTF_8));
     }
 }

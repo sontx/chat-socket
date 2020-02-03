@@ -55,9 +55,9 @@
 			<version>1.2.17</version>
 		</dependency>
 		<dependency>
-			<groupId>com.blogspot.sontx</groupId>
-			<artifactId>eventbus</artifactId>
-			<version>3.1.1</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>28.2-jre</version>
 		</dependency>
 	</dependencies>
 
@@ -76,7 +76,7 @@
 					<configuration>
 						<archive>
 							<manifest>
-								<mainClass>com.blogspot.sontx.chatsocket.App</mainClass>
+								<mainClass>com.blogspot.sontx.chatsocket.Program</mainClass>
 							</manifest>
 						</archive>
 						<descriptorRefs>

@@ -6,12 +6,11 @@ import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.server.event.*;
 import com.blogspot.sontx.chatsocket.server.view.LogView;
 import com.blogspot.sontx.chatsocket.server.view.MainView;
+import com.google.common.eventbus.Subscribe;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.LogManager;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 @Log4j
 public class MainPresenter extends AbstractService {
@@ -68,9 +67,11 @@ public class MainPresenter extends AbstractService {
         mainView.showWindow();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe
     public void onServerStatusChanged(ServerStatusChangedEvent event) {
-        serverIsRunning = event.isRunning();
-        mainView.setStartButtonText(serverIsRunning ? "Stop" : "Start");
+        runOnUiThread(() -> {
+            serverIsRunning = event.isRunning();
+            mainView.setStartButtonText(serverIsRunning ? "Stop" : "Start");
+        });
     }
 }

@@ -7,10 +7,9 @@ import com.blogspot.sontx.chatsocket.lib.bean.Response;
 import com.blogspot.sontx.chatsocket.lib.bean.ResponseCode;
 import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
+import com.google.common.eventbus.Subscribe;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -105,10 +104,12 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
         setChattingWithState(event.getChatWith().getAccountId(), true);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    @Subscribe
     public void onChatWindowClosed(ChatWindowClosedEvent event) {
-        AccountInfo chatWith = event.getChatWith();
-        setChattingWithState(chatWith.getAccountId(), false);
+        runOnUiThread(() -> {
+            AccountInfo chatWith = event.getChatWith();
+            setChattingWithState(chatWith.getAccountId(), false);
+        });
     }
 
     @Subscribe

@@ -6,10 +6,9 @@ import com.blogspot.sontx.chatsocket.client.event.ConnectedToServerEvent;
 import com.blogspot.sontx.chatsocket.client.view.ConnectionView;
 import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
+import com.google.common.eventbus.Subscribe;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 public class ConnectionPresenter extends AbstractService implements Presenter {
     private final ConnectionView connectionView;
@@ -40,10 +39,12 @@ public class ConnectionPresenter extends AbstractService implements Presenter {
         post(new ConnectToServerEvent(serverIp, Integer.parseInt(serverPortAsString)));
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe
     public void onConnectedToServer(ConnectedToServerEvent event) {
-        stop();
-        connectionView.closeWindow();
+        runOnUiThread(() -> {
+            stop();
+            connectionView.closeWindow();
+        });
     }
 
     public void show() {

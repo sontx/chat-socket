@@ -4,9 +4,8 @@ import com.blogspot.sontx.chatsocket.lib.service.BackgroundService;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
 import com.blogspot.sontx.chatsocket.server.event.ShutdownServerEvent;
 import com.blogspot.sontx.chatsocket.server.event.ShutdownWorkerEvent;
+import com.google.common.eventbus.Subscribe;
 import lombok.extern.log4j.Log4j;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -83,7 +82,7 @@ public class SocketServer extends BackgroundService implements Server {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING)
+    @Subscribe
     public void onShutdownServer(ShutdownServerEvent event) {
         if (event.getSessionId() == ShutdownServerEvent.ALL || event.getSessionId() == sessionId)
             shutdownServer();

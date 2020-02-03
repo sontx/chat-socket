@@ -1,24 +1,18 @@
 package com.blogspot.sontx.chatsocket.lib.service;
 
 import com.blogspot.sontx.chatsocket.AppConfig;
+import com.blogspot.sontx.chatsocket.lib.Component;
 import com.blogspot.sontx.chatsocket.lib.platform.Platform;
 import com.blogspot.sontx.chatsocket.lib.service.event.ShowMessageBoxEvent;
 import com.blogspot.sontx.chatsocket.lib.service.event.StopServiceEvent;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
-import lombok.AccessLevel;
+import com.google.common.eventbus.Subscribe;
 import lombok.Getter;
-import lombok.Setter;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class AbstractService implements Service {
+public abstract class AbstractService extends Component implements Service {
     private static AtomicInteger freeId = new AtomicInteger();
-
-    @Setter
-    @Getter(AccessLevel.PROTECTED)
-    private Platform platform;
 
     @Getter
     private volatile boolean started;
@@ -26,23 +20,27 @@ public abstract class AbstractService implements Service {
     @Getter
     private int id;
 
+    private boolean registered = false;
+
     protected AbstractService() {
         id = freeId.incrementAndGet();
     }
 
     @Override
     public synchronized void start() {
-        EventBus eventBus = platform.getEventBus();
-        if (eventBus != null && !eventBus.isRegistered(this))
-            eventBus.register(this);
+        if (!registered) {
+            getPlatform().attach(this);
+            registered = true;
+        }
         started = true;
     }
 
     @Override
     public synchronized void stop() {
-        EventBus eventBus = platform.getEventBus();
-        if (eventBus != null && eventBus.isRegistered(this))
-            eventBus.unregister(this);
+        if (registered) {
+            getPlatform().detach(this);
+            registered = false;
+        }
         started = false;
     }
 
@@ -52,12 +50,6 @@ public abstract class AbstractService implements Service {
 
     protected void postMessageBox(String message, MessageType type) {
         postMessageBox(message, AppConfig.getDefault().getAppName(), type);
-    }
-
-    protected void post(Object event) {
-        EventBus eventBus = platform.getEventBus();
-        if (eventBus != null)
-            eventBus.post(event);
     }
 
     @SuppressWarnings("unchecked")

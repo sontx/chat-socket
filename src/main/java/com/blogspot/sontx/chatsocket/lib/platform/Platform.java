@@ -1,15 +1,18 @@
 package com.blogspot.sontx.chatsocket.lib.platform;
 
-import com.blogspot.sontx.chatsocket.lib.thread.Invoker;
+import com.blogspot.sontx.chatsocket.lib.thread.ThreadInvoker;
 import com.blogspot.sontx.chatsocket.lib.view.ViewFactory;
-import org.greenrobot.eventbus.EventBus;
 
 public interface Platform {
     ViewFactory getViewFactory();
 
-    Invoker getInvoker();
+    ThreadInvoker getThreadInvoker();
 
-    EventBus getEventBus();
+    void attach(Object service);
+
+    void detach(Object service);
+
+    void postEvent(Object event);
 
     void exit();
 }

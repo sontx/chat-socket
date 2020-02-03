@@ -1,9 +1,9 @@
 package com.blogspot.sontx.chatsocket.server.view.javafx;
 
-import com.blogspot.sontx.chatsocket.lib.thread.JavaFxInvoker;
 import com.blogspot.sontx.chatsocket.lib.view.AbstractViewFactory;
 import com.blogspot.sontx.chatsocket.server.view.LogView;
 import com.blogspot.sontx.chatsocket.server.view.MainView;
+import com.sun.javafx.application.PlatformImpl;
 
 public class JavaFxViewFactory extends AbstractViewFactory {
     private MainWindow mainWindow;
@@ -14,8 +14,9 @@ public class JavaFxViewFactory extends AbstractViewFactory {
     }
 
     private MainWindow createMainWindowIfNecessary() {
-        if (this.mainWindow == null)
-            mainWindow = new JavaFxInvoker.Helper<MainWindow>().invokeWithResult(MainWindow::new);
+        if (mainWindow == null) {
+            PlatformImpl.runAndWait(() -> mainWindow = new MainWindow());
+        }
         return mainWindow;
     }
 }

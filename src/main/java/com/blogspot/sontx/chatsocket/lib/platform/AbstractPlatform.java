@@ -1,26 +1,29 @@
 package com.blogspot.sontx.chatsocket.lib.platform;
 
-import com.blogspot.sontx.chatsocket.lib.thread.Invoker;
-import lombok.AccessLevel;
+import com.blogspot.sontx.chatsocket.lib.thread.ThreadInvoker;
+import com.google.common.eventbus.EventBus;
 import lombok.Getter;
-import lombok.Setter;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.MainThreadSupport;
 
 public abstract class AbstractPlatform implements Platform {
     @Getter
-    @Setter(AccessLevel.PROTECTED)
-    private Invoker invoker;
+    private final ThreadInvoker threadInvoker;
+    private final EventBus eventBus;
 
-    @Getter
-    private EventBus eventBus;
+    protected AbstractPlatform(ThreadInvoker threadInvoker) {
+        this.threadInvoker = threadInvoker;
+        eventBus = new EventBus(getClass().getName());
+    }
 
-    void initializeEventBus(MainThreadSupport mainThreadSupport) {
-        eventBus = EventBus
-                .builder()
-                .throwSubscriberException(false)
-                .mainThreadSupport(mainThreadSupport)
-                .build();
+    public void attach(Object service) {
+        eventBus.register(service);
+    }
+
+    public void detach(Object service) {
+        eventBus.unregister(service);
+    }
+
+    public void postEvent(Object event) {
+        eventBus.post(event);
     }
 
     @Override

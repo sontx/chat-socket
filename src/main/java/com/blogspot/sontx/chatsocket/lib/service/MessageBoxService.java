@@ -2,8 +2,7 @@ package com.blogspot.sontx.chatsocket.lib.service;
 
 import com.blogspot.sontx.chatsocket.lib.service.event.ShowMessageBoxEvent;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageBox;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import com.google.common.eventbus.Subscribe;
 
 public class MessageBoxService extends AbstractService {
     private final MessageBox messageBox;
@@ -12,8 +11,8 @@ public class MessageBoxService extends AbstractService {
         this.messageBox = messageBox;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe
     public void onShowMessageBox(ShowMessageBoxEvent event) {
-        messageBox.show(event.getCaption(), event.getMessage(), event.getType());
+        runOnUiThread(() -> messageBox.show(event.getCaption(), event.getMessage(), event.getType()));
     }
 }

@@ -5,8 +5,7 @@ import com.blogspot.sontx.chatsocket.client.event.*;
 import com.blogspot.sontx.chatsocket.client.view.FriendListView;
 import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
 import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import com.google.common.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,9 +53,9 @@ public class FriendListPresenter extends AbstractService implements Presenter {
         friendListView.showWindow();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    @Subscribe
     public void onMyAccountInfoReceived(MyAccountInfoReceivedEvent event) {
-        setMyAccountInfo(event.getMyAccountInfo());
+        runOnUiThread(() -> setMyAccountInfo(event.getMyAccountInfo()));
     }
 
     public void setMyAccountInfo(AccountInfo myAccountInfo) {
@@ -69,24 +68,28 @@ public class FriendListPresenter extends AbstractService implements Presenter {
             friendListView.setTitle(appName);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    @Subscribe
     public void onFriendListReceived(FriendListReceivedEvent event) {
-        friendList = event.getFriendList();
-        friendListView.setFriendList(friendList);
+        runOnUiThread(() -> {
+            friendList = event.getFriendList();
+            friendListView.setFriendList(friendList);
+        });
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    @Subscribe
     public void onFriendInfoChanged(FriendInfoChangedEvent event) {
-        AccountInfo newFriendInfo = event.getNewFriendInfo();
+        runOnUiThread(() -> {
+            AccountInfo newFriendInfo = event.getNewFriendInfo();
 
-        if (friendList == null)
-            friendList = new ArrayList<>();
+            if (friendList == null)
+                friendList = new ArrayList<>();
 
-        if (friendList.stream().anyMatch(friend -> friend.getAccountId() == newFriendInfo.getAccountId())) {
-            friendListView.updateFriend(newFriendInfo);
-        } else {
-            friendList.add(newFriendInfo);
-            friendListView.addNewFriend(newFriendInfo);
-        }
+            if (friendList.stream().anyMatch(friend -> friend.getAccountId() == newFriendInfo.getAccountId())) {
+                friendListView.updateFriend(newFriendInfo);
+            } else {
+                friendList.add(newFriendInfo);
+                friendListView.addNewFriend(newFriendInfo);
+            }
+        });
     }
 }
