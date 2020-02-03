@@ -97,7 +97,7 @@ public class SocketClient extends BackgroundService implements Client {
 
     @Subscribe
     public void onUpdateProfile(UpdateProfileEvent event) {
-        runAsync(() -> sendRequest(event.getAccountInfo(), RequestCode.UpdateProfile));
+        runAsync(() -> sendRequest(event.getProfile(), RequestCode.UpdateProfile));
     }
 
     @Subscribe

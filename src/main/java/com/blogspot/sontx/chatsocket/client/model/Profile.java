@@ -1,6 +1,5 @@
 package com.blogspot.sontx.chatsocket.client.model;
 
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,15 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Profile extends AccountInfo {
+public class Profile extends com.blogspot.sontx.chatsocket.lib.bean.Profile {
     private String username;
 
-    public void update(AccountInfo accountInfo) {
-        if (accountInfo != null) {
-            super.setAccountId(accountInfo.getAccountId());
-            super.setDisplayName(accountInfo.getDisplayName());
-            super.setStatus(accountInfo.getStatus());
-            super.setState(accountInfo.getState());
+    public void update(com.blogspot.sontx.chatsocket.lib.bean.Profile profile) {
+        if (profile != null) {
+            super.setAccountId(profile.getAccountId());
+            super.setDisplayName(profile.getDisplayName());
+            super.setStatus(profile.getStatus());
+            super.setState(profile.getState());
         } else {
             super.setAccountId(-1);
         }

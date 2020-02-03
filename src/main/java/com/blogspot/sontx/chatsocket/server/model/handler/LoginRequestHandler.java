@@ -23,33 +23,33 @@ class LoginRequestHandler extends AbstractRequestHandler {
         if (request.getExtra() instanceof LoginInfo) {
             Response result = authenticate((LoginInfo) request.getExtra());
             if (result.getCode() == ResponseCode.OK)
-                registerNewLoggedUser(sender, (AccountInfo) result.getExtra());
+                registerNewLoggedUser(sender, (Profile) result.getExtra());
             sender.response(result);
         } else {
             sender.response(failResponse("Extra must be login info", event.getRequest().getCode()));
         }
     }
 
-    private void registerNewLoggedUser(Worker sender, AccountInfo accountInfo) {
-        accountInfo.setState(AccountInfo.STATE_ONLINE);
-        sender.setAccount(accountInfo);
-        broadcastAccountInfoChanged(accountInfo);
+    private void registerNewLoggedUser(Worker sender, Profile profile) {
+        profile.setState(Profile.STATE_ONLINE);
+        sender.setAccount(profile);
+        broadcastAccountInfoChanged(profile);
     }
 
     private Response authenticate(LoginInfo loginInfo) {
-        AccountInfo accountInfo = accountManager.findAccountByLoginInfo(loginInfo);
-        if (accountInfo == null)
+        Profile profile = accountManager.findAccountByLoginInfo(loginInfo);
+        if (profile == null)
             return failResponse("Wrong username or password", RequestCode.Login);
 
         LookupWorkerEvent event = new LookupWorkerEvent();
-        event.setMatchedAccount(accountInfo);
+        event.setMatchedAccount(profile);
         post(event);
 
         Worker matchedWorker = event.getMatchedWorker();
         if (matchedWorker != null) {
             return failResponse("Already logged in other place", RequestCode.Login);
         } else {
-            return okResponse(accountInfo, RequestCode.Login);
+            return okResponse(profile, RequestCode.Login);
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.server.model.handler;
 
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.bean.Response;
 import com.blogspot.sontx.chatsocket.server.event.RequestReceivedEvent;
 import com.blogspot.sontx.chatsocket.server.model.account.AccountManager;
@@ -20,10 +20,10 @@ class FriendListRequestHandler extends AbstractRequestHandler {
 
     @Override
     Response handleWithAuthenticated(RequestReceivedEvent event) throws Exception {
-        List<AccountInfo> accounts = accountManager.getAllAccounts();
+        List<Profile> accounts = accountManager.getAllAccounts();
 
-        int exceptId = event.getAccountInfo().getAccountId();
-        List<AccountInfo> friends = accounts
+        int exceptId = event.getProfile().getAccountId();
+        List<Profile> friends = accounts
                 .stream()
                 .filter(account -> account.getAccountId() != exceptId)
                 .collect(Collectors.toList());

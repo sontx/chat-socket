@@ -4,7 +4,7 @@ import com.blogspot.sontx.chatsocket.client.view.FriendListView;
 import com.blogspot.sontx.chatsocket.client.view.swing.custom.FriendCellRenderer;
 import com.blogspot.sontx.chatsocket.client.view.swing.custom.FriendEntry;
 import com.blogspot.sontx.chatsocket.lib.Callback;
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
 import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.ClickableJLabel;
@@ -25,7 +25,7 @@ class FriendListWindow extends BaseSwingWindow implements FriendListView, Action
     @Setter
     private Runnable myInfoButtonClickListener;
     @Setter
-    private Callback<AccountInfo> friendButtonClickListener;
+    private Callback<Profile> friendButtonClickListener;
 
     @Override
     protected void initializeComponents() {
@@ -59,9 +59,9 @@ class FriendListWindow extends BaseSwingWindow implements FriendListView, Action
     }
 
     @Override
-    public void setFriendList(List<AccountInfo> friendAccountInfoList) {
+    public void setFriendList(List<Profile> friendProfileList) {
         DefaultListModel<FriendEntry> friendEntities = getFriendEntities();
-        for (AccountInfo friend : friendAccountInfoList) {
+        for (Profile friend : friendProfileList) {
             friendEntities.addElement(new FriendEntry(friend));
         }
     }
@@ -77,9 +77,9 @@ class FriendListWindow extends BaseSwingWindow implements FriendListView, Action
     }
 
     @Override
-    public void setMyAccountInfo(AccountInfo accountInfo) {
-        if (accountInfo != null) {
-            myInfoField.setText(accountInfo.getStatus());
+    public void setMyAccountInfo(Profile profile) {
+        if (profile != null) {
+            myInfoField.setText(profile.getStatus());
             displayMyInfoIcon("online.png");
         } else {
             myInfoField.setText("");
@@ -88,7 +88,7 @@ class FriendListWindow extends BaseSwingWindow implements FriendListView, Action
     }
 
     @Override
-    public void updateFriend(AccountInfo friend) {
+    public void updateFriend(Profile friend) {
         DefaultListModel<FriendEntry> friendEntities = getFriendEntities();
         int count = friendEntities.size();
         for (int i = 0; i < count; i++) {
@@ -101,7 +101,7 @@ class FriendListWindow extends BaseSwingWindow implements FriendListView, Action
     }
 
     @Override
-    public void addNewFriend(AccountInfo newFriendInfo) {
+    public void addNewFriend(Profile newFriendInfo) {
         DefaultListModel<FriendEntry> friendEntries = getFriendEntities();
         friendEntries.addElement(new FriendEntry(newFriendInfo));
     }
@@ -119,7 +119,7 @@ class FriendListWindow extends BaseSwingWindow implements FriendListView, Action
                 int where = friendList.locationToIndex(e.getPoint());
                 if (where > -1) {
                     FriendEntry friendEntry = friendList.getModel().getElementAt(where);
-                    AccountInfo friend = friendEntry.getAccountInfo();
+                    Profile friend = friendEntry.getProfile();
                     if (friendButtonClickListener != null)
                         friendButtonClickListener.call(friend);
                 }

@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.server.model.handler;
 
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.bean.Request;
 import com.blogspot.sontx.chatsocket.lib.bean.Response;
 import com.blogspot.sontx.chatsocket.lib.utils.Security;
@@ -20,10 +20,10 @@ class UpdateProfileRequestHandler extends AbstractRequestHandler {
     @Override
     Response handleWithAuthenticated(RequestReceivedEvent event) throws Exception {
         Request request = event.getRequest();
-        if (request.getExtra() != null && request.getExtra() instanceof AccountInfo) {
-            AccountInfo updateFrom = (AccountInfo) request.getExtra();
+        if (request.getExtra() != null && request.getExtra() instanceof Profile) {
+            Profile updateFrom = (Profile) request.getExtra();
             if (Security.checkValidDisplayName(updateFrom.getDisplayName())) {
-                AccountInfo updateTo = event.getAccountInfo();
+                Profile updateTo = event.getProfile();
                 updateTo.setDisplayName(updateFrom.getDisplayName());
                 updateTo.setStatus(updateFrom.getStatus());
 

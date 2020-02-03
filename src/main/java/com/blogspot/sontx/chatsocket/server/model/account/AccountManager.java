@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.server.model.account;
 
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.bean.LoginInfo;
 
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.List;
  */
 public interface AccountManager {
 
-    List<AccountInfo> getAllAccounts();
+    List<Profile> getAllAccounts();
 
-    AccountInfo findAccountByLoginInfo(LoginInfo loginInfo);
+    Profile findAccountByLoginInfo(LoginInfo loginInfo);
 
     void setPasswordHash(int accountId, String passwordHash);
 
-    AccountInfo findAccountByUserName(String username);
+    Profile findAccountByUserName(String username);
 
-    AccountInfo addAccount(String username, String passwordHash, String displayName);
+    Profile addAccount(String username, String passwordHash, String displayName);
 
-    void updateDetail(AccountInfo accountInfo);
+    void updateDetail(Profile profile);
 }

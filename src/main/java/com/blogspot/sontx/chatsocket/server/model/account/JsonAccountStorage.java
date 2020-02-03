@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.server.model.account;
 
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.CollectionType;
@@ -32,8 +32,8 @@ public class JsonAccountStorage implements AccountStorage {
             CollectionType destType = TypeFactory.defaultInstance().constructCollectionType(List.class, Account.class);
             List<Account> accounts = new ObjectMapper().readValue(storeFile, destType);
             accounts.forEach(account -> {
-                account.getDetail().setAccountId(account.getId());
-                account.getDetail().setState(AccountInfo.STATE_OFFLINE);
+                account.getProfile().setAccountId(account.getId());
+                account.getProfile().setState(Profile.STATE_OFFLINE);
             });
             this.accounts = new CopyOnWriteArrayList<>(accounts);
         }
@@ -65,7 +65,7 @@ public class JsonAccountStorage implements AccountStorage {
     private void reinforce(Account account) {
         int freeId = computeFreeId();
         account.setId(freeId);
-        account.getDetail().setAccountId(freeId);
+        account.getProfile().setAccountId(freeId);
     }
 
     private int computeFreeId() {
@@ -100,19 +100,19 @@ public class JsonAccountStorage implements AccountStorage {
     }
 
     @Override
-    public void updateDetail(int accountId, AccountInfo accountInfo) {
+    public void updateDetail(int accountId, Profile profile) {
         accounts
                 .stream()
                 .filter(account -> account.getId() == accountId)
                 .findFirst()
-                .ifPresent((Account account) -> updateDetail(account, accountInfo));
+                .ifPresent((Account account) -> updateDetail(account, profile));
 
         saveToFile();
     }
 
-    private void updateDetail(Account account, AccountInfo detail) {
-        account.getDetail().setDisplayName(detail.getDisplayName());
-        account.getDetail().setStatus(detail.getStatus());
+    private void updateDetail(Account account, Profile detail) {
+        account.getProfile().setDisplayName(detail.getDisplayName());
+        account.getProfile().setStatus(detail.getStatus());
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.blogspot.sontx.chatsocket.client.view.javafx;
 import com.blogspot.sontx.chatsocket.client.view.FriendListView;
 import com.blogspot.sontx.chatsocket.client.view.javafx.custom.FriendListViewCell;
 import com.blogspot.sontx.chatsocket.lib.Callback;
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,17 +18,17 @@ import java.util.List;
 import java.util.Optional;
 
 class FriendListWindow extends BaseJavaFxWindow implements FriendListView {
-    private final ObservableList<AccountInfo> friends = FXCollections.observableArrayList();
+    private final ObservableList<Profile> friends = FXCollections.observableArrayList();
     @FXML
     private Label statusLabel;
     @FXML
     private ImageView avatarImageView;
     @FXML
-    private ListView<AccountInfo> friendListView;
+    private ListView<Profile> friendListView;
     @Setter
     private Runnable myInfoButtonClickListener;
     @Setter
-    private Callback<AccountInfo> friendButtonClickListener;
+    private Callback<Profile> friendButtonClickListener;
 
     FriendListWindow() {
         init(this, "friend-list-window.fxml");
@@ -39,7 +39,7 @@ class FriendListWindow extends BaseJavaFxWindow implements FriendListView {
     @FXML
     private void onListViewItemClick(MouseEvent event) {
         if (event.getClickCount() == 2) {
-            AccountInfo selectedItem = friendListView.getSelectionModel().getSelectedItem();
+            Profile selectedItem = friendListView.getSelectionModel().getSelectedItem();
             if (friendButtonClickListener != null && selectedItem != null)
                 friendButtonClickListener.call(selectedItem);
         }
@@ -52,22 +52,22 @@ class FriendListWindow extends BaseJavaFxWindow implements FriendListView {
     }
 
     @Override
-    public void setFriendList(List<AccountInfo> friendAccountInfoList) {
-        friends.addAll(friendAccountInfoList);
+    public void setFriendList(List<Profile> friendProfileList) {
+        friends.addAll(friendProfileList);
     }
 
     @Override
-    public void setMyAccountInfo(AccountInfo accountInfo) {
-        if (accountInfo != null) {
-            statusLabel.setText(accountInfo.getStatus());
+    public void setMyAccountInfo(Profile profile) {
+        if (profile != null) {
+            statusLabel.setText(profile.getStatus());
         } else {
             statusLabel.setText("Hi there!");
         }
     }
 
     @Override
-    public void updateFriend(AccountInfo friendInfo) {
-        Optional<AccountInfo> matchedFriend = friends
+    public void updateFriend(Profile friendInfo) {
+        Optional<Profile> matchedFriend = friends
                 .stream()
                 .filter(accountInfo -> accountInfo.getAccountId() == friendInfo.getAccountId())
                 .findFirst();
@@ -76,7 +76,7 @@ class FriendListWindow extends BaseJavaFxWindow implements FriendListView {
     }
 
     @Override
-    public void addNewFriend(AccountInfo newFriendInfo) {
+    public void addNewFriend(Profile newFriendInfo) {
         friends.add(newFriendInfo);
     }
 }

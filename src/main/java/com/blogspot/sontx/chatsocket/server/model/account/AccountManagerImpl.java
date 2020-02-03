@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.server.model.account;
 
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.bean.LoginInfo;
 import com.blogspot.sontx.chatsocket.lib.utils.Security;
 
@@ -16,17 +16,17 @@ public class AccountManagerImpl implements AccountManager {
     }
 
     @Override
-    public List<AccountInfo> getAllAccounts() {
+    public List<Profile> getAllAccounts() {
         List<Account> accounts = accountStorage.findAll();
-        return accounts.stream().map(Account::getDetail).collect(Collectors.toList());
+        return accounts.stream().map(Account::getProfile).collect(Collectors.toList());
     }
 
     @Override
-    public AccountInfo findAccountByLoginInfo(LoginInfo loginInfo) {
+    public Profile findAccountByLoginInfo(LoginInfo loginInfo) {
         Optional<Account> account = accountStorage.findByUserName(loginInfo.getUsername());
         String passwordHash = Security.getPasswordHash(loginInfo.getPassword());
         if (account.isPresent() && account.get().getPasswordHash().equals(passwordHash))
-            return account.get().getDetail();
+            return account.get().getProfile();
         return null;
     }
 
@@ -38,25 +38,25 @@ public class AccountManagerImpl implements AccountManager {
     }
 
     @Override
-    public AccountInfo findAccountByUserName(String username) {
+    public Profile findAccountByUserName(String username) {
         Optional<Account> account = accountStorage.findByUserName(username);
-        return account.map(Account::getDetail).orElse(null);
+        return account.map(Account::getProfile).orElse(null);
     }
 
     @Override
-    public AccountInfo addAccount(String username, String passwordHash, String displayName) {
+    public Profile addAccount(String username, String passwordHash, String displayName) {
         Account account = new Account();
         account.setUsername(username);
         account.setPasswordHash(passwordHash);
-        AccountInfo accountInfo = new AccountInfo();
-        accountInfo.setDisplayName(displayName);
-        accountInfo.setState(AccountInfo.STATE_OFFLINE);
-        account.setDetail(accountInfo);
-        return accountStorage.add(account).getDetail();
+        Profile profile = new Profile();
+        profile.setDisplayName(displayName);
+        profile.setState(Profile.STATE_OFFLINE);
+        account.setProfile(profile);
+        return accountStorage.add(account).getProfile();
     }
 
     @Override
-    public void updateDetail(AccountInfo accountInfo) {
-        accountStorage.updateDetail(accountInfo.getAccountId(), accountInfo);
+    public void updateDetail(Profile profile) {
+        accountStorage.updateDetail(profile.getAccountId(), profile);
     }
 }

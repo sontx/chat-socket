@@ -1,7 +1,7 @@
 package com.blogspot.sontx.chatsocket.client.model.handler;
 
 import com.blogspot.sontx.chatsocket.client.event.FriendListReceivedEvent;
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.bean.Response;
 import com.blogspot.sontx.chatsocket.lib.bean.ResponseCode;
 import com.blogspot.sontx.chatsocket.lib.bo.ObjectTransmission;
@@ -13,7 +13,7 @@ public class FriendListResponseHandler extends AbstractResponseHandler {
     @SuppressWarnings("unchecked")
     public void handle(ObjectTransmission transmission, Response response) throws Exception {
         if (response.getCode() == ResponseCode.OK) {
-            post(new FriendListReceivedEvent((List<AccountInfo>) response.getExtra()));
+            post(new FriendListReceivedEvent((List<Profile>) response.getExtra()));
         } else {
             showErrorMessage("Can not fetch friend list", response.getExtra());
         }

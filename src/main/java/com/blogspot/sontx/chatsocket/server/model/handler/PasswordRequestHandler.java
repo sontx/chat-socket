@@ -22,7 +22,7 @@ class PasswordRequestHandler extends AbstractRequestHandler {
         if (request.getExtra() != null && Security.checkValidPassword(request.getExtra().toString())) {
             String password = request.getExtra().toString();
             String passwordHash = Security.getPasswordHash(password);
-            accountManager.setPasswordHash(event.getAccountInfo().getAccountId(), passwordHash);
+            accountManager.setPasswordHash(event.getProfile().getAccountId(), passwordHash);
             return okResponse(null, event.getRequest().getCode());
         }
         return failResponse("Invalid password.", event.getRequest().getCode());

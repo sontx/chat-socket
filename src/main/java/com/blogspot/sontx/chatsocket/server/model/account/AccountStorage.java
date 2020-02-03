@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.server.model.account;
 
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ public interface AccountStorage {
 
     List<Account> findAll();
 
-    void updateDetail(int accountId, AccountInfo accountInfo);
+    void updateDetail(int accountId, Profile profile);
 
     void updatePasswordHash(int accountId, String passwordHash);
 }

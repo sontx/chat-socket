@@ -1,7 +1,7 @@
 package com.blogspot.sontx.chatsocket.client.model;
 
 import com.blogspot.sontx.chatsocket.client.event.*;
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.bean.ChatMessage;
 import com.blogspot.sontx.chatsocket.lib.bean.Response;
 import com.blogspot.sontx.chatsocket.lib.bean.ResponseCode;
@@ -47,40 +47,40 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
         synchronized (lock) {
             return managedFriends
                     .stream()
-                    .anyMatch(friend -> friend.accountInfo.getAccountId() == friendId && friend.isChattingWith);
+                    .anyMatch(friend -> friend.profile.getAccountId() == friendId && friend.isChattingWith);
         }
     }
 
     private void openChatWindow(int friendId) {
         Optional<ManagedFriend> foundFriend = managedFriends
                 .stream()
-                .filter(friend -> friend.accountInfo.getAccountId() == friendId)
+                .filter(friend -> friend.profile.getAccountId() == friendId)
                 .findFirst();
 
         foundFriend.ifPresent(this::openChatWindow);
     }
 
     private void openChatWindow(ManagedFriend friend) {
-        post(new OpenChatEvent(friend.accountInfo));
+        post(new OpenChatEvent(friend.profile));
         friend.isChattingWith = true;
     }
 
-    private void updateCurrentManagedFriends(List<AccountInfo> updatedFriends) {
+    private void updateCurrentManagedFriends(List<Profile> updatedFriends) {
         for (ManagedFriend managedFriend : managedFriends) {
-            for (AccountInfo updatedFriend : updatedFriends) {
-                if (updatedFriend.getAccountId() == managedFriend.accountInfo.getAccountId()) {
-                    managedFriend.accountInfo = updatedFriend;
+            for (Profile updatedFriend : updatedFriends) {
+                if (updatedFriend.getAccountId() == managedFriend.profile.getAccountId()) {
+                    managedFriend.profile = updatedFriend;
                 }
             }
         }
     }
 
-    private void addNewManagedFriends(List<AccountInfo> updatedFriends) {
-        List<AccountInfo> newFriends = updatedFriends
+    private void addNewManagedFriends(List<Profile> updatedFriends) {
+        List<Profile> newFriends = updatedFriends
                 .stream()
                 .filter(updatedFriend -> managedFriends
                         .stream()
-                        .noneMatch(managedFriend -> managedFriend.accountInfo.getAccountId() == updatedFriend.getAccountId()))
+                        .noneMatch(managedFriend -> managedFriend.profile.getAccountId() == updatedFriend.getAccountId()))
                 .collect(Collectors.toList());
 
         managedFriends.addAll(newFriends
@@ -92,7 +92,7 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
     private void setChattingWithState(int friendId, boolean isChattingWith) {
         synchronized (lock) {
             managedFriends.forEach(managedFriend -> {
-                if (managedFriend.accountInfo.getAccountId() == friendId) {
+                if (managedFriend.profile.getAccountId() == friendId) {
                     managedFriend.isChattingWith = isChattingWith;
                 }
             });
@@ -107,33 +107,33 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
     @Subscribe
     public void onChatWindowClosed(ChatWindowClosedEvent event) {
         runOnUiThread(() -> {
-            AccountInfo chatWith = event.getChatWith();
+            Profile chatWith = event.getChatWith();
             setChattingWithState(chatWith.getAccountId(), false);
         });
     }
 
     @Subscribe
     public void onFriendListReceived(FriendListReceivedEvent event) {
-        List<AccountInfo> updatedFriends = event.getFriendList();
+        List<Profile> updatedFriends = event.getFriendList();
         updateManagedFriends(updatedFriends);
     }
 
-    private void updateManagedFriends(List<AccountInfo> updatedFriends) {
+    private void updateManagedFriends(List<Profile> updatedFriends) {
         updateCurrentManagedFriends(updatedFriends);
         addNewManagedFriends(updatedFriends);
     }
 
     @Subscribe
     public void onFriendInfoChanged(FriendInfoChangedEvent event) {
-        AccountInfo newFriendInfo = event.getNewFriendInfo();
-        List<AccountInfo> updatedFriends = Collections.singletonList(newFriendInfo);
+        Profile newFriendInfo = event.getNewFriendInfo();
+        List<Profile> updatedFriends = Collections.singletonList(newFriendInfo);
         updateManagedFriends(updatedFriends);
     }
 
     @Data
     @AllArgsConstructor
     private static class ManagedFriend {
-        private AccountInfo accountInfo;
+        private Profile profile;
         private boolean isChattingWith;
     }
 }

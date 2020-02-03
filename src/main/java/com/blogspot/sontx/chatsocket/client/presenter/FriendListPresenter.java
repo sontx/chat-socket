@@ -3,7 +3,7 @@ package com.blogspot.sontx.chatsocket.client.presenter;
 import com.blogspot.sontx.chatsocket.AppConfig;
 import com.blogspot.sontx.chatsocket.client.event.*;
 import com.blogspot.sontx.chatsocket.client.view.FriendListView;
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.google.common.eventbus.Subscribe;
 
@@ -12,8 +12,8 @@ import java.util.List;
 
 public class FriendListPresenter extends AbstractService implements Presenter {
     private final FriendListView friendListView;
-    private AccountInfo myAccountInfo;
-    private List<AccountInfo> friendList;
+    private Profile myProfile;
+    private List<Profile> friendList;
 
     public FriendListPresenter(FriendListView friendListView) {
         this.friendListView = friendListView;
@@ -27,13 +27,13 @@ public class FriendListPresenter extends AbstractService implements Presenter {
     }
 
     private void openMyProfile() {
-        AccountInfo accountInfo = myAccountInfo;
-        if (accountInfo != null) {
-            post(new OpenMyProfileEvent(accountInfo));
+        Profile profile = myProfile;
+        if (profile != null) {
+            post(new OpenMyProfileEvent(profile));
         }
     }
 
-    private void openChat(AccountInfo friend) {
+    private void openChat(Profile friend) {
         if (friend != null) {
             post(new OpenChatEvent(friend));
         }
@@ -55,15 +55,15 @@ public class FriendListPresenter extends AbstractService implements Presenter {
 
     @Subscribe
     public void onMyAccountInfoReceived(MyAccountInfoReceivedEvent event) {
-        runOnUiThread(() -> setMyAccountInfo(event.getMyAccountInfo()));
+        runOnUiThread(() -> setMyProfile(event.getMyProfile()));
     }
 
-    public void setMyAccountInfo(AccountInfo myAccountInfo) {
-        this.myAccountInfo = myAccountInfo;
-        friendListView.setMyAccountInfo(this.myAccountInfo);
+    public void setMyProfile(Profile myProfile) {
+        this.myProfile = myProfile;
+        friendListView.setMyAccountInfo(this.myProfile);
         String appName = AppConfig.getDefault().getAppName();
-        if (this.myAccountInfo != null)
-            friendListView.setTitle(String.format("%s [%s]", appName, this.myAccountInfo.getDisplayName()));
+        if (this.myProfile != null)
+            friendListView.setTitle(String.format("%s [%s]", appName, this.myProfile.getDisplayName()));
         else
             friendListView.setTitle(appName);
     }
@@ -79,7 +79,7 @@ public class FriendListPresenter extends AbstractService implements Presenter {
     @Subscribe
     public void onFriendInfoChanged(FriendInfoChangedEvent event) {
         runOnUiThread(() -> {
-            AccountInfo newFriendInfo = event.getNewFriendInfo();
+            Profile newFriendInfo = event.getNewFriendInfo();
 
             if (friendList == null)
                 friendList = new ArrayList<>();

@@ -22,7 +22,7 @@ public class SocketWorker extends BackgroundService implements Worker {
     private final DefaultObjectTransmission objectTransmission;
     private final int sessionId;
     private final Object lock = new Object();
-    private AccountInfo account;
+    private Profile account;
     private volatile boolean closing;
     private volatile boolean alreadyShutdown;
 
@@ -78,10 +78,10 @@ public class SocketWorker extends BackgroundService implements Worker {
         closing = true;
 
         StreamUtils.tryCloseStream(objectTransmission);
-        AccountInfo accountInfo = account;
-        if (accountInfo != null) {
-            accountInfo.setState(AccountInfo.STATE_OFFLINE);
-            post(new AccountInfoChangedEvent(accountInfo));
+        Profile profile = account;
+        if (profile != null) {
+            profile.setState(Profile.STATE_OFFLINE);
+            post(new AccountInfoChangedEvent(profile));
         }
 
         alreadyShutdown = true;
@@ -135,7 +135,7 @@ public class SocketWorker extends BackgroundService implements Worker {
     }
 
     @Override
-    public void setAccount(AccountInfo account) {
+    public void setAccount(Profile account) {
         synchronized (lock) {
             this.account = account;
         }
@@ -144,11 +144,11 @@ public class SocketWorker extends BackgroundService implements Worker {
     @Subscribe
     public void onAccountInfoChanged(AccountInfoChangedEvent event) {
         runAsync(() -> {
-            if (!itIsMe(event.getAccountInfo().getAccountId())) {
+            if (!itIsMe(event.getProfile().getAccountId())) {
                 Response result = new Response();
                 result.setCode(ResponseCode.OK);
                 result.setRequestCode(RequestCode.FriendInfoUpdated);
-                result.setExtra(event.getAccountInfo());
+                result.setExtra(event.getProfile());
                 try {
                     response(result);
                 } catch (IOException e) {

@@ -88,7 +88,7 @@ public class AppClientImpl extends Component implements AppClient {
     private void openMainWindow() {
         FriendListPresenter friendListPresenter = new FriendListPresenter(create(FriendListView.class));
         startPresenter(friendListPresenter);
-        friendListPresenter.setMyAccountInfo(userProfile);
+        friendListPresenter.setMyProfile(userProfile);
     }
 
     @Subscribe

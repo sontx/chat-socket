@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.server.model;
 
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 
 import java.io.IOException;
 
@@ -12,5 +12,5 @@ public interface Worker {
 
     void response(Object obj) throws IOException;
 
-    void setAccount(AccountInfo account);
+    void setAccount(Profile account);
 }

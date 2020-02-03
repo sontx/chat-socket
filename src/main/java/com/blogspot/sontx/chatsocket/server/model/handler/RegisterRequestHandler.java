@@ -23,8 +23,8 @@ class RegisterRequestHandler extends AbstractRequestHandler {
         if (request.getExtra() instanceof RegisterInfo) {
             Response result = register((RegisterInfo) request.getExtra());
             if (result.getCode() == ResponseCode.OK) {
-                AccountInfo accountInfo = (AccountInfo) result.getExtra();
-                broadcastAccountInfoChanged(accountInfo);
+                Profile profile = (Profile) result.getExtra();
+                broadcastAccountInfoChanged(profile);
             }
             sender.response(result);
         } else {
@@ -39,13 +39,13 @@ class RegisterRequestHandler extends AbstractRequestHandler {
             return failResponse("Invalid register info.", RequestCode.Register);
 
         String username = registerInfo.getUsername().trim();
-        AccountInfo accountInfo = accountManager.findAccountByUserName(username);
-        if (accountInfo != null)
+        Profile profile = accountManager.findAccountByUserName(username);
+        if (profile != null)
             return failResponse("Username already exists", RequestCode.Register);
 
         String passwordHash = Security.getPasswordHash(registerInfo.getPassword());
         String displayName = registerInfo.getDisplayName().trim();
-        accountInfo = accountManager.addAccount(username, passwordHash, displayName);
-        return okResponse(accountInfo, RequestCode.Register);
+        profile = accountManager.addAccount(username, passwordHash, displayName);
+        return okResponse(profile, RequestCode.Register);
     }
 }

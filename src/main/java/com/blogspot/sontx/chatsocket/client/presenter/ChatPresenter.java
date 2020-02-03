@@ -5,7 +5,7 @@ import com.blogspot.sontx.chatsocket.client.event.ChatWindowClosedEvent;
 import com.blogspot.sontx.chatsocket.client.event.FriendInfoChangedEvent;
 import com.blogspot.sontx.chatsocket.client.event.SendChatMessageEvent;
 import com.blogspot.sontx.chatsocket.client.view.ChatView;
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.bean.ChatMessage;
 import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.google.common.eventbus.Subscribe;
@@ -13,9 +13,9 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ChatPresenter extends AbstractService implements Presenter {
     private final ChatView chatView;
-    private AccountInfo chatWith;
+    private Profile chatWith;
 
-    public ChatPresenter(ChatView chatView, AccountInfo chatWith) {
+    public ChatPresenter(ChatView chatView, Profile chatWith) {
         this.chatView = chatView;
         this.chatWith = chatWith;
         wireUpViewEvents();
@@ -60,7 +60,7 @@ public class ChatPresenter extends AbstractService implements Presenter {
     @Subscribe
     public void onFriendInfoChanged(FriendInfoChangedEvent event) {
         runOnUiThread(() -> {
-            AccountInfo newFriendInfo = event.getNewFriendInfo();
+            Profile newFriendInfo = event.getNewFriendInfo();
             if (newFriendInfo.getAccountId() == chatWith.getAccountId()) {
                 chatView.setTitle(newFriendInfo.getDisplayName());
                 chatWith = newFriendInfo;

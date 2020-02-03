@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.server.model.handler;
 
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.bean.RequestCode;
 import com.blogspot.sontx.chatsocket.lib.bean.Response;
 import com.blogspot.sontx.chatsocket.lib.bean.ResponseCode;
@@ -41,10 +41,10 @@ abstract class AbstractRequestHandler extends AbstractService implements Request
     }
 
     private boolean authenticate(RequestReceivedEvent event) {
-        return event.getRequest() != null && event.getAccountInfo() != null;
+        return event.getRequest() != null && event.getProfile() != null;
     }
 
-    void broadcastAccountInfoChanged(AccountInfo accountInfo) {
-        post(new AccountInfoChangedEvent(accountInfo));
+    void broadcastAccountInfoChanged(Profile profile) {
+        post(new AccountInfoChangedEvent(profile));
     }
 }

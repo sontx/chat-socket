@@ -13,13 +13,13 @@ class ChatMessageRequestHandler extends AbstractRequestHandler {
     Response handleWithAuthenticated(RequestReceivedEvent event) throws Exception {
         Request request = event.getRequest();
         if (request.getExtra() instanceof ChatMessage)
-            return forwardChatMessage((ChatMessage) request.getExtra(), event.getAccountInfo());
+            return forwardChatMessage((ChatMessage) request.getExtra(), event.getProfile());
         return failResponse("Extra must be chat message.", event.getRequest().getCode());
     }
 
-    private Response forwardChatMessage(ChatMessage chatMessage, AccountInfo accountInfo) {
+    private Response forwardChatMessage(ChatMessage chatMessage, Profile profile) {
         int receiverId = chatMessage.getWhoId();
-        int senderId = accountInfo.getAccountId();
+        int senderId = profile.getAccountId();
 
         ChatMessage forwardMessage = new ChatMessage(senderId, chatMessage.getContent());
 

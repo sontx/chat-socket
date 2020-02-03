@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.server.event;
 
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountInfoChangedEvent {
-    private AccountInfo accountInfo;
+    private Profile profile;
 }

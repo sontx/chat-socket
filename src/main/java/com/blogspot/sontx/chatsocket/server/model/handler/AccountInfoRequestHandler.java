@@ -9,6 +9,6 @@ import com.blogspot.sontx.chatsocket.server.event.RequestReceivedEvent;
 class AccountInfoRequestHandler extends AbstractRequestHandler {
     @Override
     Response handleWithAuthenticated(RequestReceivedEvent event) throws Exception {
-        return okResponse(event.getAccountInfo(), event.getRequest().getCode());
+        return okResponse(event.getProfile(), event.getRequest().getCode());
     }
 }

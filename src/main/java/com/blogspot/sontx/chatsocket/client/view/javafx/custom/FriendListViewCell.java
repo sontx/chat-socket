@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.client.view.javafx.custom;
 
-import com.blogspot.sontx.chatsocket.lib.bean.AccountInfo;
+import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
 import com.blogspot.sontx.chatsocket.lib.bo.LayoutsResource;
 import javafx.fxml.FXML;
@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j;
 import java.io.IOException;
 
 @Log4j
-public class FriendListViewCell extends ListCell<AccountInfo> {
+public class FriendListViewCell extends ListCell<Profile> {
     @FXML
     private Label displayNameLabel;
     @FXML
@@ -40,7 +40,7 @@ public class FriendListViewCell extends ListCell<AccountInfo> {
     }
 
     @Override
-    protected void updateItem(AccountInfo item, boolean empty) {
+    protected void updateItem(Profile item, boolean empty) {
         super.updateItem(item, empty);
         if (empty || item == null) {
             displayNameLabel.setText("");

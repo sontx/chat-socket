@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @EqualsAndHashCode(of = "accountId")
-public class AccountInfo implements Serializable {
+public class Profile implements Serializable {
     public static final int STATE_ONLINE = 0;
     public static final int STATE_OFFLINE = 1;
     private static final long serialVersionUID = -4193811689167914857L;
