@@ -9,6 +9,8 @@ import com.blogspot.sontx.chatsocket.server.platform.ServerSwingPlatform;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.cli.*;
 
+import java.util.Scanner;
+
 /**
  * Starts client/server based on application's arguments.
  * <p>
@@ -31,7 +33,7 @@ class Bootstrap {
     private void initializeOptions() {
         options = new Options();
         options.addOption("h", "help", false, "Show help.");
-        options.addRequiredOption("m", "mode", true, "The app should be run as client/server mode.");
+        options.addOption("m", "mode", true, "The app should be run as client/server mode.");
         options.addOption("ui", "uistyle", true, "UI style will be shown (swing/javafx)");
     }
 
@@ -47,15 +49,29 @@ class Bootstrap {
                 startServer(commandLine.getOptionValue("ui"));
             else
                 showHelp();
+        } else {
+            askUser();
         }
     }
 
-    private void startClient(String uistyle) {
-        new AppClientImpl().start("swing".equals(uistyle) ? new ClientSwingPlatform() : new ClientJavaFxPlatform());
+    private void askUser() {
+        System.out.print("Working mode was not supplied, please enter your mode (client/server): ");
+        Scanner scanner = new Scanner(System.in);
+        String mode = scanner.nextLine();
+        if (mode.equals("client"))
+            startClient(null);
+        else if (mode.equals("server"))
+            startServer(null);
     }
 
-    private void startServer(String uistyle) {
-        new AppServerImpl().start("swing".equals(uistyle) ? new ServerSwingPlatform() : new ServerJavaFxPlatform());
+    private void startClient(String uiStyle) {
+        log.info("Starting app as client");
+        new AppClientImpl().start("swing".equals(uiStyle) ? new ClientSwingPlatform() : new ClientJavaFxPlatform());
+    }
+
+    private void startServer(String uiStyle) {
+        log.info("Starting app as server");
+        new AppServerImpl().start("swing".equals(uiStyle) ? new ServerSwingPlatform() : new ServerJavaFxPlatform());
     }
 
     private CommandLine parseArgs(String[] args) {

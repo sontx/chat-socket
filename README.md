@@ -4,25 +4,33 @@
 
 **chat-socket** is a simple chat application includes chat client and chat server.
 Support multiple users, private chat, and personal status.
-This project is based on TCP socket, multithreading, Java serialization, and JSON.
+This project is based on TCP socket, multi-threading, JavaFx, Java Swing, Java serialization, and JSON.
 
 <a href="https://youtu.be/tIEG-Q6liXw">
 <img src="https://3.bp.blogspot.com/-4mgFXugXUps/WzcobCOOhOI/AAAAAAAAVOY/y9D8YMwETGUIrElK5rJy_XT2l_6iO1s7QCLcBGAs/s1600/client-friendlist.PNG">
 </a>
 
-## Installation
-Download the [binary file](https://github.com/sontx/chat-socket/releases) or clone this project and use your favorite IDE to
-customize then rebuild by:
+## Prerequisites
+To compile this project, you need to install these things:
 
-1. Run `install.bat` in [scripts](https://github.com/sontx/chat-socket/tree/master/scripts) folder.
-1. `mvn clean compile assembly:single` (the binary file will be placed in **target** folder)
+- [jdk8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [maven](https://maven.apache.org/download.cgi)
 
-> This project requires [jdk 1.8 or later](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+## Installing
+Build (binary file will be placed in **target** directory):
+```bash
+mvn clean compile assembly:single
+```
+
+Run (will ask you for working mode):
+```bash
+mvn exec:java
+```
 
 ## Usage
-Both server and client are in **homechat.jar**.
-1. Server app: run `server.bat`/`server.sh` or `java -jar homechat.jar --mode=server`
-2. Client app: run `client.bat`/`client.sh` or `java -jar homechat.jar --mode=client`
+Both server and client are in **chatsocket-x.y-SNAPSHOT-jar-with-dependencies.jar** (to get this jar file you need to build this project).
+1. Server app: `java -jar homechat.jar --mode=server`
+2. Client app: `java -jar homechat.jar --mode=client`
 
 ### Server
 The server needs to listen to an IP and a port number, other clients will connect to this address.
@@ -31,9 +39,17 @@ Fill up these boxes and click on **Start** button to start the server.
 ![](https://1.bp.blogspot.com/-kB7oA2W7bcc/WzcodYjgBtI/AAAAAAAAVOs/JBM-hmbCSoE9aWaZYSl77k0C0Ggm-kkZgCLcBGAs/s1600/server.PNG)
 
 All users data will be saved in **user.json** file.
-
-![](https://1.bp.blogspot.com/-3jSUQe1DRLY/WzcuV6DxROI/AAAAAAAAVPE/Ebh3KjveqG4kPMdfOvM2-mKjfjSpwMAbACLcBGAs/user-json.PNG)
-
+```json
+[ {
+  "id" : "7453f7f5105547179f0845cd03fe4eda",
+  "username" : "sontx",
+  "passwordHash" : "7c4a8d09ca3762af61e59520943dc26494f8941b",
+  "profile" : {
+    "displayName" : "Tran Xuan Son",
+    "status" : "I'm just a beginner"
+  }
+} ]
+```
 ### Client
 1. Connect to the server.
 
@@ -79,7 +95,7 @@ All users data will be saved in **user.json** file.
  - [**jdk 1.8**](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 ## Author
-Developed by sontx/noem, some useful information:
+Developed by sontx:
 
  - Home: [www.code4bugs.com](https://code4bugs.com)
  - Email: <a href="mailto:xuanson33bk@gmail.com">xuanson33bk@gmail.com</a>
