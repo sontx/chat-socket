@@ -22,10 +22,10 @@ class FriendListRequestHandler extends AbstractRequestHandler {
     Response handleWithAuthenticated(RequestReceivedEvent event) throws Exception {
         List<Profile> accounts = accountManager.getAllAccounts();
 
-        int exceptId = event.getProfile().getAccountId();
+        String exceptId = event.getProfile().getAccountId();
         List<Profile> friends = accounts
                 .stream()
-                .filter(account -> account.getAccountId() != exceptId)
+                .filter(account -> !account.getAccountId().equals(exceptId))
                 .collect(Collectors.toList());
 
         return okResponse(friends, event.getRequest().getCode());

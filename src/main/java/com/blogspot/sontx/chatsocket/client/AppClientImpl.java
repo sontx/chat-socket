@@ -22,7 +22,7 @@ import com.google.common.eventbus.Subscribe;
  * </pre>
  */
 public class AppClientImpl extends Component implements AppClient {
-    private final Profile userProfile = new Profile();
+    private final UserProfile userProfile = new UserProfile();
     private Client client;
     private ChattingManager chattingManager;
 

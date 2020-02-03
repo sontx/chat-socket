@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.client.view;
 
-import com.blogspot.sontx.chatsocket.client.model.Profile;
+import com.blogspot.sontx.chatsocket.client.model.UserProfile;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.view.BaseView;
 
@@ -11,5 +11,5 @@ public interface ProfileView extends BaseView {
 
     void setChangePasswordButtonClickListener(Callback<String> listener);
 
-    void setProfile(Profile profile);
+    void setProfile(UserProfile userProfile);
 }

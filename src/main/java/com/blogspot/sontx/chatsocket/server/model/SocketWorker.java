@@ -66,9 +66,9 @@ public class SocketWorker extends BackgroundService implements Worker {
             shutdownWorker();
     }
 
-    private boolean itIsMe(int accountId) {
+    private boolean itIsMe(String accountId) {
         synchronized (lock) {
-            return account != null && account.getAccountId() == accountId;
+            return account != null && account.getAccountId().equals(accountId);
         }
     }
 

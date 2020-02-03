@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Log4j
@@ -45,8 +46,8 @@ public class JsonAccountStorage implements AccountStorage {
     }
 
     @Override
-    public Optional<Account> findById(int id) {
-        return accounts.stream().filter(account -> account.getId() == id).findFirst();
+    public Optional<Account> findById(String id) {
+        return accounts.stream().filter(account -> account.getId().equals(id)).findFirst();
     }
 
     @Override
@@ -63,17 +64,12 @@ public class JsonAccountStorage implements AccountStorage {
     }
 
     private void reinforce(Account account) {
-        int freeId = computeFreeId();
-        account.setId(freeId);
-        account.getProfile().setAccountId(freeId);
-    }
-
-    private int computeFreeId() {
-        int maxId = -1;
-        for (Account account : accounts) {
-            maxId = Math.max(account.getId(), maxId);
-        }
-        return maxId + 1;
+        String uuid = UUID
+                .randomUUID()
+                .toString()
+                .replace("-", "");
+        account.setId(uuid);
+        account.getProfile().setAccountId(uuid);
     }
 
     private synchronized void saveToFile() {
@@ -100,10 +96,10 @@ public class JsonAccountStorage implements AccountStorage {
     }
 
     @Override
-    public void updateDetail(int accountId, Profile profile) {
+    public void updateDetail(String accountId, Profile profile) {
         accounts
                 .stream()
-                .filter(account -> account.getId() == accountId)
+                .filter(account -> account.getId().equals(accountId))
                 .findFirst()
                 .ifPresent((Account account) -> updateDetail(account, profile));
 
@@ -116,10 +112,10 @@ public class JsonAccountStorage implements AccountStorage {
     }
 
     @Override
-    public void updatePasswordHash(int accountId, String passwordHash) {
+    public void updatePasswordHash(String accountId, String passwordHash) {
         accounts
                 .stream()
-                .filter(account -> account.getId() == accountId)
+                .filter(account -> account.getId().equals(accountId))
                 .findFirst()
                 .ifPresent((Account account) -> account.setPasswordHash(passwordHash));
 

@@ -12,6 +12,6 @@ import java.io.Serializable;
 public class ChatMessage implements Serializable {
     private static final long serialVersionUID = 5140826547264710686L;
 
-    private int whoId;
+    private String whoId;
     private String content;
 }

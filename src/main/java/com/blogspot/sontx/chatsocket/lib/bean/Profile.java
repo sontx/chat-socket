@@ -13,7 +13,7 @@ public class Profile implements Serializable {
     public static final int STATE_OFFLINE = 1;
     private static final long serialVersionUID = -4193811689167914857L;
     @JsonIgnore
-    private int accountId;
+    private String accountId;
 
     private String displayName;
     private String status;

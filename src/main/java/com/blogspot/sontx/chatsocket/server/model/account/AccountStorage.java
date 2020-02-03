@@ -9,7 +9,7 @@ import java.util.Optional;
  * Reads/writes accounts data from/to storage.
  */
 public interface AccountStorage {
-    Optional<Account> findById(int id);
+    Optional<Account> findById(String id);
 
     Optional<Account> findByUserName(String username);
 
@@ -17,7 +17,7 @@ public interface AccountStorage {
 
     List<Account> findAll();
 
-    void updateDetail(int accountId, Profile profile);
+    void updateDetail(String accountId, Profile profile);
 
-    void updatePasswordHash(int accountId, String passwordHash);
+    void updatePasswordHash(String accountId, String passwordHash);
 }

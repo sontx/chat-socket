@@ -31,7 +31,7 @@ public class AccountManagerImpl implements AccountManager {
     }
 
     @Override
-    public void setPasswordHash(int accountId, String passwordHash) {
+    public void setPasswordHash(String accountId, String passwordHash) {
         Optional<Account> account = accountStorage.findById(accountId);
         account.ifPresent(presentAccount -> presentAccount.setPasswordHash(passwordHash));
         accountStorage.updatePasswordHash(accountId, passwordHash);

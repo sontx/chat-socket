@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ForwardChatMessageEvent {
     private ChatMessage forwardMessage;
-    private int receiverId;
+    private String receiverId;
     private Response responseResult;
 }

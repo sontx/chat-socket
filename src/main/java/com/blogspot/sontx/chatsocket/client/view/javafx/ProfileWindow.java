@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.client.view.javafx;
 
-import com.blogspot.sontx.chatsocket.client.model.Profile;
+import com.blogspot.sontx.chatsocket.client.model.UserProfile;
 import com.blogspot.sontx.chatsocket.client.view.ProfileView;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
@@ -56,9 +56,9 @@ class ProfileWindow extends BaseJavaFxWindow implements ProfileView {
     }
 
     @Override
-    public void setProfile(Profile profile) {
-        displayNameTextField.setText(profile.getDisplayName());
-        statusTextField.setText(profile.getStatus());
-        usernameLabel.setText(profile.getUsername());
+    public void setProfile(UserProfile userProfile) {
+        displayNameTextField.setText(userProfile.getDisplayName());
+        statusTextField.setText(userProfile.getStatus());
+        usernameLabel.setText(userProfile.getUsername());
     }
 }

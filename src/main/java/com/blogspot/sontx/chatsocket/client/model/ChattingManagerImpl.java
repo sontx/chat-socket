@@ -27,7 +27,7 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
 
     @Override
     public void processReceivedChatMessage(ChatMessage chatMessage) {
-        int friendId = chatMessage.getWhoId();
+        String friendId = chatMessage.getWhoId();
         if (!isChattingWith(friendId)) {
             openChatWindow(friendId);
         }
@@ -43,18 +43,18 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
         }
     }
 
-    private boolean isChattingWith(int friendId) {
+    private boolean isChattingWith(String friendId) {
         synchronized (lock) {
             return managedFriends
                     .stream()
-                    .anyMatch(friend -> friend.profile.getAccountId() == friendId && friend.isChattingWith);
+                    .anyMatch(friend -> friend.profile.getAccountId().equals(friendId) && friend.isChattingWith);
         }
     }
 
-    private void openChatWindow(int friendId) {
+    private void openChatWindow(String friendId) {
         Optional<ManagedFriend> foundFriend = managedFriends
                 .stream()
-                .filter(friend -> friend.profile.getAccountId() == friendId)
+                .filter(friend -> friend.profile.getAccountId().equals(friendId))
                 .findFirst();
 
         foundFriend.ifPresent(this::openChatWindow);
@@ -68,7 +68,7 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
     private void updateCurrentManagedFriends(List<Profile> updatedFriends) {
         for (ManagedFriend managedFriend : managedFriends) {
             for (Profile updatedFriend : updatedFriends) {
-                if (updatedFriend.getAccountId() == managedFriend.profile.getAccountId()) {
+                if (updatedFriend.getAccountId().equals(managedFriend.profile.getAccountId())) {
                     managedFriend.profile = updatedFriend;
                 }
             }
@@ -80,7 +80,7 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
                 .stream()
                 .filter(updatedFriend -> managedFriends
                         .stream()
-                        .noneMatch(managedFriend -> managedFriend.profile.getAccountId() == updatedFriend.getAccountId()))
+                        .noneMatch(managedFriend -> managedFriend.profile.getAccountId().equals(updatedFriend.getAccountId())))
                 .collect(Collectors.toList());
 
         managedFriends.addAll(newFriends
@@ -89,10 +89,10 @@ public class ChattingManagerImpl extends AbstractService implements ChattingMana
                 .collect(Collectors.toList()));
     }
 
-    private void setChattingWithState(int friendId, boolean isChattingWith) {
+    private void setChattingWithState(String friendId, boolean isChattingWith) {
         synchronized (lock) {
             managedFriends.forEach(managedFriend -> {
-                if (managedFriend.profile.getAccountId() == friendId) {
+                if (managedFriend.profile.getAccountId().equals(friendId)) {
                     managedFriend.isChattingWith = isChattingWith;
                 }
             });

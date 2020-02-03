@@ -51,9 +51,9 @@ All users data will be saved in **user.json** file.
 
 ![](https://3.bp.blogspot.com/-4mgFXugXUps/WzcobCOOhOI/AAAAAAAAVOY/y9D8YMwETGUIrElK5rJy_XT2l_6iO1s7QCLcBGAs/s1600/client-friendlist.PNG)
 
-5. To update your profile, double-click to the avatar.
+5. To update your userProfile, double-click to the avatar.
 
-![](https://3.bp.blogspot.com/-CwPvtWoHAY4/WzcocQqJQAI/AAAAAAAAVOk/mfAu94v3EOwlxoqCxy8lYVmP593h_bXvQCLcBGAs/s1600/client-profile.PNG)
+![](https://3.bp.blogspot.com/-CwPvtWoHAY4/WzcocQqJQAI/AAAAAAAAVOk/mfAu94v3EOwlxoqCxy8lYVmP593h_bXvQCLcBGAs/s1600/client-userProfile.PNG)
 
 6. Double-click to any online friend to chat
 

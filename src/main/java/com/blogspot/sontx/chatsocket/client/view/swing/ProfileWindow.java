@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.client.view.swing;
 
-import com.blogspot.sontx.chatsocket.client.model.Profile;
+import com.blogspot.sontx.chatsocket.client.model.UserProfile;
 import com.blogspot.sontx.chatsocket.client.view.ProfileView;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
@@ -125,9 +125,9 @@ class ProfileWindow extends BaseSwingWindow implements ProfileView, ActionListen
     }
 
     @Override
-    public void setProfile(Profile profile) {
-        displayNameField.setText(profile.getDisplayName());
-        statusField.setText(profile.getStatus());
-        usernameField.setText(profile.getUsername());
+    public void setProfile(UserProfile userProfile) {
+        displayNameField.setText(userProfile.getDisplayName());
+        statusField.setText(userProfile.getStatus());
+        usernameField.setText(userProfile.getUsername());
     }
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 class Account {
-    private int id;
+    private String id;
     private String username;
     private String passwordHash;
     private Profile profile;

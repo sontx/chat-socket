@@ -2,7 +2,7 @@ package com.blogspot.sontx.chatsocket.client.presenter;
 
 import com.blogspot.sontx.chatsocket.client.event.UpdatePasswordEvent;
 import com.blogspot.sontx.chatsocket.client.event.UpdateProfileEvent;
-import com.blogspot.sontx.chatsocket.client.model.Profile;
+import com.blogspot.sontx.chatsocket.client.model.UserProfile;
 import com.blogspot.sontx.chatsocket.client.view.ProfileView;
 import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
@@ -10,11 +10,11 @@ import com.blogspot.sontx.chatsocket.lib.utils.Security;
 
 public class ProfilePresenter extends AbstractService implements Presenter {
     private final ProfileView profileView;
-    private final Profile profile;
+    private final UserProfile userProfile;
 
-    public ProfilePresenter(ProfileView profileView, Profile profile) {
+    public ProfilePresenter(ProfileView profileView, UserProfile userProfile) {
         this.profileView = profileView;
-        this.profile = profile;
+        this.userProfile = userProfile;
         wireUpViewEvents();
     }
 
@@ -36,13 +36,13 @@ public class ProfilePresenter extends AbstractService implements Presenter {
     }
 
     private void updateDisplayName(String displayName) {
-        profile.setDisplayName(displayName);
-        post(new UpdateProfileEvent(profile));
+        userProfile.setDisplayName(displayName);
+        post(new UpdateProfileEvent(userProfile));
     }
 
     private void updateStatus(String status) {
-        profile.setStatus(status);
-        post(new UpdateProfileEvent(profile));
+        userProfile.setStatus(status);
+        post(new UpdateProfileEvent(userProfile));
     }
 
     private void updatePassword(String password) {
@@ -52,7 +52,7 @@ public class ProfilePresenter extends AbstractService implements Presenter {
     public void show() {
         start();
         profileView.setTitle("Profile");
-        profileView.setProfile(profile);
+        profileView.setProfile(userProfile);
         profileView.showWindow();
     }
 }
