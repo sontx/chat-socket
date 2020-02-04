@@ -2,7 +2,7 @@ package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.client.view.RegisterView;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.FitImageJLabel;
 import lombok.Setter;
 
@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class RegisterWindow extends BaseSwingWindow implements RegisterView, ActionListener {
+class RegisterWindow extends AbstractSwingWindow implements RegisterView, ActionListener {
 
     private JTextField usernameField;
     private JPasswordField passwordField;

@@ -10,4 +10,6 @@ public interface BaseView {
     void setOnClosingListener(Runnable listener);
 
     void setMainWindow();
+
+    boolean isMainWindow();
 }

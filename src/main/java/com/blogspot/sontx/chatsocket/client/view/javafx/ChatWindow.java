@@ -4,7 +4,7 @@ import com.blogspot.sontx.chatsocket.client.view.ChatView;
 import com.blogspot.sontx.chatsocket.client.view.javafx.custom.ChatMessageCell;
 import com.blogspot.sontx.chatsocket.client.view.javafx.custom.ChatMessageInternal;
 import com.blogspot.sontx.chatsocket.lib.Callback;
-import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractJavaFxWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j;
 import java.io.IOException;
 
 @Log4j
-class ChatWindow extends BaseJavaFxWindow implements ChatView {
+class ChatWindow extends AbstractJavaFxWindow implements ChatView {
     @FXML
     private TextArea messageTextArea;
     @FXML

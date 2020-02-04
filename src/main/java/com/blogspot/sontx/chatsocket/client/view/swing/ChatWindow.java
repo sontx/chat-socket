@@ -3,7 +3,7 @@ package com.blogspot.sontx.chatsocket.client.view.swing;
 import com.blogspot.sontx.chatsocket.client.view.ChatView;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractSwingWindow;
 import lombok.Setter;
 import org.apache.commons.text.StringEscapeUtils;
 
@@ -16,7 +16,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-class ChatWindow extends BaseSwingWindow implements
+class ChatWindow extends AbstractSwingWindow implements
         ChatView,
         ActionListener,
         WindowStateListener,

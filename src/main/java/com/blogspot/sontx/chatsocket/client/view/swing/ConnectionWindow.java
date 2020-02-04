@@ -2,7 +2,7 @@ package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.client.view.ConnectionView;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.FitImageJLabel;
 import lombok.Setter;
 
@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class ConnectionWindow extends BaseSwingWindow implements ConnectionView, ActionListener {
+class ConnectionWindow extends AbstractSwingWindow implements ConnectionView, ActionListener {
 
     private JTextField portField;
     private JTextField ipField;

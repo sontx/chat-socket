@@ -1,14 +1,14 @@
 package com.blogspot.sontx.chatsocket.client.view.javafx;
 
 import com.blogspot.sontx.chatsocket.client.view.RegisterView;
-import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractJavaFxWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.StageStyle;
 import lombok.Setter;
 
-class RegisterWindow extends BaseJavaFxWindow implements RegisterView {
+class RegisterWindow extends AbstractJavaFxWindow implements RegisterView {
     @FXML
     private TextField usernameTextField;
     @FXML

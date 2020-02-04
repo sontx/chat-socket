@@ -5,7 +5,7 @@ import com.blogspot.sontx.chatsocket.client.view.ProfileView;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.bean.UpdatePassword;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.ClickableJLabel;
 import com.blogspot.sontx.chatsocket.lib.view.FitImageJLabel;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class ProfileWindow extends BaseSwingWindow implements ProfileView, ActionListener {
+class ProfileWindow extends AbstractSwingWindow implements ProfileView, ActionListener {
     private JTextField statusField;
     private JTextField displayNameField;
     private ClickableJLabel passwordButton;

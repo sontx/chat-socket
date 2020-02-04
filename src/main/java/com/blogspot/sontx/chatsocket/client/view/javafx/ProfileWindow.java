@@ -4,14 +4,14 @@ import com.blogspot.sontx.chatsocket.client.model.UserProfile;
 import com.blogspot.sontx.chatsocket.client.view.ProfileView;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.bean.UpdatePassword;
-import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractJavaFxWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.StageStyle;
 import lombok.Setter;
 
-class ProfileWindow extends BaseJavaFxWindow implements ProfileView {
+class ProfileWindow extends AbstractJavaFxWindow implements ProfileView {
     @FXML
     private Label usernameLabel;
     @FXML

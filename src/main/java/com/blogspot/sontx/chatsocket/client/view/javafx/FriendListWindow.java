@@ -4,7 +4,7 @@ import com.blogspot.sontx.chatsocket.client.view.FriendListView;
 import com.blogspot.sontx.chatsocket.client.view.javafx.custom.FriendListViewCell;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.bean.Profile;
-import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractJavaFxWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,7 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 import java.util.Optional;
 
-class FriendListWindow extends BaseJavaFxWindow implements FriendListView {
+class FriendListWindow extends AbstractJavaFxWindow implements FriendListView {
     private final ObservableList<Profile> friends = FXCollections.observableArrayList();
     @FXML
     private Label statusLabel;

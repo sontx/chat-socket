@@ -2,7 +2,7 @@ package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.client.view.LoginView;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.FitImageJLabel;
 import lombok.Setter;
 
@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class LoginWindow extends BaseSwingWindow implements LoginView, ActionListener {
+class LoginWindow extends AbstractSwingWindow implements LoginView, ActionListener {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton btnRegister;

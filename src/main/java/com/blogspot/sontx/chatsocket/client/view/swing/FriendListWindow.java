@@ -6,7 +6,7 @@ import com.blogspot.sontx.chatsocket.client.view.swing.custom.FriendEntry;
 import com.blogspot.sontx.chatsocket.lib.Callback;
 import com.blogspot.sontx.chatsocket.lib.bean.Profile;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.ClickableJLabel;
 import lombok.Setter;
 
@@ -19,7 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-class FriendListWindow extends BaseSwingWindow implements FriendListView, ActionListener {
+class FriendListWindow extends AbstractSwingWindow implements FriendListView, ActionListener {
     private JList<FriendEntry> friendList;
     private ClickableJLabel myInfoField;
     @Setter

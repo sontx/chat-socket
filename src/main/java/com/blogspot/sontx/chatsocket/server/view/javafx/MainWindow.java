@@ -1,6 +1,6 @@
 package com.blogspot.sontx.chatsocket.server.view.javafx;
 
-import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractJavaFxWindow;
 import com.blogspot.sontx.chatsocket.server.view.LogView;
 import com.blogspot.sontx.chatsocket.server.view.MainView;
 import javafx.fxml.FXML;
@@ -12,7 +12,7 @@ import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.StringUtils;
 
 @Log4j
-class MainWindow extends BaseJavaFxWindow implements MainView, LogView {
+class MainWindow extends AbstractJavaFxWindow implements MainView, LogView {
     @FXML
     private TextArea logTextArea;
     @FXML

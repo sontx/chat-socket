@@ -17,19 +17,29 @@ import lombok.extern.log4j.Log4j;
 import java.io.IOException;
 
 @Log4j
-public abstract class BaseJavaFxWindow implements BaseView {
+public abstract class AbstractJavaFxWindow implements BaseView {
+    private static AbstractJavaFxWindow mainWindow;
+
     @Getter
     @Setter
     private Stage stage;
     private ThreadInvoker threadInvoker = new JavaFxThreadInvoker();
 
-    private boolean isMainWindow;
+    @Override
+    public void setMainWindow() {
+        mainWindow = this;
+    }
 
-    protected void init(BaseJavaFxWindow controller, String layoutName) {
+    @Override
+    public boolean isMainWindow() {
+        return mainWindow == this;
+    }
+
+    protected void init(AbstractJavaFxWindow controller, String layoutName) {
         init(controller, layoutName, true);
     }
 
-    protected void init(BaseJavaFxWindow controller, String layoutName, boolean resizable) {
+    protected void init(AbstractJavaFxWindow controller, String layoutName, boolean resizable) {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(LayoutsResource.getInstance().getResource(layoutName));
         fxmlLoader.setController(controller);
@@ -75,7 +85,7 @@ public abstract class BaseJavaFxWindow implements BaseView {
             stage.setOnCloseRequest(event -> {
                 if (listener != null)
                     listener.run();
-                if (isMainWindow)
+                if (isMainWindow())
                     Platform.exit();
             });
         });
@@ -87,10 +97,5 @@ public abstract class BaseJavaFxWindow implements BaseView {
             if (stage != null)
                 stage.setTitle(title);
         });
-    }
-
-    @Override
-    public void setMainWindow() {
-        isMainWindow = true;
     }
 }

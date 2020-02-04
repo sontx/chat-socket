@@ -2,7 +2,7 @@ package com.blogspot.sontx.chatsocket.client.view.javafx;
 
 import com.blogspot.sontx.chatsocket.AppConfig;
 import com.blogspot.sontx.chatsocket.client.view.ConnectionView;
-import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractJavaFxWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 
-class ConnectionWindow extends BaseJavaFxWindow implements ConnectionView {
+class ConnectionWindow extends AbstractJavaFxWindow implements ConnectionView {
     @Setter
     private Runnable connectButtonClickListener;
     @FXML

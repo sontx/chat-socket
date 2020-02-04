@@ -1,7 +1,7 @@
 package com.blogspot.sontx.chatsocket.server.view.swing;
 
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
-import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractSwingWindow;
 import com.blogspot.sontx.chatsocket.server.view.LogView;
 import com.blogspot.sontx.chatsocket.server.view.MainView;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 @Log4j
-class MainWindow extends BaseSwingWindow implements ActionListener, MainView, LogView {
+class MainWindow extends AbstractSwingWindow implements ActionListener, MainView, LogView {
     private JTextField addressField;
     private JTextField portField;
     private JButton btnShowIPs;

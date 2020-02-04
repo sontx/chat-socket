@@ -17,6 +17,7 @@ public abstract class AbstractPresenter<TView extends BaseView> extends Abstract
     }
 
     protected void onUserClosesView() {
-        post(new AppShutdownEvent());
+        if (view.isMainWindow())
+            post(new AppShutdownEvent());
     }
 }

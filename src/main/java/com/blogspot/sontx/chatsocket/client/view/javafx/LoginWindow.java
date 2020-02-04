@@ -1,13 +1,13 @@
 package com.blogspot.sontx.chatsocket.client.view.javafx;
 
 import com.blogspot.sontx.chatsocket.client.view.LoginView;
-import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
+import com.blogspot.sontx.chatsocket.lib.view.AbstractJavaFxWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import lombok.Setter;
 
-class LoginWindow extends BaseJavaFxWindow implements LoginView {
+class LoginWindow extends AbstractJavaFxWindow implements LoginView {
     @FXML
     private TextField usernameTextField;
     @FXML
