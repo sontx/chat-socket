@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +59,7 @@ class FriendListWindow extends BaseJavaFxWindow implements FriendListView {
 
     @Override
     public void setMyAccountInfo(Profile profile) {
-        if (profile != null) {
+        if (profile != null && !StringUtils.isEmpty(profile.getStatus())) {
             statusLabel.setText(profile.getStatus());
         } else {
             statusLabel.setText("Hi there!");
