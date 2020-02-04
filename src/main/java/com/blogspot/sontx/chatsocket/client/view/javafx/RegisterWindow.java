@@ -5,6 +5,7 @@ import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.StageStyle;
 import lombok.Setter;
 
 class RegisterWindow extends BaseJavaFxWindow implements RegisterView {
@@ -19,6 +20,7 @@ class RegisterWindow extends BaseJavaFxWindow implements RegisterView {
 
     RegisterWindow() {
         init(this, "register-window.fxml", false);
+        getStage().initStyle(StageStyle.UTILITY);
     }
 
     @FXML

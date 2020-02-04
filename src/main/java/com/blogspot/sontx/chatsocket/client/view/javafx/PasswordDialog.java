@@ -11,6 +11,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.StageStyle;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -31,6 +32,7 @@ class PasswordDialog {
         alert.getDialogPane()
                 .lookupButton(ButtonType.OK)
                 .addEventFilter(ActionEvent.ACTION, this::handleOK);
+        alert.initStyle(StageStyle.UTILITY);
         alert.showAndWait();
     }
 

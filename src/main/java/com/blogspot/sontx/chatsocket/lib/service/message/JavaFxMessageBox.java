@@ -3,6 +3,7 @@ package com.blogspot.sontx.chatsocket.lib.service.message;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 
@@ -15,6 +16,7 @@ public class JavaFxMessageBox implements MessageBox {
         alert.setContentText(getHeaderText(type));
         alert.setTitle(caption);
         alert.setHeaderText(text);
+        alert.initStyle(StageStyle.UTILITY);
         alert.showAndWait();
     }
 
