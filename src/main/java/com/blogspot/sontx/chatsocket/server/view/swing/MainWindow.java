@@ -117,6 +117,16 @@ class MainWindow extends BaseSwingWindow implements ActionListener, MainView, Lo
     }
 
     @Override
+    public void setIp(String ip) {
+        addressField.setText(ip);
+    }
+
+    @Override
+    public void setPort(int port) {
+        portField.setText(Integer.toString(port));
+    }
+
+    @Override
     public void setStartButtonText(String text) {
         btnStart.setText(text);
     }

@@ -47,4 +47,14 @@ class ConnectionWindow extends BaseJavaFxWindow implements ConnectionView {
     public String getServerPort() {
         return portTextField.getText();
     }
+
+    @Override
+    public void setServerIp(String serverIp) {
+        addressTextField.setText(serverIp);
+    }
+
+    @Override
+    public void setServerPort(int serverPort) {
+        portTextField.setText(Integer.toString(serverPort));
+    }
 }

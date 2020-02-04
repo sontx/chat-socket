@@ -1,4 +1,4 @@
-package com.blogspot.sontx.chatsocket.client.presenter;
+package com.blogspot.sontx.chatsocket.lib;
 
 import com.blogspot.sontx.chatsocket.lib.platform.Platform;
 

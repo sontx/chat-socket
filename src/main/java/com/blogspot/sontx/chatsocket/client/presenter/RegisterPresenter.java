@@ -3,21 +3,20 @@ package com.blogspot.sontx.chatsocket.client.presenter;
 import com.blogspot.sontx.chatsocket.client.event.RegisterEvent;
 import com.blogspot.sontx.chatsocket.client.event.RegisteredEvent;
 import com.blogspot.sontx.chatsocket.client.view.RegisterView;
-import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
+import com.blogspot.sontx.chatsocket.lib.AbstractPresenter;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.lib.utils.Security;
 import com.google.common.eventbus.Subscribe;
 
-public class RegisterPresenter extends AbstractService implements Presenter {
-    private final RegisterView registerView;
-
+public class RegisterPresenter extends AbstractPresenter<RegisterView> {
     public RegisterPresenter(RegisterView registerView) {
-        this.registerView = registerView;
-        wireUpViewEvents();
+        super(registerView);
     }
 
-    private void wireUpViewEvents() {
-        registerView.setRegisterButtonClickListener(() -> {
+    @Override
+    protected  void wireUpViewEvents() {
+        super.wireUpViewEvents();
+        view.setRegisterButtonClickListener(() -> {
             if (!verifyInputs())
                 postMessageBox("Invalid register info.", "Registration", MessageType.Error);
             else
@@ -26,9 +25,9 @@ public class RegisterPresenter extends AbstractService implements Presenter {
     }
 
     private boolean verifyInputs() {
-        String username = registerView.getUsername();
-        String password = registerView.getPassword();
-        String displayName = registerView.getDisplayName();
+        String username = view.getUsername();
+        String password = view.getPassword();
+        String displayName = view.getDisplayName();
 
         return Security.checkValidUsername(username)
                 && Security.checkValidPassword(password)
@@ -36,9 +35,9 @@ public class RegisterPresenter extends AbstractService implements Presenter {
     }
 
     private void register() {
-        String username = registerView.getUsername();
-        String password = registerView.getPassword();
-        String displayName = registerView.getDisplayName();
+        String username = view.getUsername();
+        String password = view.getPassword();
+        String displayName = view.getDisplayName();
 
         post(new RegisterEvent(username, password, displayName));
     }
@@ -47,13 +46,13 @@ public class RegisterPresenter extends AbstractService implements Presenter {
     public void onRegistered(RegisteredEvent event) {
         runOnUiThread(() -> {
             stop();
-            registerView.closeWindow();
+            view.closeWindow();
         });
     }
 
     public void show() {
         start();
-        registerView.setTitle("Register");
-        registerView.showWindow();
+        view.setTitle("Register");
+        view.showWindow();
     }
 }

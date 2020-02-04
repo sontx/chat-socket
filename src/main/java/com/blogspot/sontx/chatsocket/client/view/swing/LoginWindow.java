@@ -85,4 +85,9 @@ class LoginWindow extends BaseSwingWindow implements LoginView, ActionListener {
     public String getPassword() {
         return passwordField.getText();
     }
+
+    @Override
+    public void setUserName(String loggedUserName) {
+        usernameField.setText(loggedUserName);
+    }
 }

@@ -42,4 +42,9 @@ class LoginWindow extends BaseJavaFxWindow implements LoginView {
     public String getPassword() {
         return passwordField.getText();
     }
+
+    @Override
+    public void setUserName(String loggedUserName) {
+        usernameTextField.setText(loggedUserName);
+    }
 }

@@ -78,4 +78,14 @@ class ConnectionWindow extends BaseSwingWindow implements ConnectionView, Action
     public String getServerPort() {
         return portField.getText();
     }
+
+    @Override
+    public void setServerIp(String serverIp) {
+        ipField.setText(serverIp);
+    }
+
+    @Override
+    public void setServerPort(int serverPort) {
+        portField.setText(Integer.toString(serverPort));
+    }
 }

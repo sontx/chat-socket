@@ -8,4 +8,8 @@ public interface ConnectionView extends BaseView {
     String getServerIp();
 
     String getServerPort();
+
+    void setServerIp(String serverIp);
+
+    void setServerPort(int serverPort);
 }

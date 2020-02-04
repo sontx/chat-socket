@@ -1,4 +1,4 @@
-package com.blogspot.sontx.chatsocket.client.event;
+package com.blogspot.sontx.chatsocket.lib.event;
 
 import lombok.Data;
 

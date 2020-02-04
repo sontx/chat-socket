@@ -1,8 +1,9 @@
 package com.blogspot.sontx.chatsocket.server.presenter;
 
 import com.blogspot.sontx.chatsocket.AppConfig;
-import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
+import com.blogspot.sontx.chatsocket.lib.AbstractPresenter;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
+import com.blogspot.sontx.chatsocket.server.ServerSettings;
 import com.blogspot.sontx.chatsocket.server.event.*;
 import com.blogspot.sontx.chatsocket.server.view.LogView;
 import com.blogspot.sontx.chatsocket.server.view.MainView;
@@ -13,28 +14,30 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.LogManager;
 
 @Log4j
-public class MainPresenter extends AbstractService {
-    private final MainView mainView;
+public class MainPresenter extends AbstractPresenter<MainView> {
     private volatile boolean serverIsRunning;
 
     public MainPresenter(MainView mainView, LogView logView) {
-        this.mainView = mainView;
+        super(mainView);
         LogManager.getRootLogger().addAppender(new Log4jUIAppender(logView));
-        wireUpViewEvents();
     }
 
-    private void wireUpViewEvents() {
-        mainView.setStartButtonListener(() -> {
+    @Override
+    protected  void wireUpViewEvents() {
+        super.wireUpViewEvents();
+        view.setStartButtonListener(() -> {
             if (serverIsRunning)
                 stopServer();
             else
                 startServer();
         });
-        mainView.setOnClosingListener(() -> {
-            stop();
-            post(new ShutdownServerEvent(ShutdownServerEvent.ALL));
-            post(new AppShutdownEvent());
-        });
+    }
+
+    @Override
+    protected void onUserClosesView() {
+        stop();
+        post(new ShutdownServerEvent(ShutdownServerEvent.ALL));
+        super.onUserClosesView();
     }
 
     private void stopServer() {
@@ -43,13 +46,20 @@ public class MainPresenter extends AbstractService {
 
     private void startServer() {
         if (verifyInputs()) {
-            post(new StartServerEvent(mainView.getIp(), Integer.parseInt(mainView.getPort())));
+            String ip = view.getIp();
+            int port = Integer.parseInt(view.getPort());
+
+            post(new StartServerEvent(ip, port));
+
+            ServerSettings settings = getSetting(ServerSettings.class);
+            settings.setIp(ip);
+            settings.setPort(port);
         }
     }
 
     private boolean verifyInputs() {
-        String listenOnIp = mainView.getIp();
-        String portAsString = mainView.getPort();
+        String listenOnIp = view.getIp();
+        String portAsString = view.getPort();
         if (!NumberUtils.isDigits(portAsString)) {
             postMessageBox("Port must be a number", MessageType.Error);
             return false;
@@ -62,16 +72,20 @@ public class MainPresenter extends AbstractService {
 
     public void show() {
         start();
-        mainView.setMainWindow();
-        mainView.setTitle(String.format("%s %s", AppConfig.getDefault().getAppName(), AppConfig.getDefault().getAppVersion()));
-        mainView.showWindow();
+        ServerSettings settings = getSetting(ServerSettings.class);
+        view.setIp(settings.getIp());
+        if (settings.getPort() > 0)
+            view.setPort(settings.getPort());
+        view.setMainWindow();
+        view.setTitle(String.format("%s %s", AppConfig.getDefault().getAppName(), AppConfig.getDefault().getAppVersion()));
+        view.showWindow();
     }
 
     @Subscribe
     public void onServerStatusChanged(ServerStatusChangedEvent event) {
         runOnUiThread(() -> {
             serverIsRunning = event.isRunning();
-            mainView.setStartButtonText(serverIsRunning ? "Stop" : "Start");
+            view.setStartButtonText(serverIsRunning ? "Stop" : "Start");
         });
     }
 }

@@ -10,4 +10,6 @@ public interface LoginView extends BaseView {
     void setLoginButtonClickListener(Runnable listener);
 
     void setRegisterButtonClickListener(Runnable listener);
+
+    void setUserName(String loggedUserName);
 }

@@ -66,6 +66,16 @@ class MainWindow extends BaseJavaFxWindow implements MainView, LogView {
     }
 
     @Override
+    public void setIp(String ip) {
+        ipTextField.setText(ip);
+    }
+
+    @Override
+    public void setPort(int port) {
+        portTextField.setText(Integer.toString(port));
+    }
+
+    @Override
     public void setStartButtonText(String text) {
         startButton.setText(text);
     }

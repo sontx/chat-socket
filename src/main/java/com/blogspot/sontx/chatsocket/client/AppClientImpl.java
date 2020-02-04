@@ -7,6 +7,8 @@ import com.blogspot.sontx.chatsocket.client.model.handler.ResponseHandlerFactory
 import com.blogspot.sontx.chatsocket.client.presenter.*;
 import com.blogspot.sontx.chatsocket.client.view.*;
 import com.blogspot.sontx.chatsocket.lib.Component;
+import com.blogspot.sontx.chatsocket.lib.Presenter;
+import com.blogspot.sontx.chatsocket.lib.event.AppShutdownEvent;
 import com.blogspot.sontx.chatsocket.lib.platform.Platform;
 import com.blogspot.sontx.chatsocket.lib.service.event.ShowMessageBoxEvent;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
@@ -14,11 +16,11 @@ import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
 import com.google.common.eventbus.Subscribe;
 
 /**
- * Default implementation of {@link Client} that uses:
+ * Default implementation of {@link AppClient} that uses:
  * <pre>
  * Connection: tcp socket.
  * Serialization: basic java {@link java.io.Serializable} feature.
- * Components communication: eventbus.
+ * Components communication: guava.
  * </pre>
  */
 public class AppClientImpl extends Component implements AppClient {

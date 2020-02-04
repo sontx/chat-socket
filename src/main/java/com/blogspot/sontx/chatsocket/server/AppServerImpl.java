@@ -2,11 +2,11 @@ package com.blogspot.sontx.chatsocket.server;
 
 import com.blogspot.sontx.chatsocket.AppConfig;
 import com.blogspot.sontx.chatsocket.lib.Component;
+import com.blogspot.sontx.chatsocket.lib.event.AppShutdownEvent;
 import com.blogspot.sontx.chatsocket.lib.platform.Platform;
 import com.blogspot.sontx.chatsocket.lib.service.event.ShowMessageBoxEvent;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.lib.utils.StreamUtils;
-import com.blogspot.sontx.chatsocket.server.event.AppShutdownEvent;
 import com.blogspot.sontx.chatsocket.server.event.ServerStatusChangedEvent;
 import com.blogspot.sontx.chatsocket.server.event.StartServerEvent;
 import com.blogspot.sontx.chatsocket.server.event.StopServerEvent;
@@ -26,12 +26,12 @@ import lombok.extern.log4j.Log4j;
 import java.io.IOException;
 
 /**
- * Default implementation of {@link Server} that uses:
+ * Default implementation of {@link AppServer} that uses:
  * <pre>
  * Connection: tcp socket.
  * Store: json file.
  * Serialization: basic java {@link java.io.Serializable} feature.
- * Components communication: eventbus.
+ * Components communication: guava.
  * </pre>
  */
 @Log4j

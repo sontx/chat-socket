@@ -3,27 +3,33 @@ package com.blogspot.sontx.chatsocket.client.presenter;
 import com.blogspot.sontx.chatsocket.AppConfig;
 import com.blogspot.sontx.chatsocket.client.event.*;
 import com.blogspot.sontx.chatsocket.client.view.FriendListView;
+import com.blogspot.sontx.chatsocket.lib.AbstractPresenter;
 import com.blogspot.sontx.chatsocket.lib.bean.Profile;
-import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
+import com.blogspot.sontx.chatsocket.lib.event.AppShutdownEvent;
 import com.google.common.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendListPresenter extends AbstractService implements Presenter {
-    private final FriendListView friendListView;
+public class FriendListPresenter extends AbstractPresenter<FriendListView> {
     private Profile myProfile;
     private List<Profile> friendList;
 
     public FriendListPresenter(FriendListView friendListView) {
-        this.friendListView = friendListView;
-        wireUpViewEvents();
+        super(friendListView);
     }
 
-    private void wireUpViewEvents() {
-        friendListView.setMyInfoButtonClickListener(this::openMyProfile);
-        friendListView.setFriendButtonClickListener(this::openChat);
-        friendListView.setOnClosingListener(this::exitApp);
+    @Override
+    protected  void wireUpViewEvents() {
+        super.wireUpViewEvents();
+        view.setMyInfoButtonClickListener(this::openMyProfile);
+        view.setFriendButtonClickListener(this::openChat);
+    }
+
+    @Override
+    protected void onUserClosesView() {
+        exitApp();
+        super.onUserClosesView();
     }
 
     private void openMyProfile() {
@@ -48,9 +54,9 @@ public class FriendListPresenter extends AbstractService implements Presenter {
         start();
         post(new UpdateFriendListEvent());
 
-        friendListView.setMainWindow();
-        friendListView.setTitle(String.format("%s %s", AppConfig.getDefault().getAppName(), AppConfig.getDefault().getAppVersion()));
-        friendListView.showWindow();
+        view.setMainWindow();
+        view.setTitle(String.format("%s %s", AppConfig.getDefault().getAppName(), AppConfig.getDefault().getAppVersion()));
+        view.showWindow();
     }
 
     @Subscribe
@@ -60,19 +66,19 @@ public class FriendListPresenter extends AbstractService implements Presenter {
 
     public void setMyProfile(Profile myProfile) {
         this.myProfile = myProfile;
-        friendListView.setMyAccountInfo(this.myProfile);
+        view.setMyAccountInfo(this.myProfile);
         String appName = AppConfig.getDefault().getAppName();
         if (this.myProfile != null)
-            friendListView.setTitle(String.format("%s [%s]", appName, this.myProfile.getDisplayName()));
+            view.setTitle(String.format("%s [%s]", appName, this.myProfile.getDisplayName()));
         else
-            friendListView.setTitle(appName);
+            view.setTitle(appName);
     }
 
     @Subscribe
     public void onFriendListReceived(FriendListReceivedEvent event) {
         runOnUiThread(() -> {
             friendList = event.getFriendList();
-            friendListView.setFriendList(friendList);
+            view.setFriendList(friendList);
         });
     }
 
@@ -85,10 +91,10 @@ public class FriendListPresenter extends AbstractService implements Presenter {
                 friendList = new ArrayList<>();
 
             if (friendList.stream().anyMatch(friend -> friend.getId() == newFriendInfo.getId())) {
-                friendListView.updateFriend(newFriendInfo);
+                view.updateFriend(newFriendInfo);
             } else {
                 friendList.add(newFriendInfo);
-                friendListView.addNewFriend(newFriendInfo);
+                view.addNewFriend(newFriendInfo);
             }
         });
     }

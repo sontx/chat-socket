@@ -7,6 +7,10 @@ public interface MainView extends BaseView {
 
     String getPort();
 
+    void setIp(String ip);
+
+    void setPort(int port);
+
     void setStartButtonText(String text);
 
     void setStartButtonListener(Runnable listener);

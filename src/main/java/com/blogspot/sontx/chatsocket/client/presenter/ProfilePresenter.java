@@ -4,35 +4,40 @@ import com.blogspot.sontx.chatsocket.client.event.UpdatePasswordEvent;
 import com.blogspot.sontx.chatsocket.client.event.UpdateProfileEvent;
 import com.blogspot.sontx.chatsocket.client.model.UserProfile;
 import com.blogspot.sontx.chatsocket.client.view.ProfileView;
-import com.blogspot.sontx.chatsocket.lib.service.AbstractService;
+import com.blogspot.sontx.chatsocket.lib.AbstractPresenter;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.lib.utils.Security;
 
-public class ProfilePresenter extends AbstractService implements Presenter {
-    private final ProfileView profileView;
+public class ProfilePresenter extends AbstractPresenter<ProfileView> {
     private final UserProfile userProfile;
 
     public ProfilePresenter(ProfileView profileView, UserProfile userProfile) {
-        this.profileView = profileView;
+        super(profileView);
         this.userProfile = userProfile;
-        wireUpViewEvents();
     }
 
-    private void wireUpViewEvents() {
-        profileView.setChangeDisplayNameButtonClickListener(displayName -> {
+    @Override
+    protected  void wireUpViewEvents() {
+        super.wireUpViewEvents();
+        view.setChangeDisplayNameButtonClickListener(displayName -> {
             if (Security.checkValidDisplayName(displayName))
                 updateDisplayName(displayName);
             else
                 postMessageBox("Invalid display name.", "Profile", MessageType.Error);
         });
-        profileView.setChangeStatusButtonClickListener(this::updateStatus);
-        profileView.setChangePasswordButtonClickListener(password -> {
+        view.setChangeStatusButtonClickListener(this::updateStatus);
+        view.setChangePasswordButtonClickListener(password -> {
             if (Security.checkValidPassword(password))
                 updatePassword(password);
             else
                 postMessageBox("Invalid password.", "Profile", MessageType.Error);
         });
-        profileView.setOnClosingListener(this::stop);
+    }
+
+    @Override
+    protected void onUserClosesView() {
+        stop();
+        super.onUserClosesView();
     }
 
     private void updateDisplayName(String displayName) {
@@ -51,8 +56,8 @@ public class ProfilePresenter extends AbstractService implements Presenter {
 
     public void show() {
         start();
-        profileView.setTitle("Profile");
-        profileView.setProfile(userProfile);
-        profileView.showWindow();
+        view.setTitle("Profile");
+        view.setProfile(userProfile);
+        view.showWindow();
     }
 }
