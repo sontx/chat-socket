@@ -1,8 +1,8 @@
 package com.blogspot.sontx.chatsocket.client.view.javafx;
 
 import com.blogspot.sontx.chatsocket.lib.Callback;
+import com.blogspot.sontx.chatsocket.lib.bean.UpdatePassword;
 import com.blogspot.sontx.chatsocket.lib.bo.LayoutsResource;
-import com.blogspot.sontx.chatsocket.lib.utils.Security;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,13 +19,13 @@ import java.io.IOException;
 @Log4j
 class PasswordDialog {
     @Setter
-    private Callback<String> changePasswordButtonClickListener;
+    private Callback<UpdatePassword> changePasswordButtonClickListener;
     private PasswordPane passwordPane;
 
     public void show() {
         if (initializeUI()) return;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Change Password");
+        alert.setTitle("Update Password");
         alert.setHeaderText(null);
         alert.getDialogPane().setContent(passwordPane);
         alert.getDialogPane()
@@ -45,42 +45,19 @@ class PasswordDialog {
     }
 
     private void handleOK(ActionEvent event) {
-        String password = passwordPane.passwordField.getText();
-        if (!valid(password)) {
-            showError("Invalid password");
-            event.consume();
-            return;
-        }
-
-        String repassword = passwordPane.rePasswordField.getText();
-        if (!match(password, repassword)) {
-            showError("Password does not match");
-            event.consume();
-            return;
-        }
-
         if (changePasswordButtonClickListener != null) {
-            changePasswordButtonClickListener.call(password);
+            UpdatePassword updatePassword = new UpdatePassword();
+            updatePassword.setOldPassword(passwordPane.currentPasswordField.getText());
+            updatePassword.setNewPassword(passwordPane.newPasswordField.getText());
+            changePasswordButtonClickListener.call(updatePassword);
         }
-    }
-
-    private boolean match(String password, String rePassword) {
-        return password.equals(rePassword);
-    }
-
-    private boolean valid(String password) {
-        return Security.checkValidPassword(password);
-    }
-
-    private void showError(String message) {
-        passwordPane.errorLabel.setText(message);
     }
 
     public static class PasswordPane extends AnchorPane {
         @FXML
-        private PasswordField passwordField;
+        private PasswordField currentPasswordField;
         @FXML
-        private PasswordField rePasswordField;
+        private PasswordField newPasswordField;
         @FXML
         private Label errorLabel;
 

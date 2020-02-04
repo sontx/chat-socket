@@ -3,6 +3,7 @@ package com.blogspot.sontx.chatsocket.client.view.javafx;
 import com.blogspot.sontx.chatsocket.client.model.UserProfile;
 import com.blogspot.sontx.chatsocket.client.view.ProfileView;
 import com.blogspot.sontx.chatsocket.lib.Callback;
+import com.blogspot.sontx.chatsocket.lib.bean.UpdatePassword;
 import com.blogspot.sontx.chatsocket.lib.view.BaseJavaFxWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -22,7 +23,7 @@ class ProfileWindow extends BaseJavaFxWindow implements ProfileView {
     @Setter
     private Callback<String> changeStatusButtonClickListener;
     @Setter
-    private Callback<String> changePasswordButtonClickListener;
+    private Callback<UpdatePassword> changePasswordButtonClickListener;
 
     ProfileWindow() {
         init(this, "profile-window.fxml", false);

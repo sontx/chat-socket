@@ -5,6 +5,7 @@ import com.blogspot.sontx.chatsocket.client.event.UpdateProfileEvent;
 import com.blogspot.sontx.chatsocket.client.model.UserProfile;
 import com.blogspot.sontx.chatsocket.client.view.ProfileView;
 import com.blogspot.sontx.chatsocket.lib.AbstractPresenter;
+import com.blogspot.sontx.chatsocket.lib.bean.UpdatePassword;
 import com.blogspot.sontx.chatsocket.lib.service.message.MessageType;
 import com.blogspot.sontx.chatsocket.lib.utils.Security;
 
@@ -26,9 +27,9 @@ public class ProfilePresenter extends AbstractPresenter<ProfileView> {
                 postMessageBox("Invalid display name.", "Profile", MessageType.Error);
         });
         view.setChangeStatusButtonClickListener(this::updateStatus);
-        view.setChangePasswordButtonClickListener(password -> {
-            if (Security.checkValidPassword(password))
-                updatePassword(password);
+        view.setChangePasswordButtonClickListener(updatePassword -> {
+            if (Security.checkValidPassword(updatePassword.getOldPassword()) && Security.checkValidPassword(updatePassword.getNewPassword()))
+                updatePassword(updatePassword);
             else
                 postMessageBox("Invalid password.", "Profile", MessageType.Error);
         });
@@ -50,8 +51,10 @@ public class ProfilePresenter extends AbstractPresenter<ProfileView> {
         post(new UpdateProfileEvent(userProfile));
     }
 
-    private void updatePassword(String password) {
-        post(new UpdatePasswordEvent(password));
+    private void updatePassword(UpdatePassword updatePassword) {
+        UpdatePasswordEvent updatePasswordEvent = new UpdatePasswordEvent();
+        updatePasswordEvent.setUpdatePassword(updatePassword);
+        post(updatePasswordEvent);
     }
 
     public void show() {

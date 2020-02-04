@@ -1,12 +1,9 @@
 package com.blogspot.sontx.chatsocket.client.event;
 
-import lombok.AllArgsConstructor;
+import com.blogspot.sontx.chatsocket.lib.bean.UpdatePassword;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class UpdatePasswordEvent {
-    private String password;
+    private UpdatePassword updatePassword;
 }

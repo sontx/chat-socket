@@ -1,40 +1,40 @@
 package com.blogspot.sontx.chatsocket.client.view.swing;
 
 import com.blogspot.sontx.chatsocket.lib.Callback;
+import com.blogspot.sontx.chatsocket.lib.bean.UpdatePassword;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 class PasswordDialog extends JDialog implements ActionListener {
-    private JPasswordField passwordField;
-    private JPasswordField rePasswordField;
+    private JPasswordField currentPasswordField;
+    private JPasswordField newPasswordField;
     private JButton btnCancel;
     @Setter
-    private Callback<String> changePasswordButtonClickListener;
+    private Callback<UpdatePassword> changePasswordButtonClickListener;
 
     PasswordDialog() {
         setResizable(false);
         setTitle("Change Password");
         getContentPane().setLayout(null);
 
+        JLabel lblCurrentPassword = new JLabel("Current password:");
+        lblCurrentPassword.setBounds(10, 14, 74, 14);
+        getContentPane().add(lblCurrentPassword);
+
         JLabel lblNewPassword = new JLabel("New password:");
-        lblNewPassword.setBounds(10, 14, 74, 14);
+        lblNewPassword.setBounds(10, 41, 74, 14);
         getContentPane().add(lblNewPassword);
 
-        JLabel lblConfirm = new JLabel("Confirm:");
-        lblConfirm.setBounds(10, 41, 74, 14);
-        getContentPane().add(lblConfirm);
+        currentPasswordField = new JPasswordField();
+        currentPasswordField.setBounds(94, 11, 224, 20);
+        getContentPane().add(currentPasswordField);
 
-        passwordField = new JPasswordField();
-        passwordField.setBounds(94, 11, 224, 20);
-        getContentPane().add(passwordField);
-
-        rePasswordField = new JPasswordField();
-        rePasswordField.setBounds(94, 38, 224, 20);
-        getContentPane().add(rePasswordField);
+        newPasswordField = new JPasswordField();
+        newPasswordField.setBounds(94, 38, 224, 20);
+        getContentPane().add(newPasswordField);
 
         JButton btnLookGood = new JButton("Look good");
         btnLookGood.setBounds(130, 138, 89, 23);
@@ -54,15 +54,10 @@ class PasswordDialog extends JDialog implements ActionListener {
         if (e.getSource().equals(btnCancel)) {
             dispose();
         } else {
-            if (!checkPasswordInput()) {
-                changePasswordButtonClickListener.call(new String(passwordField.getPassword()));
-            }
+            UpdatePassword updatePassword = new UpdatePassword();
+            updatePassword.setNewPassword(new String(newPasswordField.getPassword()));
+            updatePassword.setOldPassword(new String(currentPasswordField.getPassword()));
+            changePasswordButtonClickListener.call(updatePassword);
         }
-    }
-
-    private boolean checkPasswordInput() {
-        String password = new String(passwordField.getPassword());
-        String rePassword = new String(rePasswordField.getPassword());
-        return !StringUtils.isEmpty(password) && password.equals(rePassword);
     }
 }

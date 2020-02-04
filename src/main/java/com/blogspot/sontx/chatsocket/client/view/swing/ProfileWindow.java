@@ -3,6 +3,7 @@ package com.blogspot.sontx.chatsocket.client.view.swing;
 import com.blogspot.sontx.chatsocket.client.model.UserProfile;
 import com.blogspot.sontx.chatsocket.client.view.ProfileView;
 import com.blogspot.sontx.chatsocket.lib.Callback;
+import com.blogspot.sontx.chatsocket.lib.bean.UpdatePassword;
 import com.blogspot.sontx.chatsocket.lib.bo.ImagesResource;
 import com.blogspot.sontx.chatsocket.lib.view.BaseSwingWindow;
 import com.blogspot.sontx.chatsocket.lib.view.ClickableJLabel;
@@ -26,7 +27,7 @@ class ProfileWindow extends BaseSwingWindow implements ProfileView, ActionListen
     @Setter
     private Callback<String> changeStatusButtonClickListener;
     @Setter
-    private Callback<String> changePasswordButtonClickListener;
+    private Callback<UpdatePassword> changePasswordButtonClickListener;
 
     @Override
     protected void initializeComponents() {

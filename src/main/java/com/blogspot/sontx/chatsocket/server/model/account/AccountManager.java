@@ -14,7 +14,7 @@ public interface AccountManager {
 
     Profile findAccountByLoginInfo(LoginInfo loginInfo);
 
-    void setPasswordHash(String accountId, String passwordHash);
+    boolean setPasswordHash(String accountId, String currentPasswordHash, String newPasswordHash);
 
     Profile findAccountByUserName(String username);
 

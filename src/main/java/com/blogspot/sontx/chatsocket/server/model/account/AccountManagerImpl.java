@@ -31,10 +31,16 @@ public class AccountManagerImpl implements AccountManager {
     }
 
     @Override
-    public void setPasswordHash(String accountId, String passwordHash) {
+    public boolean setPasswordHash(String accountId, String currentPasswordHash, String newPasswordHash) {
         Optional<Account> account = accountStorage.findById(accountId);
-        account.ifPresent(presentAccount -> presentAccount.setPasswordHash(passwordHash));
-        accountStorage.updatePasswordHash(accountId, passwordHash);
+        if (account.isPresent()) {
+            Account presentAccount = account.get();
+            if (presentAccount.getPasswordHash().equals(currentPasswordHash)) {
+                accountStorage.updatePasswordHash(accountId, newPasswordHash);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

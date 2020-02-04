@@ -102,7 +102,7 @@ public class SocketClient extends BackgroundService implements Client {
 
     @Subscribe
     public void onUpdatePassword(UpdatePasswordEvent event) {
-        runAsync(() -> sendRequest(event.getPassword(), RequestCode.UpdatePassword));
+        runAsync(() -> sendRequest(event.getUpdatePassword(), RequestCode.UpdatePassword));
     }
 
     @Subscribe
