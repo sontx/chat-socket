@@ -29,8 +29,29 @@ mvn exec:java
 
 ## Usage
 Both server and client are in **chatsocket-x.y-SNAPSHOT-jar-with-dependencies.jar** (to get this jar file you need to build this project).
-1. Server app: `java -jar homechat.jar --mode=server`
-2. Client app: `java -jar homechat.jar --mode=client`
+1. Server app: `java -jar chatsocket.jar --mode=server`
+2. Client app: `java -jar chatsocket.jar --mode=client`
+
+App settings will be saved in **app.json** file
+```json
+{
+  "modified" : 1580791811962,
+  "settings" : [ {
+    "key" : "client",
+    "data" : {
+      "serverIp" : "127.0.0.1",
+      "serverPort" : 3393,
+      "loggedUserName" : "sontx"
+    }
+  }, {
+    "key" : "server",
+    "data" : {
+      "ip" : "127.0.0.1",
+      "port" : 3393
+    }
+  } ]
+}
+``` 
 
 ### Server
 The server needs to listen to an IP and a port number, other clients will connect to this address.
@@ -55,11 +76,11 @@ All users data will be saved in **user.json** file.
 
 ![](https://3.bp.blogspot.com/-BfelkTjAyt0/WzcobEPCZ8I/AAAAAAAAVOc/NbLfhTq8yfYFisydCUs9KiessLw4w3P0ACLcBGAs/s1600/client-connection.PNG)
 
-2. Login to the system.
+2. Then login with your account
 
 ![](https://4.bp.blogspot.com/-V-KG-eGL84Q/Wzcob9l9eII/AAAAAAAAVOg/3d5hNPowqdMVQSTa5MN7nwj-WgkO_k7dgCLcBGAs/s1600/client-login.PNG)
 
-3. Or register a new account.
+3. Or register a new one.
 
 ![](https://2.bp.blogspot.com/-j4opAkxDQPU/Wzcocwr_xPI/AAAAAAAAVOo/UYAr6J84gjIjYUwskm0oGJ3rBPda8ZWNwCLcBGAs/s1600/client-register.PNG)
 
