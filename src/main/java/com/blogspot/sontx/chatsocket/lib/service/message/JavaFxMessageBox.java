@@ -12,9 +12,9 @@ public class JavaFxMessageBox implements MessageBox {
         Alert alert = new Alert(getAlertType(type));
         URL imageUrl = getUrlByType(type);
         alert.setGraphic(new ImageView(imageUrl != null ? imageUrl.toString() : ""));
-        alert.setContentText(text);
+        alert.setContentText(getHeaderText(type));
         alert.setTitle(caption);
-        alert.setHeaderText(getHeaderText(type));
+        alert.setHeaderText(text);
         alert.showAndWait();
     }
 
